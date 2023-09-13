@@ -93,6 +93,19 @@ int main()
         }
     }
     stbi_image_free(data);
+
+    //index generation
+    std::vector<unsigned int> indices;
+    for (unsigned int i = 0; i < height - 1; i++)
+    {
+        for (unsigned int j = 0; j < width; j++)
+        {
+            for (unsigned int k = 0; k < 2; k++)
+            {
+                indices.push_back(j + width * (i + k));
+            }
+        }
+    }
 #pragma endregion
 
     /*std::vector<BasicVertex> vertices = {
