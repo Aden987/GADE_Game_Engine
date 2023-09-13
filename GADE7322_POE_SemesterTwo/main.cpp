@@ -48,7 +48,7 @@ int main()
     //load texture
 #pragma region TEXTURE
     unsigned int texture1;
-    std::filesystem::path imagePath = "resources/textures/wallImage.png";
+    std::filesystem::path imagePath = "resources/textures/NewHeightMap.png";
     
 
 
@@ -76,6 +76,22 @@ int main()
     {
         std::cout << "Failed to load texture" << std::endl;
     }
+
+    // vertex generation for heightmap
+    std::vector<float> hMapVertices;
+    float yScale = 64.0f / 256.0f, yShift = 16.0f;
+    for (unsigned int i = 0; i < height; i++)
+    {
+        for (unsigned int j = 0; j < width; j++)
+        {
+            unsigned char* texel = data + (j + width * i) * nrChannels;
+            unsigned char y = texel[0];
+
+            hMapVertices.push_back(-height / 2.0f + i); //x
+            hMapVertices.push_back((int)y * yScale - yShift); //y
+            hMapVertices.push_back(-width/2.0f +j ); //z
+        }
+    }
     stbi_image_free(data);
 #pragma endregion
 
@@ -87,6 +103,7 @@ int main()
 
     BasicMesh myTriangle(vertices);*/
      
+    //cube vertices
     std::vector<basicCubeVertex> vertices = {
         {glm::vec3(-0.5f, -0.5f, -0.5f), glm::vec2(0.0f, 0.0f)},
         {glm::vec3(0.5f, -0.5f, -0.5f), glm::vec2(1.0f, 0.0f)},
