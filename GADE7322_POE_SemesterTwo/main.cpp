@@ -93,8 +93,17 @@ int main()
         }
     }
     stbi_image_free(data);
+#pragma endregion
 
-    //index generation
+    /*std::vector<BasicVertex> vertices = {
+        {glm::vec3(-0.5f, -0.5f, 0.0f),glm::vec3(1.0f, 0.0f, 0.0f),glm::vec2(0.0f,0.0f)},
+        {glm::vec3(0.5f, -0.5f, 0.0f),glm::vec3(0.0f, 1.0f, 0.0f),glm::vec2(1.0f,0.0f)},
+        {glm::vec3(0.0f,  0.5f, 0.0f),glm::vec3(0.0f, 0.0f, 1.0f),glm::vec2(0.5f,1.0f)}
+    };
+
+    BasicMesh myTriangle(vertices);*/
+
+    //index generation for height Map
     std::vector<unsigned int> indices;
     for (unsigned int i = 0; i < height - 1; i++)
     {
@@ -106,15 +115,9 @@ int main()
             }
         }
     }
-#pragma endregion
 
-    /*std::vector<BasicVertex> vertices = {
-        {glm::vec3(-0.5f, -0.5f, 0.0f),glm::vec3(1.0f, 0.0f, 0.0f),glm::vec2(0.0f,0.0f)},
-        {glm::vec3(0.5f, -0.5f, 0.0f),glm::vec3(0.0f, 1.0f, 0.0f),glm::vec2(1.0f,0.0f)},
-        {glm::vec3(0.0f,  0.5f, 0.0f),glm::vec3(0.0f, 0.0f, 1.0f),glm::vec2(0.5f,1.0f)}
-    };
-
-    BasicMesh myTriangle(vertices);*/
+    const unsigned int NUM_STRIPS = height - 1;
+    const unsigned int NUM_VERTS_PER_STRIP = width * 2;
      
     //cube vertices
     std::vector<basicCubeVertex> vertices = {
@@ -162,11 +165,30 @@ int main()
 
     basicCubeMesh myCube(vertices);
 
+    //registering VAO for heightmap
+    GLuint terrainVAO, terrainVBO, terrainEBO;
+    glGenVertexArrays(1, &terrainVAO);
+    glBindVertexArray(terrainVAO);
+
+    glGenBuffers(1, &terrainVBO);
+    glBindBuffer(GL_ARRAY_BUFFER, terrainVBO);
+    glBufferData(GL_ARRAY_BUFFER, hMapVertices.size() * sizeof(float), &vertices[0], GL_STATIC_DRAW);
+
+    //pos attri
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+    glEnableVertexAttribArray(0);
+
+    glGenBuffers(1, &terrainEBO);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, terrainEBO);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(unsigned int), &indices[0], GL_STATIC_DRAW);
+
+
     while (!glfwWindowShouldClose(window))
     {
         processInput(window);
 
-        glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+        //glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+        glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         glBindTexture(GL_TEXTURE_2D, texture1);
@@ -209,7 +231,7 @@ int main()
             glm::vec3(0.0f, 1.0f, 0.0f));
 
         glm::mat4 projection = glm::mat4(1.0f);
-        projection = glm::perspective(glm::radians(45.0f), 800.0f / 600.0f, 0.1f, 100.0f);
+        projection = glm::perspective(glm::radians(45.0f), 800.0f / 600.0f, 0.1f, 100000.0f);
 
 
         //unsigned int modelLoc = glGetUniformLocation(myShader.ID, "model");
@@ -225,7 +247,15 @@ int main()
         myShader.setMat4("projection", projection);
 
         //myTriangle.Draw(myShader);
-        myCube.Draw(myShader);
+        //myCube.Draw(myShader);
+        glBindVertexArray(terrainVAO);
+
+        for (unsigned int strip = 0; strip < NUM_STRIPS; ++strip)
+        {
+            glDrawElements(GL_TRIANGLE_STRIP, NUM_VERTS_PER_STRIP, GL_UNSIGNED_INT, (void*)(sizeof(unsigned int)* NUM_VERTS_PER_STRIP* strip));
+        }
+
+
         glfwSwapBuffers(window);
         glfwPollEvents();
     }
