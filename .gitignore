@@ -11,6 +11,8 @@
 *.sln.docstates
 *glad.c
 *stb_image.h
+*include
+*libs
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
