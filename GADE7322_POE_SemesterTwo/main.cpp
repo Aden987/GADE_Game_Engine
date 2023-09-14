@@ -10,9 +10,31 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 #include "basicCubeMesh.h"
+#include "HeightMapMesh.h"
+#include "Camera.h"
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
+void key_callback(GLFWwindow* window, int key, int scancode, int action, int modifiers);
+void mouse_callback(GLFWwindow* window, double xpos, double ypos);
+void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
 void processInput(GLFWwindow* window);
+
+const unsigned int SCR_WIDTH = 800;
+const unsigned int SCR_HEIGHT = 600;
+int useWireframe = 0;
+int displayGrayscale = 0;
+
+// camera - give pretty starting point
+Camera camera(glm::vec3(67.0f, 627.5f, 169.9f),
+    glm::vec3(0.0f, 1.0f, 0.0f),
+    -128.1f, -42.4f);
+float lastX = SCR_WIDTH / 2.0f;
+float lastY = SCR_HEIGHT / 2.0f;
+bool firstMouse = true;
+
+// timing
+float deltaTime = 0.0f;
+float lastFrame = 0.0f;
 
 int main()
 {
@@ -31,6 +53,13 @@ int main()
         return -1;
     }
     glfwMakeContextCurrent(window);
+    glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
+    glfwSetKeyCallback(window, key_callback);
+    glfwSetCursorPosCallback(window, mouse_callback);
+    glfwSetScrollCallback(window, scroll_callback);
+
+    // tell GLFW to capture our mouse
+    glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
     {
@@ -44,6 +73,7 @@ int main()
     glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 
     Shader myShader("resources/shaders/basic.shader.vert","resources/shaders/basic.shader.frag");
+    Shader heightMapShader("resources/shaders/heightmap.shader.vert", "resources/shaders/heightmap.shader.frag");
 
     //load texture
 #pragma region TEXTURE
@@ -166,15 +196,15 @@ int main()
     basicCubeMesh myCube(vertices);
 
     //registering VAO for heightmap
-    GLuint terrainVAO, terrainVBO, terrainEBO;
+    unsigned int terrainVAO, terrainVBO, terrainEBO;
     glGenVertexArrays(1, &terrainVAO);
     glBindVertexArray(terrainVAO);
 
     glGenBuffers(1, &terrainVBO);
     glBindBuffer(GL_ARRAY_BUFFER, terrainVBO);
-    glBufferData(GL_ARRAY_BUFFER, hMapVertices.size() * sizeof(float), &vertices[0], GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, hMapVertices.size() * sizeof(float), &hMapVertices[0], GL_STATIC_DRAW);
 
-    //pos attri
+    //pos attrin
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
     glEnableVertexAttribArray(0);
 
@@ -185,15 +215,21 @@ int main()
 
     while (!glfwWindowShouldClose(window))
     {
+        float currentFrame = glfwGetTime();
+        deltaTime = currentFrame - lastFrame;
+        lastFrame = currentFrame;
+
         processInput(window);
 
         //glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
         glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-        glBindTexture(GL_TEXTURE_2D, texture1);
+        //heightMapShader.use();
 
-        glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, 3.0f);
+        //glBindTexture(GL_TEXTURE_2D, texture1);
+
+        //glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, 3.0f);
         //translations (define vector and initialize it to an identity matrix)
        /*glm::vec4 vec(1.0f, 0.0f, 0.0f, 1.0f);
         glm::mat4 trans = glm::mat4(1.0);
@@ -221,17 +257,16 @@ int main()
         glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(trans));*/
 
         //cube
-        glm::mat4 model = glm::mat4(1.0f);
-        model = glm::rotate(model, /*(float)glfwGetTime() **/ glm::radians(50.0f), glm::vec3(0.5f, 1.0f, 0.0f));
+        /*glm::mat4 model = glm::mat4(1.0f);
+        model = glm::rotate(model, /*(float)glfwGetTime() **/ /*glm::radians(50.0f), glm::vec3(0.5f, 1.0f, 0.0f));
 
-        glm::mat4 view = glm::mat4(1.0f);
+        glm::mat4 view = glm::mat4(1.0f);*/
         //view = glm::translate(view, glm::vec3(0.0f, 0.0f, -1.8f));
-        view = glm::lookAt(glm::vec3(0.0f, 0.0f, 3.0f),
+      /*  view = glm::lookAt(glm::vec3(0.0f, 0.0f, 3.0f),
             glm::vec3(0.0f, 0.0f, 0.0f),
             glm::vec3(0.0f, 1.0f, 0.0f));
-
         glm::mat4 projection = glm::mat4(1.0f);
-        projection = glm::perspective(glm::radians(45.0f), 800.0f / 600.0f, 0.1f, 100000.0f);
+        projection = glm::perspective(glm::radians(45.0f), 800.0f / 600.0f, 0.1f, 100000.0f);*/
 
 
         //unsigned int modelLoc = glGetUniformLocation(myShader.ID, "model");
@@ -242,9 +277,20 @@ int main()
         //glUniformMatrix4fv(viewLocation, 1, GL_FALSE, &view[0][0]);
 
         //myShader.setMat4("transform", trans);
-        myShader.setMat4("model", model);
-        myShader.setMat4("view", view);
-        myShader.setMat4("projection", projection);
+        heightMapShader.use();
+
+        // view/projection transformations
+        glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100000.0f);
+        glm::mat4 view = camera.GetViewMatrix();
+        heightMapShader.setMat4("projection", projection);
+        heightMapShader.setMat4("view", view);
+
+        // world transformation
+        glm::mat4 model = glm::mat4(1.0f);
+        heightMapShader.setMat4("model", model);
+        heightMapShader.setMat4("model", model);
+        heightMapShader.setMat4("view", view);
+        heightMapShader.setMat4("projection", projection);
 
         //myTriangle.Draw(myShader);
         //myCube.Draw(myShader);
@@ -273,4 +319,59 @@ void processInput(GLFWwindow* window)
 {
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
         glfwSetWindowShouldClose(window, true);
+
+    if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
+        camera.ProcessKeyboard(FORWARD, deltaTime);
+    if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
+        camera.ProcessKeyboard(BACKWARD, deltaTime);
+    if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
+        camera.ProcessKeyboard(LEFT, deltaTime);
+    if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
+        camera.ProcessKeyboard(RIGHT, deltaTime);
+}
+
+void key_callback(GLFWwindow* window, int key, int scancode, int action, int modifiers)
+{
+    if (action == GLFW_PRESS)
+    {
+        switch (key)
+        {
+        case GLFW_KEY_SPACE:
+            useWireframe = 1 - useWireframe;
+            break;
+        case GLFW_KEY_G:
+            displayGrayscale = 1 - displayGrayscale;
+            break;
+        default:
+            break;
+        }
+    }
+}
+
+
+// glfw: whenever the mouse moves, this callback is called
+// -------------------------------------------------------
+void mouse_callback(GLFWwindow* window, double xpos, double ypos)
+{
+    if (firstMouse)
+    {
+        lastX = xpos;
+        lastY = ypos;
+        firstMouse = false;
+    }
+
+    float xoffset = xpos - lastX;
+    float yoffset = lastY - ypos; // reversed since y-coordinates go from bottom to top
+
+    lastX = xpos;
+    lastY = ypos;
+
+    camera.ProcessMouseMovement(xoffset, yoffset);
+}
+
+// glfw: whenever the mouse scroll wheel scrolls, this callback is called
+// ----------------------------------------------------------------------
+void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
+{
+    camera.ProcessMouseScroll(yoffset);
 }

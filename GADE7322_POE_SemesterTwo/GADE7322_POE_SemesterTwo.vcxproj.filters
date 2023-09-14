@@ -41,12 +41,24 @@
     <ClInclude Include="basicCubeMesh.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="HeightMapMesh.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="resources\shaders\basic.shader.frag">
       <Filter>Resource Files\Shaders</Filter>
     </None>
     <None Include="resources\shaders\basic.shader.vert">
+      <Filter>Resource Files\Shaders</Filter>
+    </None>
+    <None Include="resources\shaders\heightmap.shader.frag">
+      <Filter>Resource Files\Shaders</Filter>
+    </None>
+    <None Include="resources\shaders\heightmap.shader.vert">
       <Filter>Resource Files\Shaders</Filter>
     </None>
   </ItemGroup>
