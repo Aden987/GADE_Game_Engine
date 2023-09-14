@@ -35,7 +35,7 @@ public:
 	void Draw(Shader& shader)
 	{
 		shader.use();
-		//shader.setVec3("colourIn", glm::vec3(1.0f, 0.0f, 0.0f));
+		shader.setVec3("colourIn", glm::vec3(1.0f, 0.0f, 0.0f));
 		glBindVertexArray(VAO);
 		glDrawArrays(GL_TRIANGLES, 0, 36);
 		glBindVertexArray(0);
@@ -58,12 +58,12 @@ private:
 		glEnableVertexAttribArray(0);
 
 		//colour attri
-		/*glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(basicCubeVertex), (void*)offsetof(basicCubeVertex, colour));
-		glEnableVertexAttribArray(1);*/
+		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(basicCubeVertex), (void*)offsetof(basicCubeVertex, colour));
+		glEnableVertexAttribArray(1);
 
 		//texture pointers
-		glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, sizeof(basicCubeVertex), (void*)offsetof(basicCubeVertex, texture));
-		glEnableVertexAttribArray(2);
+		//glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, sizeof(basicCubeVertex), (void*)offsetof(basicCubeVertex, texture));
+		//glEnableVertexAttribArray(2);
 	}
 };
 
