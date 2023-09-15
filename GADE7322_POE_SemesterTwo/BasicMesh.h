@@ -63,8 +63,8 @@ private:
 		glEnableVertexAttribArray(1);
 
 		//texture pointers
-		glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, sizeof(BasicVertex), (void*)offsetof(BasicVertex, Tex));
-		glEnableVertexAttribArray(2);
+		//glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, sizeof(BasicVertex), (void*)offsetof(BasicVertex, Tex));
+		//glEnableVertexAttribArray(2);
 	}
 };
 
