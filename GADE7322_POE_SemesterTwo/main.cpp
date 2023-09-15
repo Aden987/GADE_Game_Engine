@@ -225,36 +225,7 @@ int main()
         glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-        //heightMapShader.use();
-
         //glBindTexture(GL_TEXTURE_2D, texture1);
-
-        //glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, 3.0f);
-        //translations (define vector and initialize it to an identity matrix)
-       /*glm::vec4 vec(1.0f, 0.0f, 0.0f, 1.0f);
-        glm::mat4 trans = glm::mat4(1.0);
-
-        //create transformation matrix 
-        // translation
-        trans = glm::translate(trans, glm::vec3(0.5f, 0.5f, 0.0f));
-        
-        // rotation and scaling
-        //trans = glm::rotate(trans, glm::radians(90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
-        //trans = glm::scale(trans, glm::vec3(0.5f, 0.5f, 0.5f));
-
-        trans = glm::translate(trans, glm::vec3(-0.5f, -0.5f, 0.0f));
-        trans = glm::rotate(trans, (float)glfwGetTime(), glm::vec3(0.0f, 0.0f, 1.0f));
-
-        //vec = trans * vec;
-
-        //trans * vec = (1+1, 0+1, 0+0) = 2,1,0
-        //std::cout << vec.x << vec.y << vec.z << std::endl;
-        
-        //pass transformation matrix to shader
-        unsigned int transformLoc = glGetUniformLocation(myShader.ID, "transform");
-
-        // get matrix location and set matrix
-        glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(trans));*/
 
         //cube
         /*glm::mat4 model = glm::mat4(1.0f);
@@ -279,18 +250,20 @@ int main()
         //myShader.setMat4("transform", trans);
         heightMapShader.use();
 
-        // view/projection transformations
-        glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100000.0f);
-        glm::mat4 view = camera.GetViewMatrix();
-        heightMapShader.setMat4("projection", projection);
-        heightMapShader.setMat4("view", view);
+        // view/projection transformations for height map
+        glm::mat4 hMapProjection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100000.0f);
+        glm::mat4 hMapView = camera.GetViewMatrix();
+        heightMapShader.setMat4("projection", hMapProjection);
+        heightMapShader.setMat4("view", hMapView);
 
         // world transformation
-        glm::mat4 model = glm::mat4(1.0f);
-        heightMapShader.setMat4("model", model);
-        heightMapShader.setMat4("model", model);
-        heightMapShader.setMat4("view", view);
-        heightMapShader.setMat4("projection", projection);
+        glm::mat4 hMapModel = glm::mat4(1.0f);
+        heightMapShader.setMat4("model", hMapModel);
+
+        //Cube 
+        /*myShader.setMat4("model", model);
+        myShader.setMat4("view", view);
+        myShader.setMat4("projection", projection);*/
 
         //myTriangle.Draw(myShader);
         //myCube.Draw(myShader);
@@ -349,8 +322,6 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 }
 
 
-// glfw: whenever the mouse moves, this callback is called
-// -------------------------------------------------------
 void mouse_callback(GLFWwindow* window, double xpos, double ypos)
 {
     if (firstMouse)
@@ -369,8 +340,6 @@ void mouse_callback(GLFWwindow* window, double xpos, double ypos)
     camera.ProcessMouseMovement(xoffset, yoffset);
 }
 
-// glfw: whenever the mouse scroll wheel scrolls, this callback is called
-// ----------------------------------------------------------------------
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
 {
     camera.ProcessMouseScroll(yoffset);
