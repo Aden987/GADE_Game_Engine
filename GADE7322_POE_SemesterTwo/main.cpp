@@ -209,33 +209,33 @@ int main()
         //CREATE A SECONOD CUBE
         myCube.Draw(myShader);
         model = glm::mat4(1.0f);
-        model = glm::translate(model, glm::vec3(1.0f, 1.0f, 1.0f));//Coords are X Y Z
+        model = glm::translate(model, glm::vec3(1.0f, 1.0f, 1.9f));//Coords are X Y Z
         myShader.setMat4("model", model);
-        myShader.setVec3("colourIn", glm::vec3(1.0f, 2.0f, 3.0f));
+        
 
         myCube.Draw(myShader);
         model = glm::mat4(1.0f);
-        model = glm::translate(model, glm::vec3(1.0f, 2.0f, 1.0f));
-        myShader.setMat4("model", model);
-
-        myCube.Draw(myShader);
-        model = glm::mat4(1.0f);
-        model = glm::translate(model, glm::vec3(1.0f, 3.0f, 1.0f));
+        model = glm::translate(model, glm::vec3(1.0f, 2.0f, 1.6f));
         myShader.setMat4("model", model);
 
         myCube.Draw(myShader);
         model = glm::mat4(1.0f);
-        model = glm::translate(model, glm::vec3(1.0f, 4.0f, 1.0f));
+        model = glm::translate(model, glm::vec3(1.0f, 3.0f, 1.8f));
         myShader.setMat4("model", model);
 
         myCube.Draw(myShader);
         model = glm::mat4(1.0f);
-        model = glm::translate(model, glm::vec3(1.0f, -1.0f, 1.0f));
+        model = glm::translate(model, glm::vec3(1.0f, 4.0f, 1.6f));
         myShader.setMat4("model", model);
 
         myCube.Draw(myShader);
         model = glm::mat4(1.0f);
-        model = glm::translate(model, glm::vec3(1.0f, -2.0f, 1.0f));
+        model = glm::translate(model, glm::vec3(1.0f, -1.0f, 1.2f));
+        myShader.setMat4("model", model);
+
+        myCube.Draw(myShader);
+        model = glm::mat4(1.0f);
+        model = glm::translate(model, glm::vec3(1.0f, -2.0f, 1.1f));
         myShader.setMat4("model", model);
 
         myCube.Draw(myShader);
@@ -245,32 +245,32 @@ int main()
 
         myCube.Draw(myShader);
         model = glm::mat4(1.0f);
-        model = glm::translate(model, glm::vec3(1.0f, 0.0f, 1.0f));
+        model = glm::translate(model, glm::vec3(1.0f, 0.0f, 1.3f));
         myShader.setMat4("model", model);
         //Column 2
         myCube.Draw(myShader);
         model = glm::mat4(1.0f);
-        model = glm::translate(model, glm::vec3(2.0f, 0.0f, 1.0f));
+        model = glm::translate(model, glm::vec3(2.0f, 0.0f, 1.6f));
         myShader.setMat4("model", model);
 
         myCube.Draw(myShader);
         model = glm::mat4(1.0f);
-        model = glm::translate(model, glm::vec3(2.0f, 1.0f, 1.0f));
+        model = glm::translate(model, glm::vec3(2.0f, 1.0f, 1.5f));
         myShader.setMat4("model", model);
 
         myCube.Draw(myShader);
         model = glm::mat4(1.0f);
-        model = glm::translate(model, glm::vec3(2.0f, 2.0f, 1.0f));
+        model = glm::translate(model, glm::vec3(2.0f, 2.0f, 1.6f));
         myShader.setMat4("model", model);
 
         myCube.Draw(myShader);
         model = glm::mat4(1.0f);
-        model = glm::translate(model, glm::vec3(2.0f, 3.0f, 1.0f));
+        model = glm::translate(model, glm::vec3(2.0f, 3.0f, 1.4f));
         myShader.setMat4("model", model);
 
         myCube.Draw(myShader);
         model = glm::mat4(1.0f);
-        model = glm::translate(model, glm::vec3(2.0f, 4.0f, 1.4f));
+        model = glm::translate(model, glm::vec3(2.0f, 4.0f, 1.3f));
         myShader.setMat4("model", model);
 
         myCube.Draw(myShader);
@@ -280,7 +280,7 @@ int main()
 
         myCube.Draw(myShader);
         model = glm::mat4(1.0f);
-        model = glm::translate(model, glm::vec3(2.0f, -2.0f, 1.0f));
+        model = glm::translate(model, glm::vec3(2.0f, -2.0f, 1.5f));
         myShader.setMat4("model", model);
 
         myCube.Draw(myShader);
@@ -290,37 +290,37 @@ int main()
         //Column 3
         myCube.Draw(myShader);
         model = glm::mat4(1.0f);
-        model = glm::translate(model, glm::vec3(3.0f, 0.0f, 1.0f));
+        model = glm::translate(model, glm::vec3(3.0f, 0.0f, 1.7f));
         myShader.setMat4("model", model);
 
         myCube.Draw(myShader);
         model = glm::mat4(1.0f);
-        model = glm::translate(model, glm::vec3(3.0f, 1.0f, 1.0f));
+        model = glm::translate(model, glm::vec3(3.0f, 1.0f, 1.5f));
         myShader.setMat4("model", model);
 
         myCube.Draw(myShader);
         model = glm::mat4(1.0f);
-        model = glm::translate(model, glm::vec3(3.0f, 2.0f, 1.0f));
+        model = glm::translate(model, glm::vec3(3.0f, 2.0f, 1.3f));
         myShader.setMat4("model", model);
 
         myCube.Draw(myShader);
         model = glm::mat4(1.0f);
-        model = glm::translate(model, glm::vec3(3.0f, 3.0f, 1.0f));
+        model = glm::translate(model, glm::vec3(3.0f, 3.0f, 1.7f));
         myShader.setMat4("model", model);
 
         myCube.Draw(myShader);
         model = glm::mat4(1.0f);
-        model = glm::translate(model, glm::vec3(3.0f, 4.0f, 1.4f));
+        model = glm::translate(model, glm::vec3(3.0f, 4.0f, 1.3f));
         myShader.setMat4("model", model);
 
         myCube.Draw(myShader);
         model = glm::mat4(1.0f);
-        model = glm::translate(model, glm::vec3(3.0f, -1.0f, 1.6f));
+        model = glm::translate(model, glm::vec3(3.0f, -1.0f, 1.2f));
         myShader.setMat4("model", model);
 
         myCube.Draw(myShader);
         model = glm::mat4(1.0f);
-        model = glm::translate(model, glm::vec3(3.0f, -2.0f, 1.0f));
+        model = glm::translate(model, glm::vec3(3.0f, -2.0f, 1.7f));
         myShader.setMat4("model", model);
 
         myCube.Draw(myShader);
@@ -331,22 +331,22 @@ int main()
         //Column 4
         myCube.Draw(myShader);
         model = glm::mat4(1.0f);
-        model = glm::translate(model, glm::vec3(4.0f, 0.0f, 1.0f));
+        model = glm::translate(model, glm::vec3(4.0f, 0.0f, 1.5f));
         myShader.setMat4("model", model);
 
         myCube.Draw(myShader);
         model = glm::mat4(1.0f);
-        model = glm::translate(model, glm::vec3(4.0f, 1.0f, 1.0f));
+        model = glm::translate(model, glm::vec3(4.0f, 1.0f, 1.9f));
         myShader.setMat4("model", model);
 
         myCube.Draw(myShader);
         model = glm::mat4(1.0f);
-        model = glm::translate(model, glm::vec3(4.0f, 2.0f, 1.0f));
+        model = glm::translate(model, glm::vec3(4.0f, 2.0f, 1.7f));
         myShader.setMat4("model", model);
 
         myCube.Draw(myShader);
         model = glm::mat4(1.0f);
-        model = glm::translate(model, glm::vec3(4.0f, 3.0f, 1.0f));
+        model = glm::translate(model, glm::vec3(4.0f, 3.0f, 1.5f));
         myShader.setMat4("model", model);
 
         myCube.Draw(myShader);
@@ -361,12 +361,12 @@ int main()
 
         myCube.Draw(myShader);
         model = glm::mat4(1.0f);
-        model = glm::translate(model, glm::vec3(4.0f, -2.0f, 1.0f));
+        model = glm::translate(model, glm::vec3(4.0f, -2.0f, 1.5f));
         myShader.setMat4("model", model);
 
         myCube.Draw(myShader);
         model = glm::mat4(1.0f);
-        model = glm::translate(model, glm::vec3(4.0f, -3.0f, 1.3f));
+        model = glm::translate(model, glm::vec3(4.0f, -3.0f, 1.2f));
         myShader.setMat4("model", model);
         //Column 0
         myCube.Draw(myShader);
@@ -376,7 +376,7 @@ int main()
 
         myCube.Draw(myShader);
         model = glm::mat4(1.0f);
-        model = glm::translate(model, glm::vec3(0.0f, 1.0f, 1.0f));
+        model = glm::translate(model, glm::vec3(0.0f, 1.0f, 1.1f));
         myShader.setMat4("model", model);
 
         myCube.Draw(myShader);
@@ -386,12 +386,12 @@ int main()
 
         myCube.Draw(myShader);
         model = glm::mat4(1.0f);
-        model = glm::translate(model, glm::vec3(0.0f, 3.0f, 1.0f));
+        model = glm::translate(model, glm::vec3(0.0f, 3.0f, 1.3f));
         myShader.setMat4("model", model);
 
         myCube.Draw(myShader);
         model = glm::mat4(1.0f);
-        model = glm::translate(model, glm::vec3(0.0f, 4.0f, 1.4f));
+        model = glm::translate(model, glm::vec3(0.0f, 4.0f, 1.5f));
         myShader.setMat4("model", model);
 
         myCube.Draw(myShader);
@@ -401,7 +401,7 @@ int main()
 
         myCube.Draw(myShader);
         model = glm::mat4(1.0f);
-        model = glm::translate(model, glm::vec3(0.0f, -2.0f, 1.0f));
+        model = glm::translate(model, glm::vec3(0.0f, -2.0f, 1.6f));
         myShader.setMat4("model", model);
 
         myCube.Draw(myShader);
@@ -412,12 +412,12 @@ int main()
         //Column -1
         myCube.Draw(myShader);
         model = glm::mat4(1.0f);
-        model = glm::translate(model, glm::vec3(-1.0f, 0.0f, 1.0f));
+        model = glm::translate(model, glm::vec3(-1.0f, 0.0f, 1.4f));
         myShader.setMat4("model", model);
 
         myCube.Draw(myShader);
         model = glm::mat4(1.0f);
-        model = glm::translate(model, glm::vec3(-1.0f, 1.0f, 1.0f));
+        model = glm::translate(model, glm::vec3(-1.0f, 1.0f, 1.5f));
         myShader.setMat4("model", model);
 
         myCube.Draw(myShader);
@@ -427,22 +427,22 @@ int main()
 
         myCube.Draw(myShader);
         model = glm::mat4(1.0f);
-        model = glm::translate(model, glm::vec3(-1.0f, 3.0f, 1.0f));
+        model = glm::translate(model, glm::vec3(-1.0f, 3.0f, 1.1f));
         myShader.setMat4("model", model);
 
         myCube.Draw(myShader);
         model = glm::mat4(1.0f);
-        model = glm::translate(model, glm::vec3(-1.0f, 4.0f, 1.4f));
+        model = glm::translate(model, glm::vec3(-1.0f, 4.0f, 1.2f));
         myShader.setMat4("model", model);
 
         myCube.Draw(myShader);
         model = glm::mat4(1.0f);
-        model = glm::translate(model, glm::vec3(-1.0f, -1.0f, 1.6f));
+        model = glm::translate(model, glm::vec3(-1.0f, -1.0f, 1.8f));
         myShader.setMat4("model", model);
 
         myCube.Draw(myShader);
         model = glm::mat4(1.0f);
-        model = glm::translate(model, glm::vec3(-1.0f, -2.0f, 1.0f));
+        model = glm::translate(model, glm::vec3(-1.0f, -2.0f, 1.6f));
         myShader.setMat4("model", model);
 
         myCube.Draw(myShader);
@@ -453,22 +453,22 @@ int main()
         //Column -2
         myCube.Draw(myShader);
         model = glm::mat4(1.0f);
-        model = glm::translate(model, glm::vec3(-2.0f, 0.0f, 1.0f));
+        model = glm::translate(model, glm::vec3(-2.0f, 0.0f, 1.6f));
         myShader.setMat4("model", model);
 
         myCube.Draw(myShader);
         model = glm::mat4(1.0f);
-        model = glm::translate(model, glm::vec3(-2.0f, 1.0f, 1.0f));
+        model = glm::translate(model, glm::vec3(-2.0f, 1.0f, 1.1f));
         myShader.setMat4("model", model);
 
         myCube.Draw(myShader);
         model = glm::mat4(1.0f);
-        model = glm::translate(model, glm::vec3(-2.0f, 2.0f, 1.0f));
+        model = glm::translate(model, glm::vec3(-2.0f, 2.0f, 1.5f));
         myShader.setMat4("model", model);
 
         myCube.Draw(myShader);
         model = glm::mat4(1.0f);
-        model = glm::translate(model, glm::vec3(-2.0f, 3.0f, 1.0f));
+        model = glm::translate(model, glm::vec3(-2.0f, 3.0f, 1.7f));
         myShader.setMat4("model", model);
 
         myCube.Draw(myShader);
@@ -483,7 +483,7 @@ int main()
 
         myCube.Draw(myShader);
         model = glm::mat4(1.0f);
-        model = glm::translate(model, glm::vec3(-2.0f, -2.0f, 1.0f));
+        model = glm::translate(model, glm::vec3(-2.0f, -2.0f, 1.6f));
         myShader.setMat4("model", model);
 
         myCube.Draw(myShader);
@@ -494,22 +494,22 @@ int main()
         //Column -3
         myCube.Draw(myShader);
         model = glm::mat4(1.0f);
-        model = glm::translate(model, glm::vec3(-3.0f, 0.0f, 1.0f));
+        model = glm::translate(model, glm::vec3(-3.0f, 0.0f, 1.5f));
         myShader.setMat4("model", model);
 
         myCube.Draw(myShader);
         model = glm::mat4(1.0f);
-        model = glm::translate(model, glm::vec3(-3.0f, 1.0f, 1.0f));
+        model = glm::translate(model, glm::vec3(-3.0f, 1.0f, 1.2f));
         myShader.setMat4("model", model);
 
         myCube.Draw(myShader);
         model = glm::mat4(1.0f);
-        model = glm::translate(model, glm::vec3(-3.0f, 2.0f, 1.0f));
+        model = glm::translate(model, glm::vec3(-3.0f, 2.0f, 1.1f));
         myShader.setMat4("model", model);
 
         myCube.Draw(myShader);
         model = glm::mat4(1.0f);
-        model = glm::translate(model, glm::vec3(-3.0f, 3.0f, 1.0f));
+        model = glm::translate(model, glm::vec3(-3.0f, 3.0f, 1.2f));
         myShader.setMat4("model", model);
 
         myCube.Draw(myShader);
@@ -531,6 +531,8 @@ int main()
         model = glm::mat4(1.0f);
         model = glm::translate(model, glm::vec3(-3.0f, -3.0f, 1.3f));
         myShader.setMat4("model", model);
+
+
 
         //Right Hand Border
         myCube.Draw(myShader);
@@ -613,6 +615,110 @@ int main()
         model = glm::mat4(1.0f);
         model = glm::translate(model, glm::vec3(-3.5f, -3.0f, 1.0f));
         myShader.setMat4("model", model);
+
+        //Top Border
+        myCube.Draw(myShader);
+        model = glm::mat4(1.0f);
+        model = glm::translate(model, glm::vec3(1.0f, 4.5f, 1.0f));//Coords are X Y Z
+        myShader.setMat4("model", model);
+       
+        myCube.Draw(myShader);
+        model = glm::mat4(1.0f);
+        model = glm::translate(model, glm::vec3(2.0f, 4.5f, 1.0f));//Coords are X Y Z
+        myShader.setMat4("model", model);
+
+        myCube.Draw(myShader);
+        model = glm::mat4(1.0f);
+        model = glm::translate(model, glm::vec3(3.0f, 4.5f, 1.0f));//Coords are X Y Z
+        myShader.setMat4("model", model);
+
+        myCube.Draw(myShader);
+        model = glm::mat4(1.0f);
+        model = glm::translate(model, glm::vec3(4.0f, 4.5f, 1.0f));//Coords are X Y Z
+        myShader.setMat4("model", model);
+
+        myCube.Draw(myShader);
+        model = glm::mat4(1.0f);
+        model = glm::translate(model, glm::vec3(4.5f, 4.5f, 1.0f));//Coords are X Y Z
+        myShader.setMat4("model", model);
+
+        myCube.Draw(myShader);
+        model = glm::mat4(1.0f);
+        model = glm::translate(model, glm::vec3(0.0f, 4.5f, 1.0f));//Coords are X Y Z
+        myShader.setMat4("model", model);
+
+        myCube.Draw(myShader);
+        model = glm::mat4(1.0f);
+        model = glm::translate(model, glm::vec3(-1.0f, 4.5f, 1.0f));//Coords are X Y Z
+        myShader.setMat4("model", model);
+
+        myCube.Draw(myShader);
+        model = glm::mat4(1.0f);
+        model = glm::translate(model, glm::vec3(-2.0f, 4.5f, 1.0f));//Coords are X Y Z
+        myShader.setMat4("model", model);
+
+        myCube.Draw(myShader);
+        model = glm::mat4(1.0f);
+        model = glm::translate(model, glm::vec3(-3.0f, 4.5f, 1.0f));//Coords are X Y Z
+        myShader.setMat4("model", model);
+
+        myCube.Draw(myShader);
+        model = glm::mat4(1.0f);
+        model = glm::translate(model, glm::vec3(-3.5f, 4.5f, 1.0f));//Coords are X Y Z
+        myShader.setMat4("model", model);
+        
+        //Bottom Border
+        myCube.Draw(myShader);
+        model = glm::mat4(1.0f);
+        model = glm::translate(model, glm::vec3(1.0f, -3.5f, 1.0f));//Coords are X Y Z
+        myShader.setMat4("model", model);
+
+        myCube.Draw(myShader);
+        model = glm::mat4(1.0f);
+        model = glm::translate(model, glm::vec3(2.0f, -3.5f, 1.0f));//Coords are X Y Z
+        myShader.setMat4("model", model);
+
+        myCube.Draw(myShader);
+        model = glm::mat4(1.0f);
+        model = glm::translate(model, glm::vec3(3.0f, -3.5f, 1.0f));//Coords are X Y Z
+        myShader.setMat4("model", model);
+
+        myCube.Draw(myShader);
+        model = glm::mat4(1.0f);
+        model = glm::translate(model, glm::vec3(4.0f, -3.5f, 1.0f));//Coords are X Y Z
+        myShader.setMat4("model", model);
+
+        myCube.Draw(myShader);
+        model = glm::mat4(1.0f);
+        model = glm::translate(model, glm::vec3(4.5f, -3.5f, 1.0f));//Coords are X Y Z
+        myShader.setMat4("model", model);
+
+        myCube.Draw(myShader);
+        model = glm::mat4(1.0f);
+        model = glm::translate(model, glm::vec3(0.0f, -3.5f, 1.0f));//Coords are X Y Z
+        myShader.setMat4("model", model);
+
+        myCube.Draw(myShader);
+        model = glm::mat4(1.0f);
+        model = glm::translate(model, glm::vec3(-1.0f, -3.5f, 1.0f));//Coords are X Y Z
+        myShader.setMat4("model", model);
+
+        myCube.Draw(myShader);
+        model = glm::mat4(1.0f);
+        model = glm::translate(model, glm::vec3(-2.0f, -3.5f, 1.0f));//Coords are X Y Z
+        myShader.setMat4("model", model);
+
+        myCube.Draw(myShader);
+        model = glm::mat4(1.0f);
+        model = glm::translate(model, glm::vec3(-3.0f, -3.5f, 1.0f));//Coords are X Y Z
+        myShader.setMat4("model", model);
+
+        myCube.Draw(myShader);
+        model = glm::mat4(1.0f);
+        model = glm::translate(model, glm::vec3(-3.5f, -3.5f, 1.0f));//Coords are X Y Z
+        myShader.setMat4("model", model);
+
+
 
         myCube.Draw(myShader);//THIS IS THE CUBE PREFAB
 

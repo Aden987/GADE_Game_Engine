@@ -58,7 +58,7 @@ private:
 		glEnableVertexAttribArray(0);
 
 		//colour attri
-		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(basicCubeVertex), (void*)offsetof(basicCubeVertex, colour));
+		glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, sizeof(basicCubeVertex), (void*)offsetof(basicCubeVertex, colour));
 		glEnableVertexAttribArray(1);
 
 		//texture pointers
