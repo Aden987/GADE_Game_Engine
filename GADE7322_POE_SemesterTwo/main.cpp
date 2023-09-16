@@ -257,48 +257,102 @@ int main()
         //Cube 
         /*myShader.setMat4("model", model);
         myCube.Draw(myShader);*/
-        int chessBoardCol = 8;
+        int chessBoardCol = 10;
         int chessBoardRow = 10;
         for (unsigned int i = 0; i < chessBoardCol; i++)
         {
             for (unsigned int j = 0; j < chessBoardRow; j++)
             {
                 glm::mat4 model = glm::mat4(1.0f);
-                if (j == 0)
+                //generates bottom border
+                if (i == 0)
                 {
-                    model = glm::translate(model, glm::vec3(j + 0.3f, 0.0f, i));
-                    model = glm::scale(model, glm::vec3(0.5f, 1.0f, 1.0f));
+                    //checks if it is generating a corner piece of the border to adjust its scaling and position
+                    if (j == 0 || j == 9)
+                    {
+                        if (j == 0)
+                        {
+                            model = glm::translate(model, glm::vec3(j + 0.3f, 0.0f, i + 0.3f));
+                        }
+                        else
+                        {
+                            model = glm::translate(model, glm::vec3(j - 0.3f, 0.0f, i + 0.3f));
+                        }
+                        model = glm::scale(model, glm::vec3(0.5f, 1.0f, 0.5f));
+                    }
+                    else
+                    {
+                        model = glm::translate(model, glm::vec3(j, 0.0f, i + 0.3f));
+                        model = glm::scale(model, glm::vec3(1.0f, 1.0f, 0.5f));
+                    }
                     myShader.setVec3("colourIn", glm::vec3(123.0f, 63.0f, 0.0f));
                 }
-                else if (j == 9)
+                //generate top border
+                else if (i == 9)
                 {
-                    model = glm::translate(model, glm::vec3(j - 0.3f, 0.0f, i));
-                    model = glm::scale(model, glm::vec3(0.5f, 1.0f, 1.0f));
+                    if (j == 0 || j == 9)
+                    {
+                        if (j == 0)
+                        {
+                            model = glm::translate(model, glm::vec3(j + 0.3f, 0.0f, i - 0.3f));
+                        }
+                        else
+                        {
+                            model = glm::translate(model, glm::vec3(j - 0.3f, 0.0f, i - 0.3f));
+                        }
+                        model = glm::scale(model, glm::vec3(0.5f, 1.0f, 0.5f));
+                    }
+                    else
+                    {
+                        model = glm::translate(model, glm::vec3(j, 0.0f, i - 0.3f));
+                        model = glm::scale(model, glm::vec3(1.0f, 1.0f, 0.5f));
+                    }
                     myShader.setVec3("colourIn", glm::vec3(123.0f, 63.0f, 0.0f));
                 }
                 else
                 {
-                    model = glm::translate(model, glm::vec3(j, 0.0f, i));
-                    if (i % 2 != 0)
+                    //generates left border
+                    if (j == 0)
                     {
-                        if (j % 2 != 0)
-                        {
-                            myShader.setVec3("colourIn", glm::vec3(255.0f, 255.0f, 255.0f));
-                        }
-                        else
-                        {
-                            myShader.setVec3("colourIn", glm::vec3(0.0f, 0.0f, 0.0f));
-                        }
+                        model = glm::translate(model, glm::vec3(j + 0.3f, 0.0f, i));
+                        model = glm::scale(model, glm::vec3(0.5f, 1.0f, 1.0f));
+                        myShader.setVec3("colourIn", glm::vec3(123.0f, 63.0f, 0.0f));
                     }
+                    //generates right border
+                    else if (j == 9)
+                    {
+                        model = glm::translate(model, glm::vec3(j - 0.3f, 0.0f, i));
+                        model = glm::scale(model, glm::vec3(0.5f, 1.0f, 1.0f));
+                        myShader.setVec3("colourIn", glm::vec3(123.0f, 63.0f, 0.0f));
+                    }
+                    //generates chess board
                     else
                     {
-                        if (j % 2 != 0)
+                        model = glm::translate(model, glm::vec3(j, 0.0f, i));
+                        //checks if height is even to see if the chess row blocks need to alternate colour from the previous row
+                        if (i % 2 != 0)
                         {
-                            myShader.setVec3("colourIn", glm::vec3(0.0f, 0.0f, 0.0f));
+                            //non even row block is white
+                            if (j % 2 != 0)
+                            {
+                                myShader.setVec3("colourIn", glm::vec3(255.0f, 255.0f, 255.0f));
+                            }
+                            //non even row block is black
+                            else
+                            {
+                                myShader.setVec3("colourIn", glm::vec3(0.0f, 0.0f, 0.0f));
+                            }
                         }
                         else
                         {
-                            myShader.setVec3("colourIn", glm::vec3(255.0f, 255.0f, 255.0f));
+                            if (j % 2 != 0)
+                            {
+                                myShader.setVec3("colourIn", glm::vec3(0.0f, 0.0f, 0.0f));
+                            }
+                            else
+                            {
+                                myShader.setVec3("colourIn", glm::vec3(255.0f, 255.0f, 255.0f));
+                            }
                         }
                     }
                 }
