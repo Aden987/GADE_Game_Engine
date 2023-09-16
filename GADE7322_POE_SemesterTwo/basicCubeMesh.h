@@ -16,7 +16,7 @@ struct basicCubeVertex
 {
 	glm::vec3 position;
 	//glm::vec3 colour;
-	glm::vec2 texture;
+	//glm::vec2 texture;
 };
 
 class basicCubeMesh
@@ -35,7 +35,7 @@ public:
 	void Draw(Shader& shader)
 	{
 		shader.use();
-		//shader.setVec3("colourIn", glm::vec3(1.0f, 0.0f, 0.0f));
+		//shader.setVec3("colourIn", glm::vec3(0.5f, 0.0, 0.0f));
 		glBindVertexArray(VAO);
 		glDrawArrays(GL_TRIANGLES, 0, 36);
 		glBindVertexArray(0);
@@ -62,8 +62,8 @@ private:
 		glEnableVertexAttribArray(1);*/
 
 		//texture pointers
-		glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, sizeof(basicCubeVertex), (void*)offsetof(basicCubeVertex, texture));
-		glEnableVertexAttribArray(2);
+		/*glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, sizeof(basicCubeVertex), (void*)offsetof(basicCubeVertex, texture));
+		glEnableVertexAttribArray(2);*/
 	}
 };
 

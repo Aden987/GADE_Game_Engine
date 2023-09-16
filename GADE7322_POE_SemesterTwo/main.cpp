@@ -151,46 +151,46 @@ int main()
      
     //cube vertices
     std::vector<basicCubeVertex> vertices = {
-        {glm::vec3(-0.5f, -0.5f, -0.5f), glm::vec2(0.0f, 0.0f)},
-        {glm::vec3(0.5f, -0.5f, -0.5f), glm::vec2(1.0f, 0.0f)},
-        {glm::vec3(0.5f,  0.5f, -0.5f), glm::vec2(1.0f, 1.0f)},
-        {glm::vec3(0.5f,  0.5f, -0.5f), glm::vec2(1.0f, 1.0f)},
-        {glm::vec3(-0.5f,  0.5f, -0.5f), glm::vec2(0.0f, 1.0f)},
-        {glm::vec3(-0.5f, -0.5f, -0.5f), glm::vec2(0.0f, 0.0f)},
+        {glm::vec3(-0.5f, -0.5f, -0.5f) /*glm::vec2(0.0f, 0.0f)},*/},
+        {glm::vec3(0.5f, -0.5f, -0.5f) /*glm::vec2(1.0f, 0.0f)},*/},
+        {glm::vec3(0.5f,  0.5f, -0.5f) /*glm::vec2(1.0f, 1.0f)},*/},
+        {glm::vec3(0.5f,  0.5f, -0.5f) /*glm::vec2(1.0f, 1.0f)},*/},
+        {glm::vec3(-0.5f,  0.5f, -0.5f) /*glm::vec2(0.0f, 1.0f)},*/},
+        {glm::vec3(-0.5f, -0.5f, -0.5f)/* glm::vec2(0.0f, 0.0f)},*/},
 
-        {glm::vec3(-0.5f, -0.5f,  0.5f), glm::vec2(0.0f, 0.0f)},
-        {glm::vec3(0.5f, -0.5f,  0.5f), glm::vec2(1.0f, 0.0f)},
-        {glm::vec3(0.5f,  0.5f,  0.5f), glm::vec2(1.0f, 1.0f)},
-        {glm::vec3(0.5f,  0.5f,  0.5f), glm::vec2(1.0f, 1.0f)},
-        {glm::vec3(-0.5f,  0.5f,  0.5f), glm::vec2(0.0f, 1.0f)},
-        {glm::vec3(-0.5f, -0.5f,  0.5f), glm::vec2(0.0f, 0.0f)},
-        {glm::vec3(-0.5f,  0.5f,  0.5f), glm::vec2(1.0f, 0.0f)},
-        {glm::vec3(-0.5f,  0.5f, -0.5f), glm::vec2(1.0f, 1.0f)},
-        {glm::vec3(-0.5f, -0.5f, -0.5f), glm::vec2(0.0f, 1.0f)},
-        {glm::vec3(-0.5f, -0.5f, -0.5f), glm::vec2(0.0f, 1.0f)},
-        {glm::vec3(-0.5f, -0.5f,  0.5f), glm::vec2(0.0f, 0.0f)},
-        {glm::vec3(-0.5f,  0.5f,  0.5f), glm::vec2(1.0f, 0.0f)},
+        {glm::vec3(-0.5f, -0.5f,  0.5f)/* glm::vec2(0.0f, 0.0f)},*/},
+        {glm::vec3(0.5f, -0.5f,  0.5f) /*glm::vec2(1.0f, 0.0f)},*/},
+        {glm::vec3(0.5f,  0.5f,  0.5f) /*glm::vec2(1.0f, 1.0f)},*/},
+        {glm::vec3(0.5f,  0.5f,  0.5f) /*glm::vec2(1.0f, 1.0f)},*/},
+        {glm::vec3(-0.5f,  0.5f,  0.5f) /*glm::vec2(0.0f, 1.0f)},*/},
+        {glm::vec3(-0.5f, -0.5f,  0.5f) /*glm::vec2(0.0f, 0.0f)},*/},
+        {glm::vec3(-0.5f,  0.5f,  0.5f)/* glm::vec2(1.0f, 0.0f)},*/},
+        {glm::vec3(-0.5f,  0.5f, -0.5f) /*glm::vec2(1.0f, 1.0f)},*/},
+        {glm::vec3(-0.5f, -0.5f, -0.5f) /*glm::vec2(0.0f, 1.0f)},*/},
+        {glm::vec3(-0.5f, -0.5f, -0.5f) /*glm::vec2(0.0f, 1.0f)},*/},
+        {glm::vec3(-0.5f, -0.5f,  0.5f) /*glm::vec2(0.0f, 0.0f)},*/},
+        {glm::vec3(-0.5f,  0.5f,  0.5f) /*glm::vec2(1.0f, 0.0f)},*/},
 
-        {glm::vec3(0.5f,  0.5f,  0.5f), glm::vec2(1.0f, 0.0f)},
-        {glm::vec3(0.5f,  0.5f, -0.5f), glm::vec2(1.0f, 1.0f)},
-        {glm::vec3(0.5f, -0.5f, -0.5f), glm::vec2(0.0f, 1.0f)},
-        {glm::vec3(0.5f, -0.5f, -0.5f), glm::vec2(0.0f, 1.0f)},
-        {glm::vec3(0.5f, -0.5f,  0.5f), glm::vec2(0.0f, 0.0f)},
-        {glm::vec3(0.5f,  0.5f,  0.5f), glm::vec2(1.0f, 0.0f)},
+        {glm::vec3(0.5f,  0.5f,  0.5f) /*glm::vec2(1.0f, 0.0f)},*/},
+        {glm::vec3(0.5f,  0.5f, -0.5f) /*glm::vec2(1.0f, 1.0f)},*/},
+        {glm::vec3(0.5f, -0.5f, -0.5f) /*glm::vec2(0.0f, 1.0f)},*/},
+        {glm::vec3(0.5f, -0.5f, -0.5f) /*glm::vec2(0.0f, 1.0f)},*/},
+        {glm::vec3(0.5f, -0.5f,  0.5f) /*glm::vec2(0.0f, 0.0f)},*/},
+        {glm::vec3(0.5f,  0.5f,  0.5f) /*glm::vec2(1.0f, 0.0f)},*/},
 
-        {glm::vec3(-0.5f, -0.5f, -0.5f), glm::vec2(0.0f, 1.0f)},
-        {glm::vec3(0.5f, -0.5f, -0.5f), glm::vec2(1.0f, 1.0f)},
-        {glm::vec3(0.5f, -0.5f,  0.5f), glm::vec2(1.0f, 0.0f)},
-        {glm::vec3(0.5f, -0.5f,  0.5f), glm::vec2(1.0f, 0.0f)},
-        {glm::vec3(-0.5f, -0.5f,  0.5f), glm::vec2(0.0f, 0.0f)},
-        {glm::vec3(-0.5f, -0.5f, -0.5f), glm::vec2(0.0f, 1.0f)},
+        {glm::vec3(-0.5f, -0.5f, -0.5f) /*glm::vec2(0.0f, 1.0f)},*/},
+        {glm::vec3(0.5f, -0.5f, -0.5f) /*glm::vec2(1.0f, 1.0f)},*/},
+        {glm::vec3(0.5f, -0.5f,  0.5f) /*glm::vec2(1.0f, 0.0f)},*/},
+        {glm::vec3(0.5f, -0.5f,  0.5f) /*glm::vec2(1.0f, 0.0f)},*/},
+        {glm::vec3(-0.5f, -0.5f,  0.5f) /*glm::vec2(0.0f, 0.0f)},*/},
+        {glm::vec3(-0.5f, -0.5f, -0.5f)/* glm::vec2(0.0f, 1.0f)},*/},
 
-        {glm::vec3(-0.5f,  0.5f, -0.5f), glm::vec2(0.0f, 1.0f)},
-        {glm::vec3(0.5f,  0.5f, -0.5f), glm::vec2(1.0f, 1.0f)},
-        {glm::vec3(0.5f,  0.5f,  0.5f), glm::vec2(1.0f, 0.0f)},
-        {glm::vec3(0.5f,  0.5f,  0.5f), glm::vec2(1.0f, 0.0f)},
-        {glm::vec3(-0.5f,  0.5f,  0.5f), glm::vec2(0.0f, 0.0f)},
-        {glm::vec3(-0.5f,  0.5f, -0.5f), glm::vec2(0.0f, 1.0f)}
+        {glm::vec3(-0.5f,  0.5f, -0.5f) /*glm::vec2(0.0f, 1.0f)},*/},
+        {glm::vec3(0.5f,  0.5f, -0.5f) /*glm::vec2(1.0f, 1.0f)},*/},
+        {glm::vec3(0.5f,  0.5f,  0.5f) /*glm::vec2(1.0f, 0.0f)},*/},
+        {glm::vec3(0.5f,  0.5f,  0.5f)/*glm::vec2(1.0f, 0.0f)},*/},
+        {glm::vec3(-0.5f,  0.5f,  0.5f) /*glm::vec2(0.0f, 0.0f)},*/},
+        {glm::vec3(-0.5f,  0.5f, -0.5f)/*, glm::vec2(0.0f, 1.0f)}*/}
     };
 
     basicCubeMesh myCube(vertices);
@@ -257,15 +257,37 @@ int main()
         //Cube 
         /*myShader.setMat4("model", model);
         myCube.Draw(myShader);*/
-        int height = 8;
-        int width = 8;
-        for (unsigned int i = 0; i < height; i++)
+        int chessBoardCol = 8;
+        int chessBoardRow = 8;
+        for (unsigned int i = 0; i < chessBoardCol; i++)
         {
-            for (unsigned int j = 0; j < 8; j++)
+            for (unsigned int j = 0; j < chessBoardRow; j++)
             {
                 glm::mat4 model = glm::mat4(1.0f);
                 model = glm::translate(model, glm::vec3(j, 0.0f, i));
                 //model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));
+                if (i % 2 != 0)
+                {
+                    if (j % 2 != 0)
+                    {
+                        myShader.setVec3("colourIn", glm::vec3(255.0f, 255.0f, 255.0f));
+                    }
+                    else
+                    {
+                        myShader.setVec3("colourIn", glm::vec3(0.0f, 0.0f, 0.0f));
+                    }
+                }
+                else
+                {
+                    if (j % 2 != 0)
+                    {
+                        myShader.setVec3("colourIn", glm::vec3(0.0f, 0.0f, 0.0f));
+                    }
+                    else
+                    {
+                        myShader.setVec3("colourIn", glm::vec3(255.0f, 255.0f, 255.0f));
+                    }
+                }
                 myShader.setMat4("model", model);
                 myCube.Draw(myShader);
             }
