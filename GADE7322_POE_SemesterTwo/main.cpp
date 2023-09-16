@@ -258,34 +258,48 @@ int main()
         /*myShader.setMat4("model", model);
         myCube.Draw(myShader);*/
         int chessBoardCol = 8;
-        int chessBoardRow = 8;
+        int chessBoardRow = 10;
         for (unsigned int i = 0; i < chessBoardCol; i++)
         {
             for (unsigned int j = 0; j < chessBoardRow; j++)
             {
                 glm::mat4 model = glm::mat4(1.0f);
-                model = glm::translate(model, glm::vec3(j, 0.0f, i));
-                //model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));
-                if (i % 2 != 0)
+                if (j == 0)
                 {
-                    if (j % 2 != 0)
-                    {
-                        myShader.setVec3("colourIn", glm::vec3(255.0f, 255.0f, 255.0f));
-                    }
-                    else
-                    {
-                        myShader.setVec3("colourIn", glm::vec3(0.0f, 0.0f, 0.0f));
-                    }
+                    model = glm::translate(model, glm::vec3(j + 0.3f, 0.0f, i));
+                    model = glm::scale(model, glm::vec3(0.5f, 1.0f, 1.0f));
+                    myShader.setVec3("colourIn", glm::vec3(123.0f, 63.0f, 0.0f));
+                }
+                else if (j == 9)
+                {
+                    model = glm::translate(model, glm::vec3(j - 0.3f, 0.0f, i));
+                    model = glm::scale(model, glm::vec3(0.5f, 1.0f, 1.0f));
+                    myShader.setVec3("colourIn", glm::vec3(123.0f, 63.0f, 0.0f));
                 }
                 else
                 {
-                    if (j % 2 != 0)
+                    model = glm::translate(model, glm::vec3(j, 0.0f, i));
+                    if (i % 2 != 0)
                     {
-                        myShader.setVec3("colourIn", glm::vec3(0.0f, 0.0f, 0.0f));
+                        if (j % 2 != 0)
+                        {
+                            myShader.setVec3("colourIn", glm::vec3(255.0f, 255.0f, 255.0f));
+                        }
+                        else
+                        {
+                            myShader.setVec3("colourIn", glm::vec3(0.0f, 0.0f, 0.0f));
+                        }
                     }
                     else
                     {
-                        myShader.setVec3("colourIn", glm::vec3(255.0f, 255.0f, 255.0f));
+                        if (j % 2 != 0)
+                        {
+                            myShader.setVec3("colourIn", glm::vec3(0.0f, 0.0f, 0.0f));
+                        }
+                        else
+                        {
+                            myShader.setVec3("colourIn", glm::vec3(255.0f, 255.0f, 255.0f));
+                        }
                     }
                 }
                 myShader.setMat4("model", model);
