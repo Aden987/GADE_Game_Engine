@@ -225,17 +225,13 @@ int main()
         glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-        //glBindTexture(GL_TEXTURE_2D, texture1);
-
+        
         //cube
-        /*glm::mat4 model = glm::mat4(1.0f);
-        model = glm::rotate(model, /*(float)glfwGetTime() **/ /*glm::radians(50.0f), glm::vec3(0.5f, 1.0f, 0.0f));
+        //glm::mat4 model = glm::mat4(1.0f);
+        //model = glm::rotate(model,(float)glfwGetTime() * glm::radians(50.0f), glm::vec3(0.5f, 1.0f, 0.0f));
 
-        glm::mat4 view = glm::mat4(1.0f);*/
-        //view = glm::translate(view, glm::vec3(0.0f, 0.0f, -1.8f));
-      /*  view = glm::lookAt(glm::vec3(0.0f, 0.0f, 3.0f),
-            glm::vec3(0.0f, 0.0f, 0.0f),
-            glm::vec3(0.0f, 1.0f, 0.0f));
+        /*glm::mat4 view = glm::mat4(1.0f);
+        view = glm::translate(view, glm::vec3(0.0f, 0.0f, -1.8f));
         glm::mat4 projection = glm::mat4(1.0f);
         projection = glm::perspective(glm::radians(45.0f), 800.0f / 600.0f, 0.1f, 100000.0f);*/
 
@@ -248,7 +244,35 @@ int main()
         //glUniformMatrix4fv(viewLocation, 1, GL_FALSE, &view[0][0]);
 
         //myShader.setMat4("transform", trans);
+        myShader.use();
+
+        glBindTexture(GL_TEXTURE_2D, texture1);
+
+        
+        glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100000.0f);
+        glm::mat4 view = camera.GetViewMatrix();
+        myShader.setMat4("projection", projection);
+        myShader.setMat4("view", view);
+
+        //Cube 
+        /*myShader.setMat4("model", model);
+        myCube.Draw(myShader);*/
+        int height = 8;
+        int width = 8;
+        for (unsigned int i = 0; i < height; i++)
+        {
+            for (unsigned int j = 0; j < 8; j++)
+            {
+                glm::mat4 model = glm::mat4(1.0f);
+                model = glm::translate(model, glm::vec3(j, 0.0f, i));
+                //model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));
+                myShader.setMat4("model", model);
+                myCube.Draw(myShader);
+            }
+        }
+
         heightMapShader.use();
+        
 
         // view/projection transformations for height map
         glm::mat4 hMapProjection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100000.0f);
@@ -260,19 +284,14 @@ int main()
         glm::mat4 hMapModel = glm::mat4(1.0f);
         heightMapShader.setMat4("model", hMapModel);
 
-        //Cube 
-        /*myShader.setMat4("model", model);
-        myShader.setMat4("view", view);
-        myShader.setMat4("projection", projection);*/
-
         //myTriangle.Draw(myShader);
-        //myCube.Draw(myShader);
+
         glBindVertexArray(terrainVAO);
 
-        for (unsigned int strip = 0; strip < NUM_STRIPS; ++strip)
+        /*for (unsigned int strip = 0; strip < NUM_STRIPS; ++strip)
         {
             glDrawElements(GL_TRIANGLE_STRIP, NUM_VERTS_PER_STRIP, GL_UNSIGNED_INT, (void*)(sizeof(unsigned int)* NUM_VERTS_PER_STRIP* strip));
-        }
+        }*/
 
 
         glfwSwapBuffers(window);
