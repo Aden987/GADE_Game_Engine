@@ -259,6 +259,12 @@ int main()
         myCube.Draw(myShader);*/
         int chessBoardCol = 10;
         int chessBoardRow = 10;
+        //standard height for chess board and border
+        int boardHeight = 15;
+        //randomized height for chess board
+        int rndHeight;
+        //maximum height for chess baord
+        int heightMaximum = 20;
         for (unsigned int i = 0; i < chessBoardCol; i++)
         {
             for (unsigned int j = 0; j < chessBoardRow; j++)
@@ -272,17 +278,17 @@ int main()
                     {
                         if (j == 0)
                         {
-                            model = glm::translate(model, glm::vec3(j + 0.3f, 0.0f, i + 0.3f));
+                            model = glm::translate(model, glm::vec3(j + 0.3f, boardHeight, i + 0.3f));
                         }
                         else
                         {
-                            model = glm::translate(model, glm::vec3(j - 0.3f, 0.0f, i + 0.3f));
+                            model = glm::translate(model, glm::vec3(j - 0.3f, boardHeight, i + 0.3f));
                         }
                         model = glm::scale(model, glm::vec3(0.5f, 1.0f, 0.5f));
                     }
                     else
                     {
-                        model = glm::translate(model, glm::vec3(j, 0.0f, i + 0.3f));
+                        model = glm::translate(model, glm::vec3(j, boardHeight, i + 0.3f));
                         model = glm::scale(model, glm::vec3(1.0f, 1.0f, 0.5f));
                     }
                     myShader.setVec3("colourIn", glm::vec3(123.0f, 63.0f, 0.0f));
@@ -294,17 +300,17 @@ int main()
                     {
                         if (j == 0)
                         {
-                            model = glm::translate(model, glm::vec3(j + 0.3f, 0.0f, i - 0.3f));
+                            model = glm::translate(model, glm::vec3(j + 0.3f, boardHeight, i - 0.3f));
                         }
                         else
                         {
-                            model = glm::translate(model, glm::vec3(j - 0.3f, 0.0f, i - 0.3f));
+                            model = glm::translate(model, glm::vec3(j - 0.3f, boardHeight, i - 0.3f));
                         }
                         model = glm::scale(model, glm::vec3(0.5f, 1.0f, 0.5f));
                     }
                     else
                     {
-                        model = glm::translate(model, glm::vec3(j, 0.0f, i - 0.3f));
+                        model = glm::translate(model, glm::vec3(j, boardHeight, i - 0.3f));
                         model = glm::scale(model, glm::vec3(1.0f, 1.0f, 0.5f));
                     }
                     myShader.setVec3("colourIn", glm::vec3(123.0f, 63.0f, 0.0f));
@@ -314,21 +320,22 @@ int main()
                     //generates left border
                     if (j == 0)
                     {
-                        model = glm::translate(model, glm::vec3(j + 0.3f, 0.0f, i));
+                        model = glm::translate(model, glm::vec3(j + 0.3f, boardHeight, i));
                         model = glm::scale(model, glm::vec3(0.5f, 1.0f, 1.0f));
                         myShader.setVec3("colourIn", glm::vec3(123.0f, 63.0f, 0.0f));
                     }
                     //generates right border
                     else if (j == 9)
                     {
-                        model = glm::translate(model, glm::vec3(j - 0.3f, 0.0f, i));
+                        model = glm::translate(model, glm::vec3(j - 0.3f, boardHeight, i));
                         model = glm::scale(model, glm::vec3(0.5f, 1.0f, 1.0f));
                         myShader.setVec3("colourIn", glm::vec3(123.0f, 63.0f, 0.0f));
                     }
                     //generates chess board
                     else
                     {
-                        model = glm::translate(model, glm::vec3(j, 0.0f, i));
+                        //rndHeight = rand() % (heightMaximum - boardHeight + 1) + boardHeight;
+                        model = glm::translate(model, glm::vec3(j, boardHeight, i));
                         //checks if height is even to see if the chess row blocks need to alternate colour from the previous row
                         if (i % 2 != 0)
                         {
@@ -378,10 +385,10 @@ int main()
 
         glBindVertexArray(terrainVAO);
 
-        /*for (unsigned int strip = 0; strip < NUM_STRIPS; ++strip)
+        for (unsigned int strip = 0; strip < NUM_STRIPS; ++strip)
         {
             glDrawElements(GL_TRIANGLE_STRIP, NUM_VERTS_PER_STRIP, GL_UNSIGNED_INT, (void*)(sizeof(unsigned int)* NUM_VERTS_PER_STRIP* strip));
-        }*/
+        }
 
 
         glfwSwapBuffers(window);
