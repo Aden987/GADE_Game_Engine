@@ -141,12 +141,16 @@
   <ItemGroup>
     <ClInclude Include="basicCubeMesh.h" />
     <ClInclude Include="BasicMesh.h" />
+    <ClInclude Include="Camera.h" />
+    <ClInclude Include="HeightMapMesh.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="stb_image.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="resources\shaders\basic.shader.frag" />
     <None Include="resources\shaders\basic.shader.vert" />
+    <None Include="resources\shaders\heightmap.shader.frag" />
+    <None Include="resources\shaders\heightmap.shader.vert" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
