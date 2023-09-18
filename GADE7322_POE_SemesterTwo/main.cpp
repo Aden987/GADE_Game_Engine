@@ -24,10 +24,24 @@ const unsigned int SCR_HEIGHT = 600;
 int useWireframe = 0;
 int displayGrayscale = 0;
 
-// camera - give pretty starting point
-Camera camera(glm::vec3(67.0f, 627.5f, 169.9f),
+//Learn OpenGL.[s.a.]. Welcome to OpenGL, [s.a.]. Available at: learnopengl.com [Accessed 17 September 2023].
+
+//camera variables
+glm::vec3 cameraPosition[3] = { glm::vec3(4.5f, 30.5f, 25.0f),
+    glm::vec3(-4.5f, 22.0f, 17.0f),
+    glm::vec3(4.5f, 30.5f, 4.5f),
+};
+
+float cameraYaw[3] = { 270.1f,-53.0f,270.0f };
+
+float cameraPitch[3] = { -25.0f,-17.0f,-90.0f };
+
+int cameraIndex = 0;
+bool arrowKeyPressed = false;
+
+Camera camera(cameraPosition[cameraIndex],
     glm::vec3(0.0f, 1.0f, 0.0f),
-    -128.1f, -42.4f);
+    cameraYaw[cameraIndex], cameraPitch[cameraIndex]);
 float lastX = SCR_WIDTH / 2.0f;
 float lastY = SCR_HEIGHT / 2.0f;
 bool firstMouse = true;
@@ -225,6 +239,11 @@ int main()
         glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+
+        Camera camera(cameraPosition[cameraIndex],
+            glm::vec3(0.0f, 1.0f, 0.0f),
+            cameraYaw[cameraIndex], cameraPitch[cameraIndex]);
+
         myShader.use();
 
         glBindTexture(GL_TEXTURE_2D, texture1);
@@ -402,6 +421,29 @@ void processInput(GLFWwindow* window)
         camera.ProcessKeyboard(LEFT, deltaTime);
     if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
         camera.ProcessKeyboard(RIGHT, deltaTime);
+
+    if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS)
+    {
+        cameraIndex++;
+        if (cameraIndex > 2)
+        {
+            cameraIndex = 0;
+        }
+        //std::cout << cameraIndex << std::endl;
+    }
+    /* else
+     {
+         arrowKeyPressed = false;
+     }*/
+    if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS)
+    {
+        cameraIndex--;
+        if (cameraIndex < 0)
+        {
+            cameraIndex = 2;
+        }
+        //std::cout << cameraIndex << std::endl;
+    }
 }
 
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int modifiers)
