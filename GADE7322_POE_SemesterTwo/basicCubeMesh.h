@@ -16,19 +16,21 @@ struct basicCubeVertex
 {
 	glm::vec3 position;
 	//glm::vec3 colour;
-	//glm::vec2 texture;
+	glm::vec2 texture;
 };
 
 class basicCubeMesh
 {
 public:
 	vector<basicCubeVertex> vertices;
+	/*vector<basicCubeVertex> texture;*/
 
 	unsigned int VAO;
 
 	//constructor
-	basicCubeMesh(vector <basicCubeVertex> vertices) {
+	basicCubeMesh(vector <basicCubeVertex> vertices/*, vector <basicCubeVertex> texture*/) {
 		this->vertices =  vertices;
+		/*this->texture = texture;*/
 		setUpMesh();
 	}
 
@@ -62,8 +64,8 @@ private:
 		glEnableVertexAttribArray(1);*/
 
 		//texture pointers
-		/*glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, sizeof(basicCubeVertex), (void*)offsetof(basicCubeVertex, texture));
-		glEnableVertexAttribArray(2);*/
+		glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, sizeof(basicCubeVertex), (void*)offsetof(basicCubeVertex, texture));
+		glEnableVertexAttribArray(2);
 	}
 };
 
