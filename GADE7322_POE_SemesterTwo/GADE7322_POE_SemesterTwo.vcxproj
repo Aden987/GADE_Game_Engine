@@ -139,8 +139,11 @@
     <ClCompile Include="Shader.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="basicConeMesh.h" />
     <ClInclude Include="basicCubeMesh.h" />
+    <ClInclude Include="basicCylinderMesh.h" />
     <ClInclude Include="BasicMesh.h" />
+    <ClInclude Include="basicSphereMesh.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="HeightMapMesh.h" />
     <ClInclude Include="Shader.h" />
