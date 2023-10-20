@@ -10,6 +10,9 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 #include "basicCubeMesh.h"
+#include "basicConeMesh.h"
+#include "basicCylinderMesh.h"
+#include "basicSphereMesh.h"
 #include "HeightMapMesh.h"
 #include "Camera.h"
 
@@ -254,6 +257,7 @@ int main()
         myShader.setMat4("projection", projection);
         myShader.setMat4("view", view);
 
+#pragma region CHESSBOARD AND BORDER
         //Cube 
         /*myShader.setMat4("model", model);
         myCube.Draw(myShader);*/
@@ -264,137 +268,132 @@ int main()
         //randomized height for chess board
         int rndHeight;
         //maximum height for chess baord
-        int heightMaximum = 20;
-        for (unsigned int i = 0; i < chessBoardCol; i++)
-        {
-            for (unsigned int j = 0; j < chessBoardRow; j++)
-            {
-                glm::mat4 model = glm::mat4(1.0f);
-                //generates bottom border
-                if (i == 0)
-                {
-                    //checks if it is generating a corner piece of the border to adjust its scaling and position
-                    if (j == 0 || j == 9)
-                    {
-                        if (j == 0)
-                        {
-                            model = glm::translate(model, glm::vec3(j + 0.3f, boardHeight, i + 0.3f));
-                        }
-                        else
-                        {
-                            model = glm::translate(model, glm::vec3(j - 0.3f, boardHeight, i + 0.3f));
-                        }
-                        model = glm::scale(model, glm::vec3(0.5f, 1.0f, 0.5f));
-                    }
-                    else
-                    {
-                        model = glm::translate(model, glm::vec3(j, boardHeight, i + 0.3f));
-                        model = glm::scale(model, glm::vec3(1.0f, 1.0f, 0.5f));
-                    }
-                    myShader.setVec3("colourIn", glm::vec3(123.0f, 63.0f, 0.0f));
-                }
-                //generate top border
-                else if (i == 9)
-                {
-                    if (j == 0 || j == 9)
-                    {
-                        if (j == 0)
-                        {
-                            model = glm::translate(model, glm::vec3(j + 0.3f, boardHeight, i - 0.3f));
-                        }
-                        else
-                        {
-                            model = glm::translate(model, glm::vec3(j - 0.3f, boardHeight, i - 0.3f));
-                        }
-                        model = glm::scale(model, glm::vec3(0.5f, 1.0f, 0.5f));
-                    }
-                    else
-                    {
-                        model = glm::translate(model, glm::vec3(j, boardHeight, i - 0.3f));
-                        model = glm::scale(model, glm::vec3(1.0f, 1.0f, 0.5f));
-                    }
-                    myShader.setVec3("colourIn", glm::vec3(123.0f, 63.0f, 0.0f));
-                }
-                else
-                {
-                    //generates left border
-                    if (j == 0)
-                    {
-                        model = glm::translate(model, glm::vec3(j + 0.3f, boardHeight, i));
-                        model = glm::scale(model, glm::vec3(0.5f, 1.0f, 1.0f));
-                        myShader.setVec3("colourIn", glm::vec3(123.0f, 63.0f, 0.0f));
-                    }
-                    //generates right border
-                    else if (j == 9)
-                    {
-                        model = glm::translate(model, glm::vec3(j - 0.3f, boardHeight, i));
-                        model = glm::scale(model, glm::vec3(0.5f, 1.0f, 1.0f));
-                        myShader.setVec3("colourIn", glm::vec3(123.0f, 63.0f, 0.0f));
-                    }
-                    //generates chess board
-                    else
-                    {
-                        //rndHeight = rand() % (heightMaximum - boardHeight + 1) + boardHeight;
-                        model = glm::translate(model, glm::vec3(j, boardHeight, i));
-                        //checks if height is even to see if the chess row blocks need to alternate colour from the previous row
-                        if (i % 2 != 0)
-                        {
-                            //non even row block is white
-                            if (j % 2 != 0)
-                            {
-                                myShader.setVec3("colourIn", glm::vec3(255.0f, 255.0f, 255.0f));
-                            }
-                            //non even row block is black
-                            else
-                            {
-                                myShader.setVec3("colourIn", glm::vec3(0.0f, 0.0f, 0.0f));
-                            }
-                        }
-                        else
-                        {
-                            if (j % 2 != 0)
-                            {
-                                myShader.setVec3("colourIn", glm::vec3(0.0f, 0.0f, 0.0f));
-                            }
-                            else
-                            {
-                                myShader.setVec3("colourIn", glm::vec3(255.0f, 255.0f, 255.0f));
-                            }
-                        }
-                    }
-                }
-                myShader.setMat4("model", model);
-                myCube.Draw(myShader);
-            }
-        }
+        //int heightMaximum = 20;
+        //for (unsigned int i = 0; i < chessBoardCol; i++)
+        //{
+        //    for (unsigned int j = 0; j < chessBoardRow; j++)
+        //    {
+        //        glm::mat4 model = glm::mat4(1.0f);
+        //        //generates bottom border
+        //        if (i == 0)
+        //        {
+        //            //checks if it is generating a corner piece of the border to adjust its scaling and position
+        //            if (j == 0 || j == 9)
+        //            {
+        //                if (j == 0)
+        //                {
+        //                    model = glm::translate(model, glm::vec3(j + 0.3f, boardHeight, i + 0.3f));
+        //                }
+        //                else
+        //                {
+        //                    model = glm::translate(model, glm::vec3(j - 0.3f, boardHeight, i + 0.3f));
+        //                }
+        //                model = glm::scale(model, glm::vec3(0.5f, 1.0f, 0.5f));
+        //            }
+        //            else
+        //            {
+        //                model = glm::translate(model, glm::vec3(j, boardHeight, i + 0.3f));
+        //                model = glm::scale(model, glm::vec3(1.0f, 1.0f, 0.5f));
+        //            }
+        //            myShader.setVec3("colourIn", glm::vec3(123.0f, 63.0f, 0.0f));
+        //        }
+        //        //generate top border
+        //        else if (i == 9)
+        //        {
+        //            if (j == 0 || j == 9)
+        //            {
+        //                if (j == 0)
+        //                {
+        //                    model = glm::translate(model, glm::vec3(j + 0.3f, boardHeight, i - 0.3f));
+        //                }
+        //                else
+        //                {
+        //                    model = glm::translate(model, glm::vec3(j - 0.3f, boardHeight, i - 0.3f));
+        //                }
+        //                model = glm::scale(model, glm::vec3(0.5f, 1.0f, 0.5f));
+        //            }
+        //            else
+        //            {
+        //                model = glm::translate(model, glm::vec3(j, boardHeight, i - 0.3f));
+        //                model = glm::scale(model, glm::vec3(1.0f, 1.0f, 0.5f));
+        //            }
+        //            myShader.setVec3("colourIn", glm::vec3(123.0f, 63.0f, 0.0f));
+        //        }
+        //        else
+        //        {
+        //            //generates left border
+        //            if (j == 0)
+        //            {
+        //                model = glm::translate(model, glm::vec3(j + 0.3f, boardHeight, i));
+        //                model = glm::scale(model, glm::vec3(0.5f, 1.0f, 1.0f));
+        //                myShader.setVec3("colourIn", glm::vec3(123.0f, 63.0f, 0.0f));
+        //            }
+        //            //generates right border
+        //            else if (j == 9)
+        //            {
+        //                model = glm::translate(model, glm::vec3(j - 0.3f, boardHeight, i));
+        //                model = glm::scale(model, glm::vec3(0.5f, 1.0f, 1.0f));
+        //                myShader.setVec3("colourIn", glm::vec3(123.0f, 63.0f, 0.0f));
+        //            }
+        //            //generates chess board
+        //            else
+        //            {
+        //                //rndHeight = rand() % (heightMaximum - boardHeight + 1) + boardHeight;
+        //                model = glm::translate(model, glm::vec3(j, boardHeight, i));
+        //                //checks if height is even to see if the chess row blocks need to alternate colour from the previous row
+        //                if (i % 2 != 0)
+        //                {
+        //                    //non even row block is white
+        //                    if (j % 2 != 0)
+        //                    {
+        //                        myShader.setVec3("colourIn", glm::vec3(255.0f, 255.0f, 255.0f));
+        //                    }
+        //                    //non even row block is black
+        //                    else
+        //                    {
+        //                        myShader.setVec3("colourIn", glm::vec3(0.0f, 0.0f, 0.0f));
+        //                    }
+        //                }
+        //                else
+        //                {
+        //                    if (j % 2 != 0)
+        //                    {
+        //                        myShader.setVec3("colourIn", glm::vec3(0.0f, 0.0f, 0.0f));
+        //                    }
+        //                    else
+        //                    {
+        //                        myShader.setVec3("colourIn", glm::vec3(255.0f, 255.0f, 255.0f));
+        //                    }
+        //                }
+        //            }
+        //        }
+        //        myShader.setMat4("model", model);
+        //        myCube.Draw(myShader);
+        //    }
+        //}
+#pragma endregion
 
-        heightMapShader.use();
+#pragma region HEIGHTMAP
+        //heightMapShader.use();
 
-        // view/projection transformations for height map
-        glm::mat4 hMapProjection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100000.0f);
-        glm::mat4 hMapView = camera.GetViewMatrix();
-        heightMapShader.setMat4("projection", hMapProjection);
-        heightMapShader.setMat4("view", hMapView);
+        //// view/projection transformations for height map
+        //glm::mat4 hMapProjection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100000.0f);
+        //glm::mat4 hMapView = camera.GetViewMatrix();
+        //heightMapShader.setMat4("projection", hMapProjection);
+        //heightMapShader.setMat4("view", hMapView);
 
-        // world transformation
-        glm::mat4 hMapModel = glm::mat4(1.0f);
-        heightMapShader.setMat4("model", hMapModel);
+        //// world transformation
+        //glm::mat4 hMapModel = glm::mat4(1.0f);
+        //heightMapShader.setMat4("model", hMapModel);
 
-        //Cube 
-        /*myShader.setMat4("model", model);
-        myShader.setMat4("view", view);
-        myShader.setMat4("projection", projection);*/
+        //glBindVertexArray(terrainVAO);
 
-        //myTriangle.Draw(myShader);
-        //myCube.Draw(myShader);
-        glBindVertexArray(terrainVAO);
+        //for (unsigned int strip = 0; strip < NUM_STRIPS; ++strip)
+        //{
+        //    glDrawElements(GL_TRIANGLE_STRIP, NUM_VERTS_PER_STRIP, GL_UNSIGNED_INT, (void*)(sizeof(unsigned int)* NUM_VERTS_PER_STRIP* strip));
+        //}
 
-        for (unsigned int strip = 0; strip < NUM_STRIPS; ++strip)
-        {
-            glDrawElements(GL_TRIANGLE_STRIP, NUM_VERTS_PER_STRIP, GL_UNSIGNED_INT, (void*)(sizeof(unsigned int)* NUM_VERTS_PER_STRIP* strip));
-        }
-
-
+#pragma endregion
         glfwSwapBuffers(window);
         glfwPollEvents();
     }
