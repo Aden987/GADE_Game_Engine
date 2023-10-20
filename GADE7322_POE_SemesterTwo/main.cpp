@@ -257,7 +257,38 @@ int main()
         myShader.setMat4("projection", projection);
         myShader.setMat4("view", view);
 
+        //DRAWING THE NEW SHAPES AND TESTING
+        // 
+        //cylinder model properties
+        float cylinderRadius = 0.5f;
+        float cylinderHeight = 1.0f;
+        int cylinderSides = 16; // Adjust the number of sides as needed
+
+        basicCylinderMesh myCylinder(cylinderRadius, cylinderHeight, cylinderSides);
+
+        // cone model properties
+        float coneRadius = 0.5f;
+        float coneHeight = 1.0f;
+        int coneSides = 16; // Adjust the number of sides as needed
+
+        basicConeMesh myCone(coneRadius, coneHeight, coneSides);
+
+        //sphere model
+        float sphereRadius = 0.5f;
+        int sphereSegments = 32; // Adjust the number of segments as needed
+
+        basicSphereMesh mySphere(sphereRadius, sphereSegments);
+
+        
+
+        myCone.Draw(myShader);
+        myCylinder.Draw(myShader);
+        mySphere.Draw(myShader);
+        
+        //ENDING THE DRAWING AND TESTING
+
 #pragma region CHESSBOARD AND BORDER
+               
         //Cube 
         /*myShader.setMat4("model", model);
         myCube.Draw(myShader);*/
