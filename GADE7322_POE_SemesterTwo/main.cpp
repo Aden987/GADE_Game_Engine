@@ -390,19 +390,184 @@ int main()
         myShader.setMat4("projection", projection);
         myShader.setMat4("view", view);
        
-        /*ObjectContainer myObject;
-        myObject.addCubeMesh(myCube,
+        ObjectContainer pawnPiece;
+        ObjectContainer rookPiece;
+        ObjectContainer knightPiece;
+        ObjectContainer bishopPiece;
+        ObjectContainer queenPiece;
+        ObjectContainer kingPiece;
+        /*myObject.addCubeMesh(myCube,
             glm::vec3(0.3f, 15.0f, 0.3f),
             glm::vec3(0, 0, 0),
             glm::vec3(1, 1, 1));
         myObject.addConeMesh(myCone,
             glm::vec3(0.3f, 20.0f, 0.3f),
             glm::vec3(0, 0, 0),
-            glm::vec3(1.5f, 1.5f, 1.5f));
-        glBindTexture(GL_TEXTURE_2D, texture4);
-        glm::mat4 model = glm::mat4(1.0f);
-        model = glm::rotate(model, (float)glfwGetTime() * glm::radians(50.0f), glm::vec3(0.5f, 1.0f, 0.0f));
-        myObject.Draw(model, myShader);*/
+            glm::vec3(1.5f, 1.5f, 1.5f));*/
+        
+              
+        //spawn white pawns
+        for (int i = 1; i <= 8; i++)
+        {
+            glm::mat4 modelPiece = glm::mat4(1.0f);
+            modelPiece = glm::translate(modelPiece, glm::vec3(i, 16.0f, 7.0f));
+            modelPiece = glm::scale(modelPiece, glm::vec3(0.5f, 0.5f, 0.5f));
+            glBindTexture(GL_TEXTURE_2D, texture4);
+            pawnPiece.Draw(modelPiece, myShader);
+        }
+
+        //spawn black pawns
+        for (int i = 1; i <= 8; i++)
+        {
+            glm::mat4 modelPiece = glm::mat4(1.0f);
+            modelPiece = glm::translate(modelPiece, glm::vec3(i, 16.0f, 2.0f));
+            modelPiece = glm::scale(modelPiece, glm::vec3(0.5f, 0.5f, 0.5f));
+            glBindTexture(GL_TEXTURE_2D, texture4);
+            pawnPiece.Draw(modelPiece, myShader);
+        }
+
+        //spawn rooks
+        for (int i = 0; i <= 3; i++)
+        {
+            glm::mat4 modelPiece = glm::mat4(1.0f);
+            //white pieces
+            if (i == 0)
+            {
+                modelPiece = glm::translate(modelPiece, glm::vec3(1.0f, 16.0f, 8.0f));
+                modelPiece = glm::scale(modelPiece, glm::vec3(0.5f, 0.5f, 0.5f));
+                glBindTexture(GL_TEXTURE_2D, texture4);
+            }
+            else if (i == 1)
+            {
+                modelPiece = glm::translate(modelPiece, glm::vec3(8.0f, 16.0f, 8.0f));
+                modelPiece = glm::scale(modelPiece, glm::vec3(0.5f, 0.5f, 0.5f));
+                glBindTexture(GL_TEXTURE_2D, texture4);
+            }
+            //black pieces
+            else if (i == 2)
+            {
+                modelPiece = glm::translate(modelPiece, glm::vec3(1.0f, 16.0f, 1.0f));
+                modelPiece = glm::scale(modelPiece, glm::vec3(0.5f, 0.5f, 0.5f));
+                glBindTexture(GL_TEXTURE_2D, texture4);
+            }
+            else
+            {
+                modelPiece = glm::translate(modelPiece, glm::vec3(8.0f, 16.0f, 1.0f));
+                modelPiece = glm::scale(modelPiece, glm::vec3(0.5f, 0.5f, 0.5f));
+                glBindTexture(GL_TEXTURE_2D, texture4);
+            }
+            
+            rookPiece.Draw(modelPiece, myShader);
+        }
+
+        //spawn knights
+        for (int i = 0; i <= 3; i++)
+        {
+            glm::mat4 modelPiece = glm::mat4(1.0f);
+            //white pieces
+            if (i == 0)
+            {
+                modelPiece = glm::translate(modelPiece, glm::vec3(2.0f, 16.0f, 8.0f));
+                modelPiece = glm::scale(modelPiece, glm::vec3(0.5f, 0.5f, 0.5f));
+                glBindTexture(GL_TEXTURE_2D, texture4);
+            }
+            else if (i == 1)
+            {
+                modelPiece = glm::translate(modelPiece, glm::vec3(7.0f, 16.0f, 8.0f));
+                modelPiece = glm::scale(modelPiece, glm::vec3(0.5f, 0.5f, 0.5f));
+                glBindTexture(GL_TEXTURE_2D, texture4);
+            }
+            //black pieces
+            else if (i == 2)
+            {
+                modelPiece = glm::translate(modelPiece, glm::vec3(2.0f, 16.0f, 1.0f));
+                modelPiece = glm::scale(modelPiece, glm::vec3(0.5f, 0.5f, 0.5f));
+                glBindTexture(GL_TEXTURE_2D, texture4);
+            }
+            else
+            {
+                modelPiece = glm::translate(modelPiece, glm::vec3(7.0f, 16.0f, 1.0f));
+                modelPiece = glm::scale(modelPiece, glm::vec3(0.5f, 0.5f, 0.5f));
+                glBindTexture(GL_TEXTURE_2D, texture4);
+            }
+            knightPiece.Draw(modelPiece, myShader);
+        }
+
+        //spawn bishops
+        for (int i = 0; i <= 3; i++)
+        {
+            glm::mat4 modelPiece = glm::mat4(1.0f);
+            //white pieces
+            if (i == 0)
+            {
+                modelPiece = glm::translate(modelPiece, glm::vec3(3.0f, 16.0f, 8.0f));
+                modelPiece = glm::scale(modelPiece, glm::vec3(0.5f, 0.5f, 0.5f));
+                glBindTexture(GL_TEXTURE_2D, texture4);
+            }
+            else if (i == 1)
+            {
+                modelPiece = glm::translate(modelPiece, glm::vec3(6.0f, 16.0f, 8.0f));
+                modelPiece = glm::scale(modelPiece, glm::vec3(0.5f, 0.5f, 0.5f));
+                glBindTexture(GL_TEXTURE_2D, texture4);
+            }
+            //black pieces
+            else if (i == 2)
+            {
+                modelPiece = glm::translate(modelPiece, glm::vec3(3.0f, 16.0f, 1.0f));
+                modelPiece = glm::scale(modelPiece, glm::vec3(0.5f, 0.5f, 0.5f));
+                glBindTexture(GL_TEXTURE_2D, texture4);
+            }
+            else
+            {
+                modelPiece = glm::translate(modelPiece, glm::vec3(6.0f, 16.0f, 1.0f));
+                modelPiece = glm::scale(modelPiece, glm::vec3(0.5f, 0.5f, 0.5f));
+                glBindTexture(GL_TEXTURE_2D, texture4);
+            }
+            bishopPiece.Draw(modelPiece, myShader);
+        }
+
+        //spawn queens
+        for (int i = 0; i <= 1; i++)
+        {
+            glm::mat4 modelPiece = glm::mat4(1.0f);
+            //white pieces
+            if (i == 0)
+            {
+                modelPiece = glm::translate(modelPiece, glm::vec3(4.0f, 16.0f, 8.0f));
+                modelPiece = glm::scale(modelPiece, glm::vec3(0.5f, 0.5f, 0.5f));
+                glBindTexture(GL_TEXTURE_2D, texture4);
+            }
+            //black piece
+            else
+            {
+                modelPiece = glm::translate(modelPiece, glm::vec3(4.0f, 16.0f, 1.0f));
+                modelPiece = glm::scale(modelPiece, glm::vec3(0.5f, 0.5f, 0.5f));
+                glBindTexture(GL_TEXTURE_2D, texture4);
+            }
+            queenPiece.Draw(modelPiece, myShader);
+        }
+
+        //spawn king
+        for (int i = 0; i <= 1; i++)
+        {
+            glm::mat4 modelPiece = glm::mat4(1.0f);
+            //white pieces
+            if (i == 0)
+            {
+                modelPiece = glm::translate(modelPiece, glm::vec3(5.0f, 16.0f, 8.0f));
+                modelPiece = glm::scale(modelPiece, glm::vec3(0.5f, 0.5f, 0.5f));
+                glBindTexture(GL_TEXTURE_2D, texture3);
+            }
+            //black piece
+            else
+            {
+                modelPiece = glm::translate(modelPiece, glm::vec3(5.0f, 16.0f, 1.0f));
+                modelPiece = glm::scale(modelPiece, glm::vec3(0.5f, 0.5f, 0.5f));
+                glBindTexture(GL_TEXTURE_2D, texture3);
+            }
+            kingPiece.Draw(modelPiece, myShader);
+        }
+
 #pragma region CHESSBOARD AND BORDER
         int chessBoardCol = 10;
         int chessBoardRow = 10;
