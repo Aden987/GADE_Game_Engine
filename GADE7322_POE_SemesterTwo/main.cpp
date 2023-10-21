@@ -288,16 +288,38 @@ int main()
         //DRAWING THE NEW SHAPES AND TESTING
 
 
-        glm::mat4 modelCone = glm::mat4(1.0f);
-        modelCone = glm::translate(modelCone, glm::vec3(0.3f, 15.0f, 0.3f));//(X,Y,Z) 0.3f, 15.0f, 0.3f
-        myShader.setMat4("model", modelCone);
+        glm::mat4 neck = glm::mat4(1.0f);
+        neck = glm::translate(neck, glm::vec3(0.3f, 15.0f, 0.3f));//(X,Y,Z) 0.3f, 15.0f, 0.3f
+        neck = glm::scale(neck, glm::vec3(2.0f, 2.0f, 4.0f));
+        myShader.setMat4("model", neck);
         myCylinder.Draw(myShader);
         
-        glm::mat4 modelCone2 = glm::mat4(1.0f);
-        modelCone2 = glm::translate(modelCone2, glm::vec3(0.3f, 15.0f, 1.0f));//(X,Y,Z) 0.3f, 15.0f, 0.3f
-        myShader.setMat4("model", modelCone2);
+        glm::mat4 base = glm::mat4(1.0f);
+        base = glm::translate(base, glm::vec3(0.3f, 15.0f, -1.5f));//(X,Y,Z) 0.3f, 15.0f, 0.3f
+        base = glm::scale(base, glm::vec3(3.0f, 3.0f, 0.8f));
+        myShader.setMat4("model", base);
         myCylinder.Draw(myShader);
         
+
+        glm::mat4 collar = glm::mat4(1.0f);
+        collar = glm::translate(collar, glm::vec3(0.3f, 15.0f, 2.0f));//(X,Y,Z)
+        collar = glm::scale(collar, glm::vec3(2.5f, 2.5, 0.8f));
+        myShader.setMat4("model", collar);
+        myCylinder.Draw(myShader);
+
+
+        glm::mat4 ball1 = glm::mat4(1.0f);
+        ball1 = glm::translate(ball1, glm::vec3(0.3f, 15.0f, 3.0f));//(X,Y,Z) 0.3f, 15.0f, 0.3f        
+        ball1 = glm::scale(ball1, glm::vec3(2.0f, 2.0f, 3.0f));        
+        myShader.setMat4("model", ball1);
+        mySphere.Draw(myShader);
+
+        glm::mat4 ball2 = glm::mat4(1.0f);
+        ball2 = glm::translate(ball2, glm::vec3(0.3f, 15.0f, 4.8f));//(X,Y,Z) 0.3f, 15.0f, 0.3f        
+        ball2 = glm::scale(ball2, glm::vec3(1.0f, 1.0f, 1.0f));
+        myShader.setMat4("model", ball2);
+        mySphere.Draw(myShader);
+
         //ENDING THE DRAWING AND TESTING
 
 #pragma region CHESSBOARD AND BORDER
