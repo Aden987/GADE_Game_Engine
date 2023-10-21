@@ -15,6 +15,7 @@
 #include "basicSphereMesh.h"
 #include "HeightMapMesh.h"
 #include "Camera.h"
+#include "ObjectContainer.h"
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int modifiers);
@@ -40,7 +41,8 @@ float cameraYaw[3] = { 270.1f,-53.0f,270.0f };
 float cameraPitch[3] = { -25.0f,-17.0f,-90.0f };
 
 int cameraIndex = 0;
-bool arrowKeyPressed = false;
+bool rightArrowKeyPressed = false;
+bool leftArrowKeyPressed = false;
 
 Camera camera(cameraPosition[cameraIndex],
     glm::vec3(0.0f, 1.0f, 0.0f),
@@ -326,6 +328,26 @@ int main()
 
     basicCubeMesh myCube(vertices);
 
+    //cylinder model properties
+    float cylinderRadius = 0.5f;
+    float cylinderHeight = 1.0f;
+    int cylinderSides = 16; // Adjust the number of sides as needed
+
+    basicCylinderMesh myCylinder(cylinderRadius, cylinderHeight, cylinderSides);
+
+    // cone model properties
+    float coneRadius = 0.5f;
+    float coneHeight = 1.0f;
+    int coneSides = 16; // Adjust the number of sides as needed
+
+    basicConeMesh myCone(coneRadius, coneHeight, coneSides);
+
+    //sphere model
+    float sphereRadius = 0.5f;
+    int sphereSegments = 32; // Adjust the number of segments as needed
+
+    basicSphereMesh mySphere(sphereRadius, sphereSegments);
+
     //registering VAO for heightmap
     unsigned int terrainVAO, terrainVBO, terrainEBO;
     glGenVertexArrays(1, &terrainVAO);
@@ -370,11 +392,21 @@ int main()
         glm::mat4 view = camera.GetViewMatrix();
         myShader.setMat4("projection", projection);
         myShader.setMat4("view", view);
-
+       
+        /*ObjectContainer myObject;
+        myObject.addCubeMesh(myCube,
+            glm::vec3(0.3f, 15.0f, 0.3f),
+            glm::vec3(0, 0, 0),
+            glm::vec3(1, 1, 1));
+        myObject.addConeMesh(myCone,
+            glm::vec3(0.3f, 20.0f, 0.3f),
+            glm::vec3(0, 0, 0),
+            glm::vec3(1.5f, 1.5f, 1.5f));
+        glBindTexture(GL_TEXTURE_2D, texture4);
+        glm::mat4 model = glm::mat4(1.0f);
+        model = glm::rotate(model, (float)glfwGetTime() * glm::radians(50.0f), glm::vec3(0.5f, 1.0f, 0.0f));
+        myObject.Draw(model, myShader);*/
 #pragma region CHESSBOARD AND BORDER
-        //Cube 
-        /*myShader.setMat4("model", model);
-        myCube.Draw(myShader);*/
         int chessBoardCol = 10;
         int chessBoardRow = 10;
         //standard height for chess board and border
@@ -510,9 +542,6 @@ int main()
             }
         }
 
-        myShader.setInt("texType", 3);
-        //glActiveTexture(GL_TEXTURE1);
-        glBindTexture(GL_TEXTURE_2D, texture1);
 #pragma endregion
 
 #pragma region HEIGHTMAP
@@ -567,26 +596,39 @@ void processInput(GLFWwindow* window)
 
     if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS)
     {
-        cameraIndex++;
-        if (cameraIndex > 2)
+        if (rightArrowKeyPressed == false)
         {
-            cameraIndex = 0;
+            //arrowKeyPressed = true;
+            cameraIndex++;
+            if (cameraIndex > 2)
+            {
+                cameraIndex = 0;
+            }
+            //std::cout << cameraIndex << std::endl;
         }
-        //std::cout << cameraIndex << std::endl;
+        rightArrowKeyPressed = true;
     }
-    /* else
-     {
-         arrowKeyPressed = false;
-     }*/
+    else
+    {
+        rightArrowKeyPressed = false;
+    }
     if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS)
     {
-        cameraIndex--;
-        if (cameraIndex < 0)
+        if (leftArrowKeyPressed == false)
         {
-            cameraIndex = 2;
+            cameraIndex--;
+            if (cameraIndex < 0)
+            {
+                cameraIndex = 2;
+            }
         }
-        //std::cout << cameraIndex << std::endl;
+        leftArrowKeyPressed = true;
     }
+    else
+    {
+        leftArrowKeyPressed = false;
+    }
+
 }
 
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int modifiers)

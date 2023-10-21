@@ -23,14 +23,12 @@ class basicCubeMesh
 {
 public:
 	vector<basicCubeVertex> vertices;
-	/*vector<basicCubeVertex> texture;*/
 
 	unsigned int VAO;
 
 	//constructor
-	basicCubeMesh(vector <basicCubeVertex> vertices/*, vector <basicCubeVertex> texture*/) {
+	basicCubeMesh(vector <basicCubeVertex> vertices) {
 		this->vertices =  vertices;
-		/*this->texture = texture;*/
 		setUpMesh();
 	}
 
@@ -64,7 +62,7 @@ private:
 		glEnableVertexAttribArray(1);*/
 
 		//texture pointers
-		glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, sizeof(basicCubeVertex), (void*)offsetof(basicCubeVertex, texture));
+		glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(basicCubeVertex), (void*)offsetof(basicCubeVertex, texture));
 		glEnableVertexAttribArray(2);
 	}
 };
