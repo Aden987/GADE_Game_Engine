@@ -385,9 +385,6 @@ int main()
 
         myShader.use();
 
-        
-
-
         glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100000.0f);
         glm::mat4 view = camera.GetViewMatrix();
         myShader.setMat4("projection", projection);
@@ -541,7 +538,6 @@ int main()
                 myCube.Draw(myShader);
             }
         }
-
 #pragma endregion
 
 #pragma region HEIGHTMAP
