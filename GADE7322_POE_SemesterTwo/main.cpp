@@ -35,8 +35,9 @@ glm::vec3 cameraPosition[3] = { glm::vec3(4.5f, 30.5f, 25.0f),
     glm::vec3(4.5f, 30.5f, 4.5f),
 };
 
+//270.1f
 float cameraYaw[3] = { 270.1f,-53.0f,270.0f };
-
+//-25.0f
 float cameraPitch[3] = { -25.0f,-17.0f,-90.0f };
 
 int cameraIndex = 0;
@@ -230,6 +231,32 @@ int main()
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(unsigned int), &indices[0], GL_STATIC_DRAW);
 
 
+    //TESTING
+
+    //Cube model properties
+    
+
+
+    //cylinder model properties
+    float cylinderRadius = 0.5f;
+    float cylinderHeight = 1.0f;
+    int cylinderSides = 16; // Adjust the number of sides as needed
+
+    basicCylinderMesh myCylinder(cylinderRadius, cylinderHeight, cylinderSides);
+
+    // cone model properties
+    float coneRadius = 0.5f;
+    float coneHeight = 1.0f;
+    int coneSides = 16; // Adjust the number of sides as needed
+
+    basicConeMesh myCone(coneRadius, coneHeight, coneSides);
+
+    //sphere model
+    float sphereRadius = 0.5f;
+    int sphereSegments = 32; // Adjust the number of segments as needed
+
+    basicSphereMesh mySphere(sphereRadius, sphereSegments);
+
     while (!glfwWindowShouldClose(window))
     {
         float currentFrame = glfwGetTime();
@@ -242,7 +269,7 @@ int main()
         glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-
+        //0.0f, 1.0f, 0.0f),
         Camera camera(cameraPosition[cameraIndex],
             glm::vec3(0.0f, 1.0f, 0.0f),
             cameraYaw[cameraIndex], cameraPitch[cameraIndex]);
@@ -258,32 +285,17 @@ int main()
         myShader.setMat4("view", view);
 
         //DRAWING THE NEW SHAPES AND TESTING
-        // 
-        //cylinder model properties
-        float cylinderRadius = 0.5f;
-        float cylinderHeight = 1.0f;
-        int cylinderSides = 16; // Adjust the number of sides as needed
 
-        basicCylinderMesh myCylinder(cylinderRadius, cylinderHeight, cylinderSides);
 
-        // cone model properties
-        float coneRadius = 0.5f;
-        float coneHeight = 1.0f;
-        int coneSides = 16; // Adjust the number of sides as needed
-
-        basicConeMesh myCone(coneRadius, coneHeight, coneSides);
-
-        //sphere model
-        float sphereRadius = 0.5f;
-        int sphereSegments = 32; // Adjust the number of segments as needed
-
-        basicSphereMesh mySphere(sphereRadius, sphereSegments);
-
-        
-
-        myCone.Draw(myShader);
+        glm::mat4 modelCone = glm::mat4(1.0f);
+        modelCone = glm::translate(modelCone, glm::vec3(0.3f, 15.0f, 0.3f));//(X,Y,Z) 0.3f, 15.0f, 0.3f
+        myShader.setMat4("model", modelCone);
         myCylinder.Draw(myShader);
-        mySphere.Draw(myShader);
+        
+        glm::mat4 modelCone2 = glm::mat4(1.0f);
+        modelCone2 = glm::translate(modelCone2, glm::vec3(0.3f, 15.0f, 1.0f));//(X,Y,Z) 0.3f, 15.0f, 0.3f
+        myShader.setMat4("model", modelCone2);
+        myCylinder.Draw(myShader);
         
         //ENDING THE DRAWING AND TESTING
 
