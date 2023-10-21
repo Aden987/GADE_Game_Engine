@@ -41,7 +41,8 @@ float cameraYaw[3] = { 270.1f,-53.0f,270.0f };
 float cameraPitch[3] = { -25.0f,-17.0f,-90.0f };
 
 int cameraIndex = 0;
-bool arrowKeyPressed = false;
+bool rightArrowKeyPressed = false;
+bool leftArrowKeyPressed = false;
 
 Camera camera(cameraPosition[cameraIndex],
     glm::vec3(0.0f, 1.0f, 0.0f),
@@ -466,25 +467,37 @@ void processInput(GLFWwindow* window)
 
     if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS)
     {
-        cameraIndex++;
-        if (cameraIndex > 2)
+        if (rightArrowKeyPressed == false)
         {
-            cameraIndex = 0;
+            //arrowKeyPressed = true;
+            cameraIndex++;
+            if (cameraIndex > 2)
+            {
+                cameraIndex = 0;
+            }
+            //std::cout << cameraIndex << std::endl;
         }
-        //std::cout << cameraIndex << std::endl;
+        rightArrowKeyPressed = true;
     }
-    /* else
-     {
-         arrowKeyPressed = false;
-     }*/
+    else
+    {
+        rightArrowKeyPressed = false;
+    }
     if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS)
     {
-        cameraIndex--;
-        if (cameraIndex < 0)
+        if (leftArrowKeyPressed == false)
         {
-            cameraIndex = 2;
+            cameraIndex--;
+            if (cameraIndex < 0)
+            {
+                cameraIndex = 2;
+            }
         }
-        //std::cout << cameraIndex << std::endl;
+        leftArrowKeyPressed = true;
+    }
+    else
+    {
+        leftArrowKeyPressed = false;
     }
 }
 
