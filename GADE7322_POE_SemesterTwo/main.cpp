@@ -293,13 +293,13 @@ int main()
         neck = glm::scale(neck, glm::vec3(2.0f, 2.0f, 4.0f));
         myShader.setMat4("model", neck);
         myCylinder.Draw(myShader);
-        
+
         glm::mat4 base = glm::mat4(1.0f);
         base = glm::translate(base, glm::vec3(0.3f, 15.0f, -1.5f));//(X,Y,Z) 0.3f, 15.0f, 0.3f
         base = glm::scale(base, glm::vec3(3.0f, 3.0f, 0.8f));
         myShader.setMat4("model", base);
         myCylinder.Draw(myShader);
-        
+
 
         glm::mat4 collar = glm::mat4(1.0f);
         collar = glm::translate(collar, glm::vec3(0.3f, 15.0f, 2.0f));//(X,Y,Z)
@@ -308,17 +308,30 @@ int main()
         myCylinder.Draw(myShader);
 
 
-        glm::mat4 ball1 = glm::mat4(1.0f);
-        ball1 = glm::translate(ball1, glm::vec3(0.3f, 15.0f, 3.0f));//(X,Y,Z) 0.3f, 15.0f, 0.3f        
-        ball1 = glm::scale(ball1, glm::vec3(2.0f, 2.0f, 3.0f));        
-        myShader.setMat4("model", ball1);
-        mySphere.Draw(myShader);
+        glm::mat4 headB = glm::mat4(1.0f);
+        headB = glm::translate(headB, glm::vec3(0.3f, 15.0f, 1.5f));//(X,Y,Z) 0.3f, 15.0f, 0.3f        
+        headB = glm::scale(headB, glm::vec3(2.5f, 2.5f, 4.0f));
+        headB = glm::rotate(headB, glm::radians(180.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+        myShader.setMat4("model", headB);
+        myCone.Draw(myShader);
 
-        glm::mat4 ball2 = glm::mat4(1.0f);
-        ball2 = glm::translate(ball2, glm::vec3(0.3f, 15.0f, 4.8f));//(X,Y,Z) 0.3f, 15.0f, 0.3f        
-        ball2 = glm::scale(ball2, glm::vec3(1.0f, 1.0f, 1.0f));
-        myShader.setMat4("model", ball2);
-        mySphere.Draw(myShader);
+        glm::mat4 headC = glm::mat4(1.0f);
+        headC = glm::translate(headC, glm::vec3(0.3f, 15.0f, 4.0f));//(X,Y,Z) 0.3f, 15.0f, 0.3f        
+        headC = glm::scale(headC, glm::vec3(2.5f, 2.5f, 1.0f));
+        myShader.setMat4("model", headC);
+        myCone.Draw(myShader);
+
+        glm::mat4 cross1 = glm::mat4(1.0f);
+        cross1 = glm::translate(cross1, glm::vec3(0.3f, 15.0f, 5.0f));
+        cross1 = glm::scale(cross1, glm::vec3(0.6f, 0.6f, 2.0f));
+        myShader.setMat4("model", cross1);
+        myCube.Draw(myShader);
+
+        glm::mat4 cross2 = glm::mat4(1.0f);
+        cross2 = glm::translate(cross2, glm::vec3(0.3f, 15.0f, 5.0f));
+        cross2 = glm::scale(cross2, glm::vec3(2.0f, 0.6f, 0.6f));
+        myShader.setMat4("model", cross2);
+        myCube.Draw(myShader);
 
         //ENDING THE DRAWING AND TESTING
 
