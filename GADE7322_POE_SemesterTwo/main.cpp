@@ -300,12 +300,32 @@ int main()
         myShader.setMat4("model", base);
         myCylinder.Draw(myShader);
 
-        glm::mat4 base = glm::mat4(1.0f);
-        base = glm::translate(base, glm::vec3(0.3f, 15.0f, 0.0f));//(X,Y,Z) 0.3f, 15.0f, 0.3f
-        base = glm::scale(base, glm::vec3(2.0f, 2.0f, 2.0f));
-        myShader.setMat4("model", base);
+        glm::mat4 neck2 = glm::mat4(1.0f);
+        neck2 = glm::translate(neck2, glm::vec3(0.3f, 15.0f, 1.5f));//(X,Y,Z) 0.3f, 15.0f, 0.3f
+        neck2 = glm::scale(neck2, glm::vec3(2.0f, 0.5f, 4.0f));
+        myShader.setMat4("model", neck2);
+        myCone.Draw(myShader);
+
+        glm::mat4 neck3 = glm::mat4(1.0f);
+        neck3 = glm::translate(neck3, glm::vec3(0.3f, 15.0f, 2.5f));//(X,Y,Z) 0.3f, 15.0f, 0.3f
+        neck3 = glm::scale(neck3, glm::vec3(1.0f, 0.5f, 3.0f));
+        neck3 = glm::rotate(neck3, glm::radians(50.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+        myShader.setMat4("model", neck3);
         myCube.Draw(myShader);
         
+        glm::mat4 neck4 = glm::mat4(1.0f);
+        neck4 = glm::translate(neck4, glm::vec3(1.0f, 15.0f, 3.5f));//(X,Y,Z) 0.3f, 15.0f, 0.3f
+        neck4 = glm::scale(neck4, glm::vec3(4.0f, 0.5f, 1.0f));
+        neck4 = glm::rotate(neck4, glm::radians(50.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+        myShader.setMat4("model", neck4);
+        myCube.Draw(myShader);
+
+        glm::mat4 neck5 = glm::mat4(1.0f);
+        neck5 = glm::translate(neck5, glm::vec3(3.0f, 15.0f, 2.5f));//(X,Y,Z) 0.3f, 15.0f, 0.3f
+        neck5 = glm::scale(neck5, glm::vec3(1.5f, 0.5f, 2.0f));
+        neck5 = glm::rotate(neck5, glm::radians(50.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+        myShader.setMat4("model", neck5);
+        myCube.Draw(myShader);
         
 
         //ENDING THE DRAWING AND TESTING
