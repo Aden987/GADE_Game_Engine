@@ -16,6 +16,7 @@
 #include "HeightMapMesh.h"
 #include "Camera.h"
 #include "ObjectContainer.h"
+#include "AnimationController.cpp"
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int modifiers);
@@ -43,7 +44,9 @@ float cameraPitch[3] = { -25.0f,-17.0f,-90.0f };
 int cameraIndex = 0;
 bool rightArrowKeyPressed = false;
 bool leftArrowKeyPressed = false;
+bool spaceKeyPressed = false;
 bool camSwitch = false;
+bool animPlay = false;
 
 Camera camera(cameraPosition[cameraIndex],
     glm::vec3(0.0f, 1.0f, 0.0f),
@@ -430,12 +433,15 @@ int main()
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, terrainEBO);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(unsigned int), &indices[0], GL_STATIC_DRAW);
 
+    AnimationController anim;
 
     while (!glfwWindowShouldClose(window))
     {
         float currentFrame = glfwGetTime();
         deltaTime = currentFrame - lastFrame;
         lastFrame = currentFrame;
+
+        anim.update(deltaTime);
 
         processInput(window);
 
@@ -452,6 +458,7 @@ int main()
         Camera camera(cameraPosition[cameraIndex],
             glm::vec3(0.0f, 1.0f, 0.0f),
             cameraYaw[cameraIndex], cameraPitch[cameraIndex]);
+
         myShader.use();
 
         glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100000.0f);
@@ -466,17 +473,8 @@ int main()
         ObjectContainer queenPiece;
         ObjectContainer kingPiece;
 
-        /*myObject.addCubeMesh(myCube,
-            glm::vec3(0.3f, 15.0f, 0.3f),
-            glm::vec3(0, 0, 0),
-            glm::vec3(1, 1, 1));
-        myObject.addConeMesh(myCone,
-            glm::vec3(0.3f, 20.0f, 0.3f),
-            glm::vec3(0, 0, 0),
-            glm::vec3(1.5f, 1.5f, 1.5f));*/
 
-        //pos,rot,scale
-
+#pragma region InstantiateChessPieces
         //Michael Chess Pieces into containers
 
         kingPiece.addCylinderMesh(myCylinder,
@@ -638,7 +636,8 @@ int main()
             glm::vec3(0.0f, 0.0f, 4.3f),
             glm::vec3(0.0f, 0.0f, 0.0f),
             glm::vec3(1.5f, 1.5f, 1.5f));
-              
+#pragma endregion
+
         //spawn white pawns
         for (int i = 1; i <= 8; i++)
         {
@@ -650,6 +649,15 @@ int main()
             modelPiece = glm::rotate(modelPiece, glm::radians(-90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
             modelPiece = glm::scale(modelPiece, glm::vec3(0.5f, 0.5f, 0.5f));
             modelPiece = glm::translate(modelPiece, glm::vec3(0.0f, 0.0f, -1.0f));
+            if (animPlay == true && i == 8)
+            {
+                anim.applyBouncingAnimation(modelPiece,1.0f,5.0f);
+            }
+            if (animPlay == true && i == 3)
+            {
+                //anim.applyBouncingAnimation(modelPiece,1.0f,5.0f);
+                anim.applyPawnAnimation(modelPiece, 5.0f, 5.0f, 3.5f);
+            }
             pawnPiece.Draw(modelPiece, myShader);
             /*myShader.setMat4("model", modelPiece);
             myCube.Draw(myShader);*/
@@ -666,6 +674,15 @@ int main()
             modelPiece = glm::rotate(modelPiece, glm::radians(-90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
             modelPiece = glm::scale(modelPiece, glm::vec3(0.5f, 0.5f, 0.5f));
             modelPiece = glm::translate(modelPiece, glm::vec3(0.0f, 0.0f, -1.0f));
+            if (animPlay == true && i == 1)
+            {
+                anim.applyRotationAnimation(modelPiece, 30.0f, glm::vec3(0.0f, 0.0f, 1.0f));
+            }
+            if (animPlay == true && i == 8)
+            {
+                 //anim.applyBouncingAnimation(modelPiece,1.0f,5.0f);
+                anim.applyPawnAnimation(modelPiece, 5.0f, 5.0f, -3.5f);
+            }
             pawnPiece.Draw(modelPiece, myShader);
             /*myShader.setMat4("model", modelPiece);
             myCube.Draw(myShader);*/
@@ -681,6 +698,10 @@ int main()
                 modelPiece = glm::translate(modelPiece, glm::vec3(1.0f, 16.0f, 8.0f));
                 modelPiece = glm::scale(modelPiece, glm::vec3(0.5f, 0.5f, 0.5f));
                 glBindTexture(GL_TEXTURE_2D, texture5);
+                if (animPlay == true)
+                {
+                    anim.applyRotationAnimation(modelPiece, 30.0f, glm::vec3(1.0f, 0.0f, 0.0f));
+                }
             }
             else if (i == 1)
             {
@@ -723,6 +744,10 @@ int main()
                 modelPiece = glm::translate(modelPiece, glm::vec3(7.0f, 16.0f, 8.0f));
                 modelPiece = glm::scale(modelPiece, glm::vec3(0.5f, 0.5f, 0.5f));
                 glBindTexture(GL_TEXTURE_2D, texture5);
+                if (animPlay == true)
+                {
+                    anim.applyKnightAnimation(modelPiece, 1.5f, 5.0f, -2.5f, -1.2f);
+                }
             }
             //black pieces
             else if (i == 2)
@@ -767,12 +792,20 @@ int main()
                 modelPiece = glm::translate(modelPiece, glm::vec3(3.0f, 16.0f, 1.0f));
                 modelPiece = glm::scale(modelPiece, glm::vec3(0.5f, 0.5f, 0.5f));
                 glBindTexture(GL_TEXTURE_2D, texture6);
+                if (animPlay == true)
+                {
+                    anim.applyYBouncingAnimation(modelPiece, 1.0f, 2.0f);
+                }
             }
             else
             {
                 modelPiece = glm::translate(modelPiece, glm::vec3(6.0f, 16.0f, 1.0f));
                 modelPiece = glm::scale(modelPiece, glm::vec3(0.5f, 0.5f, 0.5f));
                 glBindTexture(GL_TEXTURE_2D, texture6);
+                if (animPlay == true)
+                {
+                    anim.applyComplicatedAnimation(modelPiece);
+                }
             }
             modelPiece = glm::rotate(modelPiece, glm::radians(-90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
             modelPiece = glm::scale(modelPiece, glm::vec3(0.5f, 0.5f, 0.5f));
@@ -790,6 +823,10 @@ int main()
                 modelPiece = glm::translate(modelPiece, glm::vec3(4.0f, 16.0f, 8.0f));
                 modelPiece = glm::scale(modelPiece, glm::vec3(0.5f, 0.5f, 0.5f));
                 glBindTexture(GL_TEXTURE_2D, texture5);
+                if (animPlay == true)
+                {
+                    anim.applyBreathingAnimation(modelPiece);
+                }
             }
             //black piece
             else
@@ -821,6 +858,10 @@ int main()
                 modelPiece = glm::translate(modelPiece, glm::vec3(5.0f, 16.0f, 1.0f));
                 modelPiece = glm::scale(modelPiece, glm::vec3(0.5f, 0.5f, 0.5f));
                 glBindTexture(GL_TEXTURE_2D, texture6);
+                if (animPlay == true)
+                {
+                    anim.applyOffsetRotationAnimation(modelPiece, 7.0f, 0.0f);
+                }
             }
             modelPiece = glm::rotate(modelPiece, glm::radians(-90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
             modelPiece = glm::scale(modelPiece, glm::vec3(0.5f, 0.5f, 0.5f));
@@ -1017,9 +1058,10 @@ void processInput(GLFWwindow* window)
 
     if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS)
     {
-        camSwitch = true;
+        
         if (rightArrowKeyPressed == false)
         {
+            camSwitch = true;
             //arrowKeyPressed = true;
             cameraIndex++;
             if (cameraIndex > 2)
@@ -1038,9 +1080,9 @@ void processInput(GLFWwindow* window)
     }
     if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS)
     {
-        camSwitch = true;
         if (leftArrowKeyPressed == false)
         {
+            camSwitch = true;
             cameraIndex--;
             if (cameraIndex < 0)
             {
@@ -1054,6 +1096,25 @@ void processInput(GLFWwindow* window)
     {
         camSwitch = false;
         leftArrowKeyPressed = false;
+    }
+    if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS)
+    {
+        if (spaceKeyPressed == false)
+        {
+            if (animPlay == false)
+            {
+                animPlay = true;
+            }
+            else
+            {
+                animPlay = false;
+            }
+        }
+        spaceKeyPressed = true;
+    }
+    else
+    {
+        spaceKeyPressed = false;
     }
 
 }
