@@ -43,6 +43,7 @@ float cameraPitch[3] = { -25.0f,-17.0f,-90.0f };
 int cameraIndex = 0;
 bool rightArrowKeyPressed = false;
 bool leftArrowKeyPressed = false;
+bool camSwitch = false;
 
 Camera camera(cameraPosition[cameraIndex],
     glm::vec3(0.0f, 1.0f, 0.0f),
@@ -99,12 +100,18 @@ int main()
     unsigned int texture2;
     unsigned int texture3;
     unsigned int texture4;
+    //white piece
+    unsigned int texture5;
+    //brown piece
+    unsigned int texture6;
 
     unsigned int texType;
 
     std::filesystem::path imagePath2 = "resources/textures/blackTexture.png";
     std::filesystem::path imagePath3 = "resources/textures/whiteBlock.png";
     std::filesystem::path imagePath4 = "resources/textures/wood.png";
+    std::filesystem::path imagePath5 = "resources/textures/whitePiece.png";
+    std::filesystem::path imagePath6 = "resources/textures/brownPiece.png";
     
     //glUniform1i(glGetUniformLocation(myShader.ID, "texture1"), 0);
     // texture 2
@@ -197,9 +204,67 @@ int main()
         std::cout << "Failed to load texture" << std::endl;
     }
     stbi_image_free(data);
+    //texture 5
+    glGenTextures(1, &texture5);
+    glBindTexture(GL_TEXTURE_2D, texture5);
+    // set the texture wrapping parameters
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);	// set texture wrapping to GL_REPEAT (default wrapping method)
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    // set texture filtering parameters
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    // load image, create texture and generate mipmaps
+    data = stbi_load(imagePath5.generic_string().c_str(), &width, &height, &nrChannels, 0);
+    if (data)
+    {
+        GLenum format;
+        if (nrChannels == 1)
+            format = GL_RED;
+        else if (nrChannels == 3)
+            format = GL_RGB;
+        else if (nrChannels == 4)
+            format = GL_RGBA;
+        glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, data);
+        glGenerateMipmap(GL_TEXTURE_2D);
+    }
+    else
+    {
+        std::cout << "Failed to load texture" << std::endl;
+    }
+    stbi_image_free(data);
+    //texture 6
+    glGenTextures(1, &texture6);
+    glBindTexture(GL_TEXTURE_2D, texture6);
+    // set the texture wrapping parameters
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);	// set texture wrapping to GL_REPEAT (default wrapping method)
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    // set texture filtering parameters
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    // load image, create texture and generate mipmaps
+    data = stbi_load(imagePath6.generic_string().c_str(), &width, &height, &nrChannels, 0);
+    if (data)
+    {
+        GLenum format;
+        if (nrChannels == 1)
+            format = GL_RED;
+        else if (nrChannels == 3)
+            format = GL_RGB;
+        else if (nrChannels == 4)
+            format = GL_RGBA;
+        glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, data);
+        glGenerateMipmap(GL_TEXTURE_2D);
+    }
+    else
+    {
+        std::cout << "Failed to load texture" << std::endl;
+    }
+    stbi_image_free(data);
     myShader.setInt("texture2", 1);
     myShader.setInt("texture3", 2);
     myShader.setInt("texture4", 3);
+    myShader.setInt("texture5", 4);
+    myShader.setInt("texture6", 5);
 #pragma endregion
 
 #pragma region HeightMapTexture
@@ -378,11 +443,15 @@ int main()
         glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-
+        /*if (camSwitch == true)
+        {
+            Camera camera(cameraPosition[cameraIndex],
+                glm::vec3(0.0f, 1.0f, 0.0f),
+                cameraYaw[cameraIndex], cameraPitch[cameraIndex]);
+        }*/
         Camera camera(cameraPosition[cameraIndex],
             glm::vec3(0.0f, 1.0f, 0.0f),
             cameraYaw[cameraIndex], cameraPitch[cameraIndex]);
-
         myShader.use();
 
         glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100000.0f);
@@ -412,8 +481,10 @@ int main()
             glm::mat4 modelPiece = glm::mat4(1.0f);
             modelPiece = glm::translate(modelPiece, glm::vec3(i, 16.0f, 7.0f));
             modelPiece = glm::scale(modelPiece, glm::vec3(0.5f, 0.5f, 0.5f));
-            glBindTexture(GL_TEXTURE_2D, texture4);
+            glBindTexture(GL_TEXTURE_2D, texture5);
             pawnPiece.Draw(modelPiece, myShader);
+            /*myShader.setMat4("model", modelPiece);
+            myCube.Draw(myShader);*/
         }
 
         //spawn black pawns
@@ -422,8 +493,10 @@ int main()
             glm::mat4 modelPiece = glm::mat4(1.0f);
             modelPiece = glm::translate(modelPiece, glm::vec3(i, 16.0f, 2.0f));
             modelPiece = glm::scale(modelPiece, glm::vec3(0.5f, 0.5f, 0.5f));
-            glBindTexture(GL_TEXTURE_2D, texture4);
+            glBindTexture(GL_TEXTURE_2D, texture6);
             pawnPiece.Draw(modelPiece, myShader);
+            /*myShader.setMat4("model", modelPiece);
+            myCube.Draw(myShader);*/
         }
 
         //spawn rooks
@@ -757,6 +830,7 @@ void processInput(GLFWwindow* window)
 
     if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS)
     {
+        camSwitch = true;
         if (rightArrowKeyPressed == false)
         {
             //arrowKeyPressed = true;
@@ -767,14 +841,17 @@ void processInput(GLFWwindow* window)
             }
             //std::cout << cameraIndex << std::endl;
         }
+        
         rightArrowKeyPressed = true;
     }
     else
     {
+        camSwitch = false;
         rightArrowKeyPressed = false;
     }
     if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS)
     {
+        camSwitch = true;
         if (leftArrowKeyPressed == false)
         {
             cameraIndex--;
@@ -783,10 +860,12 @@ void processInput(GLFWwindow* window)
                 cameraIndex = 2;
             }
         }
+        
         leftArrowKeyPressed = true;
     }
     else
     {
+        camSwitch = false;
         leftArrowKeyPressed = false;
     }
 
