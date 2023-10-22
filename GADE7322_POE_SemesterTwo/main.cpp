@@ -545,6 +545,7 @@ int main()
             glm::vec3(180.0f, 0.0f, 0.0f),
             glm::vec3(0.5f, 0.5f, 0.5f));
 
+
         bishopPiece.addCylinderMesh(myCylinder,
             glm::vec3(0.0f, 0.0f, 0.0f),
             glm::vec3(0.0f, 0.0f, 0.0f),
@@ -569,6 +570,74 @@ int main()
             glm::vec3(0.0f, 0.0f, 6.2f),
             glm::vec3(0.0f, 0.0f, 0.0f),
             glm::vec3(1.0f, 1.0f, 1.0f));
+
+
+        rookPiece.addCylinderMesh(myCylinder,
+            glm::vec3(0.0f, 0.0f, 0.0f),
+            glm::vec3(0.0f, 0.0f, 0.0f),
+            glm::vec3(3.0f, 3.0f, 0.8f));
+
+        rookPiece.addCylinderMesh(myCylinder,
+            glm::vec3(0.0f, 0.0f, 1.8f),
+            glm::vec3(0.0f, 0.0f, 0.0f),
+            glm::vec3(2.0f, 2.0f, 4.0f));
+
+        rookPiece.addCylinderMesh(myCylinder,
+            glm::vec3(0.0f, 0.0f, 3.4f),
+            glm::vec3(0.0f, 0.0f, 0.0f),
+            glm::vec3(2.5f, 2.5, 0.8f));
+         
+        rookPiece.addCylinderMesh(myCylinder,
+            glm::vec3(0.0f, 0.0f, 3.9f),
+            glm::vec3(0.0f, 0.0f, 0.0f),
+            glm::vec3(3.0f, 3.0f, 2.0f));
+
+
+        knightPiece.addCylinderMesh(myCylinder,
+            glm::vec3(0.0f, 0.0f, 0.0f),
+            glm::vec3(0.0f, 0.0f, 0.0f),
+            glm::vec3(3.0f, 3.0f, 0.8f));
+
+        knightPiece.addCylinderMesh(myCylinder,
+            glm::vec3(0.0f, 0.0f, 0.5f),
+            glm::vec3(0.0f, 0.0f, 0.0f),
+            glm::vec3(2.0f, 2.0f, 2.0f));
+        
+        knightPiece.addCubeMesh(myCube,          
+            glm::vec3(-0.5f, 0.0f, 2.0f),
+            glm::vec3(0.0f, -30.0f, 0.0f),
+            glm::vec3(1.5f, 0.5f, 3.0f));
+
+        knightPiece.addCubeMesh(myCube,
+            glm::vec3(0.0f, 0.0f, 3.0f),
+            glm::vec3(0.0f, 50.0f, 0.0f),
+            glm::vec3(1.5f, 0.5f, 4.0f));
+
+        knightPiece.addCubeMesh(myCube,
+            glm::vec3(1.0f, 0.0f, 3.0f),
+            glm::vec3(0.0f, -30.0f, 0.0f),
+            glm::vec3(1.5f, 0.5f, 2.0f));
+
+
+        pawnPiece.addCylinderMesh(myCylinder,
+            glm::vec3(0.0f, 0.0f, 0.0f),
+            glm::vec3(0.0f, 0.0f, 0.0f),
+            glm::vec3(3.0f, 3.0f, 0.8f));
+
+        pawnPiece.addConeMesh(myCone,
+            glm::vec3(0.0f, 0.0f, 1.8f),
+            glm::vec3(0.0f, 0.0f, 0.0f),
+            glm::vec3(2.0f, 2.0f, 4.0f));
+
+        pawnPiece.addCylinderMesh(myCylinder,
+            glm::vec3(0.0f, 0.0f, 3.5f),
+            glm::vec3(0.0f, 0.0f, 0.0f),
+            glm::vec3(1.5f, 1.5f, 0.5f));
+
+        pawnPiece.addSphereMesh(mySphere,
+            glm::vec3(0.0f, 0.0f, 4.3f),
+            glm::vec3(0.0f, 0.0f, 0.0f),
+            glm::vec3(1.5f, 1.5f, 1.5f));
               
         //spawn white pawns
         for (int i = 1; i <= 8; i++)
@@ -577,6 +646,10 @@ int main()
             modelPiece = glm::translate(modelPiece, glm::vec3(i, 16.0f, 7.0f));
             modelPiece = glm::scale(modelPiece, glm::vec3(0.5f, 0.5f, 0.5f));
             glBindTexture(GL_TEXTURE_2D, texture5);
+
+            modelPiece = glm::rotate(modelPiece, glm::radians(-90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+            modelPiece = glm::scale(modelPiece, glm::vec3(0.5f, 0.5f, 0.5f));
+            modelPiece = glm::translate(modelPiece, glm::vec3(0.0f, 0.0f, -1.0f));
             pawnPiece.Draw(modelPiece, myShader);
             /*myShader.setMat4("model", modelPiece);
             myCube.Draw(myShader);*/
@@ -589,6 +662,10 @@ int main()
             modelPiece = glm::translate(modelPiece, glm::vec3(i, 16.0f, 2.0f));
             modelPiece = glm::scale(modelPiece, glm::vec3(0.5f, 0.5f, 0.5f));
             glBindTexture(GL_TEXTURE_2D, texture6);
+
+            modelPiece = glm::rotate(modelPiece, glm::radians(-90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+            modelPiece = glm::scale(modelPiece, glm::vec3(0.5f, 0.5f, 0.5f));
+            modelPiece = glm::translate(modelPiece, glm::vec3(0.0f, 0.0f, -1.0f));
             pawnPiece.Draw(modelPiece, myShader);
             /*myShader.setMat4("model", modelPiece);
             myCube.Draw(myShader);*/
@@ -624,7 +701,9 @@ int main()
                 modelPiece = glm::scale(modelPiece, glm::vec3(0.5f, 0.5f, 0.5f));
                 glBindTexture(GL_TEXTURE_2D, texture6);
             }
-            
+            modelPiece = glm::rotate(modelPiece, glm::radians(-90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+            modelPiece = glm::scale(modelPiece, glm::vec3(0.5f, 0.5f, 0.5f));
+            modelPiece = glm::translate(modelPiece, glm::vec3(0.0f, 0.0f, -1.0f));            
             rookPiece.Draw(modelPiece, myShader);
         }
 
@@ -658,6 +737,10 @@ int main()
                 modelPiece = glm::scale(modelPiece, glm::vec3(0.5f, 0.5f, 0.5f));
                 glBindTexture(GL_TEXTURE_2D, texture6);
             }
+            modelPiece = glm::rotate(modelPiece, glm::radians(-90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+            modelPiece = glm::rotate(modelPiece, glm::radians(90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+            modelPiece = glm::scale(modelPiece, glm::vec3(0.5f, 0.5f, 0.5f));
+            modelPiece = glm::translate(modelPiece, glm::vec3(0.0f, 0.0f, -1.0f));
             knightPiece.Draw(modelPiece, myShader);
         }
 
