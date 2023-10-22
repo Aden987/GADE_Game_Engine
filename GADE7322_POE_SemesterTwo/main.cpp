@@ -16,6 +16,7 @@
 #include "HeightMapMesh.h"
 #include "Camera.h"
 
+
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int modifiers);
 void mouse_callback(GLFWwindow* window, double xpos, double ypos);
@@ -35,12 +36,14 @@ glm::vec3 cameraPosition[3] = { glm::vec3(4.5f, 30.5f, 25.0f),
     glm::vec3(4.5f, 30.5f, 4.5f),
 };
 
+//270.1f
 float cameraYaw[3] = { 270.1f,-53.0f,270.0f };
-
+//-25.0f
 float cameraPitch[3] = { -25.0f,-17.0f,-90.0f };
 
 int cameraIndex = 0;
-bool arrowKeyPressed = false;
+bool rightArrowKeyPressed = false;
+bool leftArrowKeyPressed = false;
 
 Camera camera(cameraPosition[cameraIndex],
     glm::vec3(0.0f, 1.0f, 0.0f),
@@ -52,6 +55,97 @@ bool firstMouse = true;
 // timing
 float deltaTime = 0.0f;
 float lastFrame = 0.0f;
+
+
+//cylinder model properties
+float cylinderRadius = 0.5f;
+float cylinderHeight = 1.0f;
+int cylinderSides = 16; // Adjust the number of sides as needed
+
+basicCylinderMesh myCylinder(cylinderRadius, cylinderHeight, cylinderSides);
+
+// cone model properties
+float coneRadius = 0.5f;
+float coneHeight = 1.0f;
+int coneSides = 16; // Adjust the number of sides as needed
+
+basicConeMesh myCone(coneRadius, coneHeight, coneSides);
+
+//sphere model
+float sphereRadius = 0.5f;
+int sphereSegments = 32; // Adjust the number of segments as needed
+
+basicSphereMesh mySphere(sphereRadius, sphereSegments);
+
+
+// Define a function to create a pawn piece
+void createPawnPiece(Shader& shader) 
+{
+    // You can use the shapes and transformations from your existing code
+
+    // Create the pawn's body (a cylinder)
+    glm::mat4 body = glm::mat4(1.0f);
+    body = glm::translate(body, glm::vec3(0.0f, 0.0f, 0.0f)); // Adjust position
+    body = glm::scale(body, glm::vec3(0.5f, 2.0f, 0.5f)); // Adjust size
+    shader.setMat4("model", body);
+    myCylinder.Draw(shader);
+
+    // Create the pawn's head (a cone)
+    glm::mat4 head = glm::mat4(1.0f);
+    head = glm::translate(head, glm::vec3(0.0f, 2.5f, 0.0f)); // Adjust position
+    head = glm::scale(head, glm::vec3(0.7f, 0.7f, 1.0f)); // Adjust size
+    shader.setMat4("model", head);
+    myCone.Draw(shader);
+}
+
+// Define a function to create a knight piece
+void createKnightPiece(Shader& shader, const glm::mat4& modelMatrix)
+{
+    // Define the size and position for the knight's base (cylinder or cuboid)
+    glm::mat4 base = glm::mat4(1.0f);
+    base = glm::translate(base, glm::vec3(0.0f, 0.0f, 0.0f)); // Adjust position 
+    base = glm::scale(base, glm::vec3(0.5f, 1.5f, 0.5f)); // Adjust size
+    glm::mat4 knightModel = modelMatrix * base;
+    shader.setMat4("model", knightModel);
+
+    myCylinder.Draw(shader);
+    glm::mat4 head = glm::mat4(1.0f);
+    head = glm::translate(head, glm::vec3(0.0f, 1.5f, 0.0f)); // Adjust position
+    head = glm::scale(head, glm::vec3(0.7f, 0.7f, 1.0f)); // Adjust size
+
+    knightModel = modelMatrix * head;
+
+    shader.setMat4("model", knightModel);
+    myCone.Draw(shader); 
+}
+
+
+void createRookPiece(Shader& shader, const glm::mat4& modelMatrix)
+{
+    
+    glm::mat4 base = glm::mat4(1.0f);
+    base = glm::translate(base, glm::vec3(0.0f, 0.0f, 0.0f)); // Adjust position
+    base = glm::scale(base, glm::vec3(0.5f, 1.0f, 0.5f)); // Adjust size
+
+    glm::mat4 rookModel = modelMatrix * base;
+
+    shader.setMat4("model", rookModel);
+
+   
+    myCylinder.Draw(shader); 
+
+    glm::mat4 tower = glm::mat4(1.0f);
+    tower = glm::translate(tower, glm::vec3(0.0f, 1.0f, 0.0f)); // Adjust position
+    tower = glm::scale(tower, glm::vec3(0.6f, 1.5f, 0.6f)); // Adjust size
+
+
+    rookModel = modelMatrix * tower;
+    shader.setMat4("model", rookModel);
+    myCylinder.Draw(shader);
+}
+
+
+
 
 int main()
 {
@@ -89,14 +183,14 @@ int main()
 
     glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 
-    Shader myShader("resources/shaders/basic.shader.vert","resources/shaders/basic.shader.frag");
+    Shader myShader("resources/shaders/basic.shader.vert", "resources/shaders/basic.shader.frag");
     Shader heightMapShader("resources/shaders/heightmap.shader.vert", "resources/shaders/heightmap.shader.frag");
 
     //load texture
 #pragma region TEXTURE
     unsigned int texture1;
     std::filesystem::path imagePath = "resources/textures/NewHeightMap.png";
-    
+
 
 
     //texture 1
@@ -136,7 +230,7 @@ int main()
 
             hMapVertices.push_back(-height / 2.0f + i); //x
             hMapVertices.push_back((int)y * yScale - yShift); //y
-            hMapVertices.push_back(-width/2.0f +j ); //z
+            hMapVertices.push_back(-width / 2.0f + j); //z
         }
     }
     stbi_image_free(data);
@@ -165,7 +259,7 @@ int main()
 
     const unsigned int NUM_STRIPS = height - 1;
     const unsigned int NUM_VERTS_PER_STRIP = width * 2;
-     
+
     //cube vertices
     std::vector<basicCubeVertex> vertices = {
         {glm::vec3(-0.5f, -0.5f, -0.5f) /*glm::vec2(0.0f, 0.0f)},*/},
@@ -230,6 +324,35 @@ int main()
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(unsigned int), &indices[0], GL_STATIC_DRAW);
 
 
+    //TESTING
+
+    //Cube model properties
+
+
+
+    ////cylinder model properties
+    //float cylinderRadius = 0.5f;
+    //float cylinderHeight = 1.0f;
+    //int cylinderSides = 16; // Adjust the number of sides as needed
+
+    //basicCylinderMesh myCylinder(cylinderRadius, cylinderHeight, cylinderSides);
+
+    //// cone model properties
+    //float coneRadius = 0.5f;
+    //float coneHeight = 1.0f;
+    //int coneSides = 16; // Adjust the number of sides as needed
+
+    //basicConeMesh myCone(coneRadius, coneHeight, coneSides);
+
+    ////sphere model
+    //float sphereRadius = 0.5f;
+    //int sphereSegments = 32; // Adjust the number of segments as needed
+
+    //basicSphereMesh mySphere(sphereRadius, sphereSegments);
+
+
+
+    
     while (!glfwWindowShouldClose(window))
     {
         float currentFrame = glfwGetTime();
@@ -242,7 +365,7 @@ int main()
         glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-
+        //0.0f, 1.0f, 0.0f),
         Camera camera(cameraPosition[cameraIndex],
             glm::vec3(0.0f, 1.0f, 0.0f),
             cameraYaw[cameraIndex], cameraPitch[cameraIndex]);
@@ -257,7 +380,74 @@ int main()
         myShader.setMat4("projection", projection);
         myShader.setMat4("view", view);
 
+        //DRAWING THE NEW SHAPES AND TESTING
+
+
+        glm::mat4 neck = glm::mat4(1.0f);
+        neck = glm::translate(neck, glm::vec3(0.3f, 15.0f, 0.3f));//(X,Y,Z) 0.3f, 15.0f, 0.3f
+        neck = glm::scale(neck, glm::vec3(2.0f, 2.0f, 4.0f));
+        myShader.setMat4("model", neck);
+        myCylinder.Draw(myShader);
+
+        glm::mat4 base = glm::mat4(1.0f);
+        base = glm::translate(base, glm::vec3(0.3f, 15.0f, -1.5f));//(X,Y,Z) 0.3f, 15.0f, 0.3f
+        base = glm::scale(base, glm::vec3(3.0f, 3.0f, 0.8f));
+        myShader.setMat4("model", base);
+        myCylinder.Draw(myShader);
+
+
+        glm::mat4 collar = glm::mat4(1.0f);
+        collar = glm::translate(collar, glm::vec3(0.3f, 15.0f, 2.0f));//(X,Y,Z)
+        collar = glm::scale(collar, glm::vec3(2.5f, 2.5, 0.8f));
+        myShader.setMat4("model", collar);
+        myCylinder.Draw(myShader);
+
+
+        glm::mat4 headB = glm::mat4(1.0f);
+        headB = glm::translate(headB, glm::vec3(0.3f, 15.0f, 1.5f));//(X,Y,Z) 0.3f, 15.0f, 0.3f        
+        headB = glm::scale(headB, glm::vec3(2.5f, 2.5f, 4.0f));
+        headB = glm::rotate(headB, glm::radians(180.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+        myShader.setMat4("model", headB);
+        myCone.Draw(myShader);
+
+        glm::mat4 headC = glm::mat4(1.0f);
+        headC = glm::translate(headC, glm::vec3(0.3f, 15.0f, 4.0f));//(X,Y,Z) 0.3f, 15.0f, 0.3f        
+        headC = glm::scale(headC, glm::vec3(2.5f, 2.5f, 1.0f));
+        myShader.setMat4("model", headC);
+        myCone.Draw(myShader);
+
+
+        //
+        myShader.use();
+        // Bind the appropriate texture for your pawn piece if needed
+
+        // Place the pawn on the board using translations
+        glm::mat4 pawnModel = glm::mat4(1.0f);
+        // Adjust these positions to place the pawn correctly on the board
+        pawnModel = glm::translate(pawnModel, glm::vec3(0.3f, 15.0f, -1.5f));
+        myShader.setMat4("model", pawnModel);
+        // Create a pawn piece using the adjusted positions
+        createPawnPiece(myShader);
+
+
+        // Define the model matrix for the knight's position
+        glm::mat4 knightModelMatrix = glm::mat4(1.0f);
+        knightModelMatrix = glm::translate(knightModelMatrix, glm::vec3(0.3f, 15.0f, -1.0f)); // Adjust position
+        // Create a knight piece
+        createKnightPiece(myShader, knightModelMatrix);
+
+        // Define the model matrix for the rook's position
+        glm::mat4 rookModelMatrix = glm::mat4(1.0f);
+        rookModelMatrix = glm::translate(rookModelMatrix, glm::vec3(0.3f, 15.0f, 1.5f)); // Adjust position
+
+        // Create a rook piece
+        createRookPiece(myShader, rookModelMatrix);
+        
+
+        //ENDING THE DRAWING AND TESTING
+
 #pragma region CHESSBOARD AND BORDER
+
         //Cube 
         /*myShader.setMat4("model", model);
         myCube.Draw(myShader);*/
@@ -402,10 +592,14 @@ int main()
     return 0;
 }
 
+
+
 void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 {
     glViewport(0, 0, width, height);
 }
+
+
 
 void processInput(GLFWwindow* window)
 {
@@ -423,27 +617,41 @@ void processInput(GLFWwindow* window)
 
     if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS)
     {
-        cameraIndex++;
-        if (cameraIndex > 2)
+        if (rightArrowKeyPressed == false)
         {
-            cameraIndex = 0;
+            //arrowKeyPressed = true;
+            cameraIndex++;
+            if (cameraIndex > 2)
+            {
+                cameraIndex = 0;
+            }
+            //std::cout << cameraIndex << std::endl;
         }
-        //std::cout << cameraIndex << std::endl;
+        rightArrowKeyPressed = true;
     }
-    /* else
-     {
-         arrowKeyPressed = false;
-     }*/
+    else
+    {
+        rightArrowKeyPressed = false;
+    }
     if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS)
     {
-        cameraIndex--;
-        if (cameraIndex < 0)
+        if (leftArrowKeyPressed == false)
         {
-            cameraIndex = 2;
+            cameraIndex--;
+            if (cameraIndex < 0)
+            {
+                cameraIndex = 2;
+            }
         }
-        //std::cout << cameraIndex << std::endl;
+        leftArrowKeyPressed = true;
+    }
+    else
+    {
+        leftArrowKeyPressed = false;
     }
 }
+
+
 
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int modifiers)
 {
