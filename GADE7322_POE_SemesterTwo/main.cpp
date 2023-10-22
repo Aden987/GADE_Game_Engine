@@ -691,6 +691,9 @@ int main()
                 modelPiece = glm::scale(modelPiece, glm::vec3(0.5f, 0.5f, 0.5f));
                 glBindTexture(GL_TEXTURE_2D, texture6);
             }
+            modelPiece = glm::rotate(modelPiece, glm::radians(-90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+            modelPiece = glm::scale(modelPiece, glm::vec3(0.5f, 0.5f, 0.5f));
+            modelPiece = glm::translate(modelPiece, glm::vec3(0.0f, 0.0f, -1.0f));
             bishopPiece.Draw(modelPiece, myShader);
         }
 
@@ -712,6 +715,9 @@ int main()
                 modelPiece = glm::scale(modelPiece, glm::vec3(0.5f, 0.5f, 0.5f));
                 glBindTexture(GL_TEXTURE_2D, texture6);
             }
+            modelPiece = glm::rotate(modelPiece, glm::radians(-90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+            modelPiece = glm::scale(modelPiece, glm::vec3(0.5f, 0.5f, 0.5f));
+            modelPiece = glm::translate(modelPiece, glm::vec3(0.0f, 0.0f, -1.0f));
             queenPiece.Draw(modelPiece, myShader);
         }
 
