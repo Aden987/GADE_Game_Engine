@@ -473,6 +473,8 @@ int main()
             glm::vec3(0.3f, 20.0f, 0.3f),
             glm::vec3(0, 0, 0),
             glm::vec3(1.5f, 1.5f, 1.5f));*/
+
+        //pos,rot,scale
         
               
         //spawn white pawns
@@ -508,26 +510,26 @@ int main()
             {
                 modelPiece = glm::translate(modelPiece, glm::vec3(1.0f, 16.0f, 8.0f));
                 modelPiece = glm::scale(modelPiece, glm::vec3(0.5f, 0.5f, 0.5f));
-                glBindTexture(GL_TEXTURE_2D, texture4);
+                glBindTexture(GL_TEXTURE_2D, texture5);
             }
             else if (i == 1)
             {
                 modelPiece = glm::translate(modelPiece, glm::vec3(8.0f, 16.0f, 8.0f));
                 modelPiece = glm::scale(modelPiece, glm::vec3(0.5f, 0.5f, 0.5f));
-                glBindTexture(GL_TEXTURE_2D, texture4);
+                glBindTexture(GL_TEXTURE_2D, texture5);
             }
             //black pieces
             else if (i == 2)
             {
                 modelPiece = glm::translate(modelPiece, glm::vec3(1.0f, 16.0f, 1.0f));
                 modelPiece = glm::scale(modelPiece, glm::vec3(0.5f, 0.5f, 0.5f));
-                glBindTexture(GL_TEXTURE_2D, texture4);
+                glBindTexture(GL_TEXTURE_2D, texture6);
             }
             else
             {
                 modelPiece = glm::translate(modelPiece, glm::vec3(8.0f, 16.0f, 1.0f));
                 modelPiece = glm::scale(modelPiece, glm::vec3(0.5f, 0.5f, 0.5f));
-                glBindTexture(GL_TEXTURE_2D, texture4);
+                glBindTexture(GL_TEXTURE_2D, texture6);
             }
             
             rookPiece.Draw(modelPiece, myShader);
@@ -542,26 +544,26 @@ int main()
             {
                 modelPiece = glm::translate(modelPiece, glm::vec3(2.0f, 16.0f, 8.0f));
                 modelPiece = glm::scale(modelPiece, glm::vec3(0.5f, 0.5f, 0.5f));
-                glBindTexture(GL_TEXTURE_2D, texture4);
+                glBindTexture(GL_TEXTURE_2D, texture5);
             }
             else if (i == 1)
             {
                 modelPiece = glm::translate(modelPiece, glm::vec3(7.0f, 16.0f, 8.0f));
                 modelPiece = glm::scale(modelPiece, glm::vec3(0.5f, 0.5f, 0.5f));
-                glBindTexture(GL_TEXTURE_2D, texture4);
+                glBindTexture(GL_TEXTURE_2D, texture5);
             }
             //black pieces
             else if (i == 2)
             {
                 modelPiece = glm::translate(modelPiece, glm::vec3(2.0f, 16.0f, 1.0f));
                 modelPiece = glm::scale(modelPiece, glm::vec3(0.5f, 0.5f, 0.5f));
-                glBindTexture(GL_TEXTURE_2D, texture4);
+                glBindTexture(GL_TEXTURE_2D, texture6);
             }
             else
             {
                 modelPiece = glm::translate(modelPiece, glm::vec3(7.0f, 16.0f, 1.0f));
                 modelPiece = glm::scale(modelPiece, glm::vec3(0.5f, 0.5f, 0.5f));
-                glBindTexture(GL_TEXTURE_2D, texture4);
+                glBindTexture(GL_TEXTURE_2D, texture6);
             }
             knightPiece.Draw(modelPiece, myShader);
         }
@@ -575,26 +577,26 @@ int main()
             {
                 modelPiece = glm::translate(modelPiece, glm::vec3(3.0f, 16.0f, 8.0f));
                 modelPiece = glm::scale(modelPiece, glm::vec3(0.5f, 0.5f, 0.5f));
-                glBindTexture(GL_TEXTURE_2D, texture4);
+                glBindTexture(GL_TEXTURE_2D, texture5);
             }
             else if (i == 1)
             {
                 modelPiece = glm::translate(modelPiece, glm::vec3(6.0f, 16.0f, 8.0f));
                 modelPiece = glm::scale(modelPiece, glm::vec3(0.5f, 0.5f, 0.5f));
-                glBindTexture(GL_TEXTURE_2D, texture4);
+                glBindTexture(GL_TEXTURE_2D, texture5);
             }
             //black pieces
             else if (i == 2)
             {
                 modelPiece = glm::translate(modelPiece, glm::vec3(3.0f, 16.0f, 1.0f));
                 modelPiece = glm::scale(modelPiece, glm::vec3(0.5f, 0.5f, 0.5f));
-                glBindTexture(GL_TEXTURE_2D, texture4);
+                glBindTexture(GL_TEXTURE_2D, texture6);
             }
             else
             {
                 modelPiece = glm::translate(modelPiece, glm::vec3(6.0f, 16.0f, 1.0f));
                 modelPiece = glm::scale(modelPiece, glm::vec3(0.5f, 0.5f, 0.5f));
-                glBindTexture(GL_TEXTURE_2D, texture4);
+                glBindTexture(GL_TEXTURE_2D, texture6);
             }
             bishopPiece.Draw(modelPiece, myShader);
         }
@@ -608,14 +610,14 @@ int main()
             {
                 modelPiece = glm::translate(modelPiece, glm::vec3(4.0f, 16.0f, 8.0f));
                 modelPiece = glm::scale(modelPiece, glm::vec3(0.5f, 0.5f, 0.5f));
-                glBindTexture(GL_TEXTURE_2D, texture4);
+                glBindTexture(GL_TEXTURE_2D, texture5);
             }
             //black piece
             else
             {
                 modelPiece = glm::translate(modelPiece, glm::vec3(4.0f, 16.0f, 1.0f));
                 modelPiece = glm::scale(modelPiece, glm::vec3(0.5f, 0.5f, 0.5f));
-                glBindTexture(GL_TEXTURE_2D, texture4);
+                glBindTexture(GL_TEXTURE_2D, texture6);
             }
             queenPiece.Draw(modelPiece, myShader);
         }
@@ -629,14 +631,14 @@ int main()
             {
                 modelPiece = glm::translate(modelPiece, glm::vec3(5.0f, 16.0f, 8.0f));
                 modelPiece = glm::scale(modelPiece, glm::vec3(0.5f, 0.5f, 0.5f));
-                glBindTexture(GL_TEXTURE_2D, texture3);
+                glBindTexture(GL_TEXTURE_2D, texture5);
             }
             //black piece
             else
             {
                 modelPiece = glm::translate(modelPiece, glm::vec3(5.0f, 16.0f, 1.0f));
                 modelPiece = glm::scale(modelPiece, glm::vec3(0.5f, 0.5f, 0.5f));
-                glBindTexture(GL_TEXTURE_2D, texture3);
+                glBindTexture(GL_TEXTURE_2D, texture6);
             }
             kingPiece.Draw(modelPiece, myShader);
         }
