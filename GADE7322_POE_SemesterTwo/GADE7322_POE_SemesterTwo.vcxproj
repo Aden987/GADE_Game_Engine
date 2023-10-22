@@ -150,6 +150,7 @@
     <ClInclude Include="basicSphereMesh.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="HeightMapMesh.h" />
+    <ClInclude Include="ObjectContainer.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="stb_image.h" />
   </ItemGroup>
