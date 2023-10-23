@@ -306,7 +306,7 @@ int main()
 
     std::filesystem::path imagePath = "resources/textures/NewHeightMap.png";
     
-    //texture 1
+    //height map
     glGenTextures(1, &texture1);
     glBindTexture(GL_TEXTURE_2D, texture1);
     //texture wrapping parameters
@@ -379,6 +379,7 @@ int main()
     const unsigned int NUM_STRIPS = height2 - 1;
     const unsigned int NUM_VERTS_PER_STRIP = width2 * 2;
      
+    //creating primitive shapes
     //cube vertices
     std::vector<basicCubeVertex> vertices = {
         {glm::vec3(-0.5f, -0.5f, -0.5f), glm::vec2(0.0f, 0.0f)},
@@ -668,6 +669,7 @@ int main()
             glm::vec3(1.5f, 1.5f, 1.5f));
 #pragma endregion
 
+        //genrating chess pieces
         //spawn white pawns
         for (int i = 1; i <= 8; i++)
         {
