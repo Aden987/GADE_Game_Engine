@@ -16,6 +16,7 @@
 #include "HeightMapMesh.h"
 #include "Camera.h"
 #include "ObjectContainer.h"
+#include "AnimationController.cpp"
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int modifiers);
@@ -43,7 +44,9 @@ float cameraPitch[3] = { -25.0f,-17.0f,-90.0f };
 int cameraIndex = 0;
 bool rightArrowKeyPressed = false;
 bool leftArrowKeyPressed = false;
+bool spaceKeyPressed = false;
 bool camSwitch = false;
+bool animPlay = false;
 
 Camera camera(cameraPosition[cameraIndex],
     glm::vec3(0.0f, 1.0f, 0.0f),
@@ -104,6 +107,7 @@ int main()
     unsigned int texture5;
     //brown piece
     unsigned int texture6;
+    unsigned int texture7;
 
     unsigned int texType;
 
@@ -112,6 +116,7 @@ int main()
     std::filesystem::path imagePath4 = "resources/textures/wood.png";
     std::filesystem::path imagePath5 = "resources/textures/whitePiece.png";
     std::filesystem::path imagePath6 = "resources/textures/brownPiece.png";
+    std::filesystem::path imagePath7 = "resources/textures/grass.png";
     
     //glUniform1i(glGetUniformLocation(myShader.ID, "texture1"), 0);
     // texture 2
@@ -260,20 +265,48 @@ int main()
         std::cout << "Failed to load texture" << std::endl;
     }
     stbi_image_free(data);
+    //texture7
+    glGenTextures(1, &texture7);
+    glBindTexture(GL_TEXTURE_2D, texture7);
+    // set the texture wrapping parameters
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);	// set texture wrapping to GL_REPEAT (default wrapping method)
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    // set texture filtering parameters
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    // load image, create texture and generate mipmaps
+    data = stbi_load(imagePath7.generic_string().c_str(), &width, &height, &nrChannels, 0);
+    if (data)
+    {
+        GLenum format;
+        if (nrChannels == 1)
+            format = GL_RED;
+        else if (nrChannels == 3)
+            format = GL_RGB;
+        else if (nrChannels == 4)
+            format = GL_RGBA;
+        glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, data);
+        glGenerateMipmap(GL_TEXTURE_2D);
+    }
+    else
+    {
+        std::cout << "Failed to load texture" << std::endl;
+    }
+    stbi_image_free(data);
     myShader.setInt("texture2", 1);
     myShader.setInt("texture3", 2);
     myShader.setInt("texture4", 3);
     myShader.setInt("texture5", 4);
     myShader.setInt("texture6", 5);
+    myShader.setInt("texture7", 6);
 #pragma endregion
 
 #pragma region HeightMapTexture
     unsigned int texture1;
 
     std::filesystem::path imagePath = "resources/textures/NewHeightMap.png";
-
-
-    //texture 1
+    
+    //height map
     glGenTextures(1, &texture1);
     glBindTexture(GL_TEXTURE_2D, texture1);
     //texture wrapping parameters
@@ -346,6 +379,7 @@ int main()
     const unsigned int NUM_STRIPS = height2 - 1;
     const unsigned int NUM_VERTS_PER_STRIP = width2 * 2;
      
+    //creating primitive shapes
     //cube vertices
     std::vector<basicCubeVertex> vertices = {
         {glm::vec3(-0.5f, -0.5f, -0.5f), glm::vec2(0.0f, 0.0f)},
@@ -430,12 +464,15 @@ int main()
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, terrainEBO);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(unsigned int), &indices[0], GL_STATIC_DRAW);
 
+    AnimationController anim;
 
     while (!glfwWindowShouldClose(window))
     {
         float currentFrame = glfwGetTime();
         deltaTime = currentFrame - lastFrame;
         lastFrame = currentFrame;
+
+        anim.update(deltaTime);
 
         processInput(window);
 
@@ -452,6 +489,7 @@ int main()
         Camera camera(cameraPosition[cameraIndex],
             glm::vec3(0.0f, 1.0f, 0.0f),
             cameraYaw[cameraIndex], cameraPitch[cameraIndex]);
+
         myShader.use();
 
         glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100000.0f);
@@ -466,17 +504,8 @@ int main()
         ObjectContainer queenPiece;
         ObjectContainer kingPiece;
 
-        /*myObject.addCubeMesh(myCube,
-            glm::vec3(0.3f, 15.0f, 0.3f),
-            glm::vec3(0, 0, 0),
-            glm::vec3(1, 1, 1));
-        myObject.addConeMesh(myCone,
-            glm::vec3(0.3f, 20.0f, 0.3f),
-            glm::vec3(0, 0, 0),
-            glm::vec3(1.5f, 1.5f, 1.5f));*/
 
-        //pos,rot,scale
-
+#pragma region InstantiateChessPieces
         //Michael Chess Pieces into containers
 
         kingPiece.addCylinderMesh(myCylinder,
@@ -638,7 +667,9 @@ int main()
             glm::vec3(0.0f, 0.0f, 4.3f),
             glm::vec3(0.0f, 0.0f, 0.0f),
             glm::vec3(1.5f, 1.5f, 1.5f));
-              
+#pragma endregion
+
+        //genrating chess pieces
         //spawn white pawns
         for (int i = 1; i <= 8; i++)
         {
@@ -650,6 +681,15 @@ int main()
             modelPiece = glm::rotate(modelPiece, glm::radians(-90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
             modelPiece = glm::scale(modelPiece, glm::vec3(0.5f, 0.5f, 0.5f));
             modelPiece = glm::translate(modelPiece, glm::vec3(0.0f, 0.0f, -1.0f));
+            if (animPlay == true && i == 8)
+            {
+                anim.applyBouncingAnimation(modelPiece,1.0f,5.0f);
+            }
+            if (animPlay == true && i == 3)
+            {
+                //anim.applyBouncingAnimation(modelPiece,1.0f,5.0f);
+                anim.applyPawnAnimation(modelPiece, 5.0f, 5.0f, 3.5f);
+            }
             pawnPiece.Draw(modelPiece, myShader);
             /*myShader.setMat4("model", modelPiece);
             myCube.Draw(myShader);*/
@@ -666,6 +706,15 @@ int main()
             modelPiece = glm::rotate(modelPiece, glm::radians(-90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
             modelPiece = glm::scale(modelPiece, glm::vec3(0.5f, 0.5f, 0.5f));
             modelPiece = glm::translate(modelPiece, glm::vec3(0.0f, 0.0f, -1.0f));
+            if (animPlay == true && i == 1)
+            {
+                anim.applyRotationAnimation(modelPiece, 30.0f, glm::vec3(0.0f, 0.0f, 1.0f));
+            }
+            if (animPlay == true && i == 8)
+            {
+                 //anim.applyBouncingAnimation(modelPiece,1.0f,5.0f);
+                anim.applyPawnAnimation(modelPiece, 5.0f, 5.0f, -3.5f);
+            }
             pawnPiece.Draw(modelPiece, myShader);
             /*myShader.setMat4("model", modelPiece);
             myCube.Draw(myShader);*/
@@ -681,6 +730,10 @@ int main()
                 modelPiece = glm::translate(modelPiece, glm::vec3(1.0f, 16.0f, 8.0f));
                 modelPiece = glm::scale(modelPiece, glm::vec3(0.5f, 0.5f, 0.5f));
                 glBindTexture(GL_TEXTURE_2D, texture5);
+                if (animPlay == true)
+                {
+                    anim.applyRotationAnimation(modelPiece, 30.0f, glm::vec3(1.0f, 0.0f, 0.0f));
+                }
             }
             else if (i == 1)
             {
@@ -723,6 +776,10 @@ int main()
                 modelPiece = glm::translate(modelPiece, glm::vec3(7.0f, 16.0f, 8.0f));
                 modelPiece = glm::scale(modelPiece, glm::vec3(0.5f, 0.5f, 0.5f));
                 glBindTexture(GL_TEXTURE_2D, texture5);
+                if (animPlay == true)
+                {
+                    anim.applyKnightAnimation(modelPiece, 1.5f, 5.0f, -2.5f, -1.2f);
+                }
             }
             //black pieces
             else if (i == 2)
@@ -767,12 +824,20 @@ int main()
                 modelPiece = glm::translate(modelPiece, glm::vec3(3.0f, 16.0f, 1.0f));
                 modelPiece = glm::scale(modelPiece, glm::vec3(0.5f, 0.5f, 0.5f));
                 glBindTexture(GL_TEXTURE_2D, texture6);
+                if (animPlay == true)
+                {
+                    anim.applyYBouncingAnimation(modelPiece, 1.0f, 2.0f);
+                }
             }
             else
             {
                 modelPiece = glm::translate(modelPiece, glm::vec3(6.0f, 16.0f, 1.0f));
                 modelPiece = glm::scale(modelPiece, glm::vec3(0.5f, 0.5f, 0.5f));
                 glBindTexture(GL_TEXTURE_2D, texture6);
+                if (animPlay == true)
+                {
+                    anim.applyComplicatedAnimation(modelPiece);
+                }
             }
             modelPiece = glm::rotate(modelPiece, glm::radians(-90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
             modelPiece = glm::scale(modelPiece, glm::vec3(0.5f, 0.5f, 0.5f));
@@ -790,6 +855,10 @@ int main()
                 modelPiece = glm::translate(modelPiece, glm::vec3(4.0f, 16.0f, 8.0f));
                 modelPiece = glm::scale(modelPiece, glm::vec3(0.5f, 0.5f, 0.5f));
                 glBindTexture(GL_TEXTURE_2D, texture5);
+                if (animPlay == true)
+                {
+                    anim.applyBreathingAnimation(modelPiece);
+                }
             }
             //black piece
             else
@@ -821,6 +890,10 @@ int main()
                 modelPiece = glm::translate(modelPiece, glm::vec3(5.0f, 16.0f, 1.0f));
                 modelPiece = glm::scale(modelPiece, glm::vec3(0.5f, 0.5f, 0.5f));
                 glBindTexture(GL_TEXTURE_2D, texture6);
+                if (animPlay == true)
+                {
+                    anim.applyOffsetRotationAnimation(modelPiece, 15.0f, 0.0f);
+                }
             }
             modelPiece = glm::rotate(modelPiece, glm::radians(-90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
             modelPiece = glm::scale(modelPiece, glm::vec3(0.5f, 0.5f, 0.5f));
@@ -978,10 +1051,10 @@ int main()
         glm::mat4 hMapModel = glm::mat4(1.0f);
         heightMapShader.setMat4("model", hMapModel);
 
-        glActiveTexture(GL_TEXTURE0);
-        glBindTexture(GL_TEXTURE_2D, texture1);
+        /*glActiveTexture(GL_TEXTURE0);
+        glBindTexture(GL_TEXTURE_2D, texture6);*/
+        glBindTexture(GL_TEXTURE_2D, texture7);
         glBindVertexArray(terrainVAO);
-        
         for (unsigned int strip = 0; strip < NUM_STRIPS; ++strip)
         {
             glDrawElements(GL_TRIANGLE_STRIP, NUM_VERTS_PER_STRIP, GL_UNSIGNED_INT, (void*)(sizeof(unsigned int)* NUM_VERTS_PER_STRIP* strip));
@@ -1017,9 +1090,10 @@ void processInput(GLFWwindow* window)
 
     if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS)
     {
-        camSwitch = true;
+        
         if (rightArrowKeyPressed == false)
         {
+            camSwitch = true;
             //arrowKeyPressed = true;
             cameraIndex++;
             if (cameraIndex > 2)
@@ -1038,9 +1112,9 @@ void processInput(GLFWwindow* window)
     }
     if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS)
     {
-        camSwitch = true;
         if (leftArrowKeyPressed == false)
         {
+            camSwitch = true;
             cameraIndex--;
             if (cameraIndex < 0)
             {
@@ -1054,6 +1128,25 @@ void processInput(GLFWwindow* window)
     {
         camSwitch = false;
         leftArrowKeyPressed = false;
+    }
+    if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS)
+    {
+        if (spaceKeyPressed == false)
+        {
+            if (animPlay == false)
+            {
+                animPlay = true;
+            }
+            else
+            {
+                animPlay = false;
+            }
+        }
+        spaceKeyPressed = true;
+    }
+    else
+    {
+        spaceKeyPressed = false;
     }
 
 }
