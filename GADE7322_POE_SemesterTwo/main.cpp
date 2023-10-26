@@ -45,6 +45,7 @@ int cameraIndex = 0;
 bool rightArrowKeyPressed = false;
 bool leftArrowKeyPressed = false;
 bool spaceKeyPressed = false;
+bool camKeyPressed = false;
 bool camSwitch = false;
 bool animPlay = false;
 
@@ -480,15 +481,15 @@ int main()
         glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-        /*if (camSwitch == true)
+        /*if (camSwitch == false)
         {
             Camera camera(cameraPosition[cameraIndex],
                 glm::vec3(0.0f, 1.0f, 0.0f),
                 cameraYaw[cameraIndex], cameraPitch[cameraIndex]);
         }*/
-        Camera camera(cameraPosition[cameraIndex],
+        /*Camera camera(cameraPosition[cameraIndex],
             glm::vec3(0.0f, 1.0f, 0.0f),
-            cameraYaw[cameraIndex], cameraPitch[cameraIndex]);
+            cameraYaw[cameraIndex], cameraPitch[cameraIndex]);*/
 
         myShader.use();
 
@@ -1080,20 +1081,26 @@ void processInput(GLFWwindow* window)
         glfwSetWindowShouldClose(window, true);
 
     if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
+    {
         camera.ProcessKeyboard(FORWARD, deltaTime);
+    }    
     if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
+    {
         camera.ProcessKeyboard(BACKWARD, deltaTime);
+    }  
     if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
+    {
         camera.ProcessKeyboard(LEFT, deltaTime);
+    }
     if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
+    {
         camera.ProcessKeyboard(RIGHT, deltaTime);
-
+    }
     if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS)
     {
-        
+        //camSwitch = false;
         if (rightArrowKeyPressed == false)
         {
-            camSwitch = true;
             //arrowKeyPressed = true;
             cameraIndex++;
             if (cameraIndex > 2)
@@ -1107,14 +1114,12 @@ void processInput(GLFWwindow* window)
     }
     else
     {
-        camSwitch = false;
         rightArrowKeyPressed = false;
     }
     if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS)
     {
         if (leftArrowKeyPressed == false)
         {
-            camSwitch = true;
             cameraIndex--;
             if (cameraIndex < 0)
             {
@@ -1126,7 +1131,6 @@ void processInput(GLFWwindow* window)
     }
     else
     {
-        camSwitch = false;
         leftArrowKeyPressed = false;
     }
     if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS)
@@ -1148,6 +1152,25 @@ void processInput(GLFWwindow* window)
     {
         spaceKeyPressed = false;
     }
+    /*if (glfwGetKey(window, GLFW_KEY_TAB) == GLFW_PRESS)
+    {
+        if (camKeyPressed == false)
+        {
+            if (camSwitch == false)
+            {
+                camSwitch = true;
+            }
+            else
+            {
+                camSwitch = false;
+            }
+        }
+        camKeyPressed = true;
+    }
+    else
+    {
+        camKeyPressed = false;
+    }*/
 
 }
 
