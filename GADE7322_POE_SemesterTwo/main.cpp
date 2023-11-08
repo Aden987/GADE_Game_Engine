@@ -17,6 +17,7 @@
 #include "Camera.h"
 #include "ObjectContainer.h"
 #include "AnimationController.cpp"
+#include "model.h"
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int modifiers);
@@ -98,6 +99,7 @@ int main()
 
     Shader myShader("resources/shaders/basic.shader.vert","resources/shaders/basic.shader.frag");
     Shader heightMapShader("resources/shaders/heightmap.shader.vert", "resources/shaders/heightmap.shader.frag");
+    Shader importShader("resources/shaders/importBasic.shader.vert", "resources/shaders/importBasic.shader.frag");
 
     //load texture
 #pragma region TEXTURE
@@ -467,7 +469,7 @@ int main()
 
     AnimationController anim;
 
-    
+    //Model testModel("")
 
 
     while (!glfwWindowShouldClose(window))

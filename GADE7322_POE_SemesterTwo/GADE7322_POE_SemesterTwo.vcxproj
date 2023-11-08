@@ -151,6 +151,8 @@
     <ClInclude Include="basicSphereMesh.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="HeightMapMesh.h" />
+    <ClInclude Include="importMesh.h" />
+    <ClInclude Include="model.h" />
     <ClInclude Include="ObjectContainer.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="stb_image.h" />
@@ -160,6 +162,8 @@
     <None Include="resources\shaders\basic.shader.vert" />
     <None Include="resources\shaders\heightmap.shader.frag" />
     <None Include="resources\shaders\heightmap.shader.vert" />
+    <None Include="resources\shaders\importBasic.shader.frag" />
+    <None Include="resources\shaders\importBasic.shader.vert" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
