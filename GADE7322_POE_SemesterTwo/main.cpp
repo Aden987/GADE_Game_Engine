@@ -467,6 +467,9 @@ int main()
 
     AnimationController anim;
 
+    
+
+
     while (!glfwWindowShouldClose(window))
     {
         float currentFrame = glfwGetTime();
@@ -481,15 +484,27 @@ int main()
         glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-        /*if (camSwitch == false)
+        if (camSwitch == true)
         {
             Camera camera(cameraPosition[cameraIndex],
                 glm::vec3(0.0f, 1.0f, 0.0f),
                 cameraYaw[cameraIndex], cameraPitch[cameraIndex]);
-        }*/
-        /*Camera camera(cameraPosition[cameraIndex],
-            glm::vec3(0.0f, 1.0f, 0.0f),
-            cameraYaw[cameraIndex], cameraPitch[cameraIndex]);*/
+            glfwSetCursorPosCallback(window, 0);
+            glfwSetScrollCallback(window, 0);
+            glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+            
+        }
+        else
+        {
+            Camera camera(cameraPosition[cameraIndex],
+                glm::vec3(0.0f, 1.0f, 0.0f),
+                cameraYaw[cameraIndex], cameraPitch[cameraIndex]);
+            glfwSetCursorPosCallback(window, mouse_callback);
+            glfwSetScrollCallback(window, scroll_callback);
+            glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+        }
+
+        
 
         myShader.use();
 
@@ -670,6 +685,7 @@ int main()
             glm::vec3(1.5f, 1.5f, 1.5f));
 #pragma endregion
 
+#pragma region GenerateChessPieces
         //genrating chess pieces
         //spawn white pawns
         for (int i = 1; i <= 8; i++)
@@ -901,6 +917,7 @@ int main()
             modelPiece = glm::translate(modelPiece, glm::vec3(0.0f, 0.0f, -1.0f));
             kingPiece.Draw(modelPiece, myShader);
         }
+#pragma endregion
 
 #pragma region CHESSBOARD AND BORDER
         int chessBoardCol = 10;
@@ -1107,7 +1124,7 @@ void processInput(GLFWwindow* window)
             {
                 cameraIndex = 0;
             }
-            //std::cout << cameraIndex << std::endl;
+
         }
         
         rightArrowKeyPressed = true;
@@ -1152,7 +1169,7 @@ void processInput(GLFWwindow* window)
     {
         spaceKeyPressed = false;
     }
-    /*if (glfwGetKey(window, GLFW_KEY_TAB) == GLFW_PRESS)
+    if (glfwGetKey(window, GLFW_KEY_TAB) == GLFW_PRESS)
     {
         if (camKeyPressed == false)
         {
@@ -1170,7 +1187,7 @@ void processInput(GLFWwindow* window)
     else
     {
         camKeyPressed = false;
-    }*/
+    }
 
 }
 
