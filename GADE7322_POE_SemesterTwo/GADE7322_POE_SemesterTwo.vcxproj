@@ -160,6 +160,8 @@
     <None Include="resources\shaders\basic.shader.vert" />
     <None Include="resources\shaders\heightmap.shader.frag" />
     <None Include="resources\shaders\heightmap.shader.vert" />
+    <None Include="resources\shaders\skybox.shader.frag" />
+    <None Include="resources\shaders\skybox.shader.vert" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
