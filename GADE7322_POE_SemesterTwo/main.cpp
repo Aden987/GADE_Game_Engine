@@ -469,7 +469,7 @@ int main()
 
     AnimationController anim;
 
-    std::filesystem::path modelPath = "resources/models/backpack/Monolith.fbx";
+    std::filesystem::path modelPath = "resources/models/Monolith.fbx";
     //Model ourModel(modelPath);
     //modelPath = "resources/models/backpack/backpack.obj";
     Model ourModel(modelPath.generic_string().c_str());
