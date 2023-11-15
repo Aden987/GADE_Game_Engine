@@ -310,6 +310,13 @@ int main()
     std::filesystem::path bottomMap = "resources/textures/skybox/bottom.jpg";
     std::filesystem::path frontMap = "resources/textures/skybox/front.jpg";
     std::filesystem::path backMap = "resources/textures/skybox/back.jpg";
+
+    //std::filesystem::path rightMap = "resources/textures/newSkybox/right.jpg";
+    //std::filesystem::path leftMap = "resources/textures/newSkybox/left.jpg";
+    //std::filesystem::path topMap = "resources/textures/newSkybox/top.jpg";
+    //std::filesystem::path bottomMap = "resources/textures/newSkybox/bottom.jpg";
+    //std::filesystem::path frontMap = "resources/textures/newSkybox/front.jpg";
+    //std::filesystem::path backMap = "resources/textures/newSkybox/back.jpg";
     
     vector<std::filesystem::path> faces
     {
@@ -1166,7 +1173,7 @@ int main()
         skyboxShader.setMat4("projection", projection);
         // skybox cube
         glBindVertexArray(skyboxVAO);
-        glActiveTexture(GL_TEXTURE1);
+        glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_CUBE_MAP, cubemapTexture);
         glDrawArrays(GL_TRIANGLES, 0, 36);
         glBindVertexArray(0);
