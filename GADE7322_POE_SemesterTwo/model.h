@@ -1,7 +1,7 @@
 #ifndef MODEL_H
 #define MODEL_H
-#define STB_IMAGE_IMPLEMENTATION
-#include "stb_image.h"
+//#define STB_IMAGE_IMPLEMENTATION
+//#include "stb_image.h"
 
 #pragma once
 #include <glad/glad.h>
@@ -24,7 +24,11 @@ unsigned int TextureFromFile(const char* path, const string& directory, bool gam
 class Model
 {
 public:
-    Model(char* path)
+    vector<Texture> textures_loaded;	// stores all the textures loaded so far, optimization to make sure textures aren't loaded more than once.
+    vector<importMesh>  meshes;
+    string directory;
+    bool gammaCorrection;
+    Model(string const& path, bool gamma = false) : gammaCorrection(gamma)
     {
         loadModel(path);
     }
@@ -35,9 +39,9 @@ public:
     }
 private:
     // model data
-    vector<importMesh> meshes;
+    /*vector<importMesh> meshes;
     string directory;
-    vector<Texture> textures_loaded;
+    vector<Texture> textures_loaded;*/
 
     void loadModel(string path)
     {

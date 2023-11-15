@@ -469,7 +469,12 @@ int main()
 
     AnimationController anim;
 
-    //Model testModel("")
+    std::filesystem::path modelPath = "resources/models/backpack/backpack.obj";
+    //Model ourModel(modelPath);
+    //modelPath = "resources/models/backpack/backpack.obj";
+    Model ourModel(modelPath.generic_string().c_str());
+    
+    //Model testModel("modelPath");
 
 
     while (!glfwWindowShouldClose(window))
@@ -1057,6 +1062,17 @@ int main()
             }
         }
 #pragma endregion
+
+        importShader.use();
+        importShader.setMat4("projection", projection);
+        importShader.setMat4("view", view);
+
+        // render the loaded model
+        glm::mat4 objModel = glm::mat4(1.0f);
+        objModel = glm::translate(objModel, glm::vec3(1.0f, 25.0f, 2.0f)); // translate it down so it's at the center of the scene
+        objModel = glm::scale(objModel, glm::vec3(1.0f, 1.0f, 1.0f));	// it's a bit too big for our scene, so scale it down
+        importShader.setMat4("model", objModel);
+        ourModel.Draw(importShader);
 
 #pragma region HEIGHTMAP
         heightMapShader.use();
