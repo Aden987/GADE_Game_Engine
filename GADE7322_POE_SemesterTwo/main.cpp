@@ -564,14 +564,30 @@ int main()
     std::filesystem::path templePath = "resources/models/temple/temple.obj";
     Model templeModel(templePath.generic_string().c_str());
     
-    //Model testModel("modelPath");
+    //counter to calculate fps
+    unsigned int counter = 0;
 
 
     while (!glfwWindowShouldClose(window))
     {
         float currentFrame = glfwGetTime();
         deltaTime = currentFrame - lastFrame;
-        lastFrame = currentFrame;
+        
+        counter++;
+
+        //Gets updated every 30th of a second
+        if (deltaTime >= 1.0f / 30.0)
+        {
+            std::string FPS = std::to_string((1.0 / deltaTime) * counter);
+            std::string ms = std::to_string((deltaTime / counter) * 1000);
+            std::string newTitle = "LearnOpenGL Current FPS: " + FPS + "FPS/ " + ms + "ms";
+            //set window title with newTitle
+            glfwSetWindowTitle(window, newTitle.c_str());
+            //get time diffrence back to 0
+            lastFrame = currentFrame;
+            //previousTime = currentTime;
+            counter = 0;
+        }
 
         anim.update(deltaTime);
 
