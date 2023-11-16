@@ -469,10 +469,15 @@ int main()
 
     AnimationController anim;
 
-    std::filesystem::path modelPath = "resources/models/Monolith.fbx";
-    //Model ourModel(modelPath);
-    //modelPath = "resources/models/backpack/backpack.obj";
+    std::filesystem::path modelPath = "resources/models/backpack/backpack.obj";
     Model ourModel(modelPath.generic_string().c_str());
+
+    std::filesystem::path monolithPath = "resources/models/monolith/monolith.obj";
+    Model monolithModel(monolithPath.generic_string().c_str());
+    std::filesystem::path pyramidPath = "resources/models/pyramid/pyramid.obj";
+    Model pyramidModel(pyramidPath.generic_string().c_str());
+    std::filesystem::path templePath = "resources/models/temple/temple.obj";
+    Model templeModel(templePath.generic_string().c_str());
     
     //Model testModel("modelPath");
 
@@ -1072,7 +1077,7 @@ int main()
         objModel = glm::translate(objModel, glm::vec3(1.0f, 25.0f, 2.0f)); // translate it down so it's at the center of the scene
         objModel = glm::scale(objModel, glm::vec3(1.0f, 1.0f, 1.0f));	// it's a bit too big for our scene, so scale it down
         importShader.setMat4("model", objModel);
-        ourModel.Draw(importShader);
+        templeModel.Draw(importShader);
 
 #pragma region HEIGHTMAP
         heightMapShader.use();
