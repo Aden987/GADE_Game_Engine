@@ -15,7 +15,7 @@ using namespace std;
 struct basicCubeVertex
 {
 	glm::vec3 position;
-	//glm::vec3 colour;
+	glm::vec3 colour;
 	glm::vec2 texture;
 };
 
@@ -58,8 +58,8 @@ private:
 		glEnableVertexAttribArray(0);
 
 		//colour attri
-		/*glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(basicCubeVertex), (void*)offsetof(basicCubeVertex, colour));
-		glEnableVertexAttribArray(1);*/
+		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(basicCubeVertex), (void*)offsetof(basicCubeVertex, colour));
+		glEnableVertexAttribArray(1);
 
 		//texture pointers
 		glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(basicCubeVertex), (void*)offsetof(basicCubeVertex, texture));

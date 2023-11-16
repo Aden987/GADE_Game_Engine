@@ -63,6 +63,13 @@ bool firstMouse = true;
 float deltaTime = 0.0f;
 float lastFrame = 0.0f;
 
+glm::vec3 pointLightPositions[] = {
+        glm::vec3(0.7f,  18.0f,  2.0f),
+        glm::vec3(2.3f,  18.0f, -4.0f),
+        glm::vec3(-4.0f,   18.0f, -12.0f),
+        glm::vec3(0.0f,  18.0f, -3.0f)
+};
+
 int main()
 {
 #pragma region GLFW_INIT_&_SETUP
@@ -409,7 +416,7 @@ int main()
      
     //creating primitive shapes
     //cube vertices
-    std::vector<basicCubeVertex> vertices = {
+   /* std::vector<basicCubeVertex> vertices = {
         {glm::vec3(-0.5f, -0.5f, -0.5f), glm::vec2(0.0f, 0.0f)},
         {glm::vec3(0.5f, -0.5f, -0.5f), glm::vec2(1.0f, 0.0f)},
         {glm::vec3(0.5f,  0.5f, -0.5f), glm::vec2(1.0f, 1.0f)},
@@ -451,8 +458,50 @@ int main()
         {glm::vec3(0.5f,  0.5f,  0.5f), glm::vec2(1.0f, 0.0f)},
         {glm::vec3(-0.5f,  0.5f,  0.5f), glm::vec2(0.0f, 0.0f)},
         {glm::vec3(-0.5f,  0.5f, -0.5f), glm::vec2(0.0f, 1.0f)},
-    };
+    };*/
+    std::vector<basicCubeVertex> vertices = {
+        {glm::vec3(-0.5f, -0.5f, -0.5f), glm::vec3(0.0f,  0.0f, -1.0f), glm::vec2(0.0f, 0.0f)},
+        {glm::vec3(0.5f, -0.5f, -0.5f), glm::vec3(0.0f,  0.0f, -1.0f), glm::vec2(1.0f, 0.0f)},
+        {glm::vec3(0.5f,  0.5f, -0.5f), glm::vec3(0.0f,  0.0f, -1.0f), glm::vec2(1.0f, 1.0f)},
+        {glm::vec3(0.5f,  0.5f, -0.5f), glm::vec3(0.0f,  0.0f, -1.0f), glm::vec2(1.0f, 1.0f)},
+        {glm::vec3(-0.5f,  0.5f, -0.5f), glm::vec3(0.0f,  0.0f, -1.0f), glm::vec2(0.0f, 1.0f)},
+        {glm::vec3(-0.5f, -0.5f, -0.5f), glm::vec3(0.0f,  0.0f, -1.0f), glm::vec2(0.0f, 0.0f)},
 
+        {glm::vec3(-0.5f, -0.5f,  0.5f), glm::vec3(0.0f,  0.0f,  1.0f), glm::vec2(0.0f, 0.0f)},
+        {glm::vec3(0.5f, -0.5f,  0.5f), glm::vec3(0.0f,  0.0f,  1.0f), glm::vec2(1.0f, 0.0f)},
+        {glm::vec3(0.5f,  0.5f,  0.5f), glm::vec3(0.0f,  0.0f,  1.0f), glm::vec2(1.0f, 1.0f)},
+        {glm::vec3(0.5f,  0.5f,  0.5f), glm::vec3(0.0f,  0.0f,  1.0f), glm::vec2(1.0f, 1.0f)},
+        {glm::vec3(-0.5f,  0.5f,  0.5f), glm::vec3(0.0f,  0.0f,  1.0f), glm::vec2(0.0f, 1.0f)},
+        {glm::vec3(-0.5f, -0.5f,  0.5f), glm::vec3(0.0f,  0.0f,  1.0f), glm::vec2(0.0f, 0.0f)},
+
+        {glm::vec3(-0.5f,  0.5f,  0.5f), glm::vec3(-1.0f,  0.0f,  0.0f), glm::vec2(1.0f, 0.0f)},
+        {glm::vec3(-0.5f,  0.5f, -0.5f), glm::vec3(-1.0f,  0.0f,  0.0f), glm::vec2(1.0f, 1.0f)},
+        {glm::vec3(-0.5f, -0.5f, -0.5f), glm::vec3(-1.0f,  0.0f,  0.0f), glm::vec2(0.0f, 1.0f)},
+        {glm::vec3(-0.5f, -0.5f, -0.5f), glm::vec3(-1.0f,  0.0f,  0.0f), glm::vec2(0.0f, 1.0f)},
+        {glm::vec3(-0.5f, -0.5f,  0.5f), glm::vec3(-1.0f,  0.0f,  0.0f), glm::vec2(0.0f, 0.0f)},
+        {glm::vec3(-0.5f,  0.5f,  0.5f), glm::vec3(-1.0f,  0.0f,  0.0f), glm::vec2(1.0f, 0.0f)},
+
+        {glm::vec3(0.5f,  0.5f,  0.5f), glm::vec3(1.0f,  0.0f,  0.0f), glm::vec2(1.0f, 0.0f)},
+        {glm::vec3(0.5f,  0.5f, -0.5f), glm::vec3(1.0f,  0.0f,  0.0f), glm::vec2(1.0f, 1.0f)},
+        {glm::vec3(0.5f, -0.5f, -0.5f), glm::vec3(1.0f,  0.0f,  0.0f), glm::vec2(0.0f, 1.0f)},
+        {glm::vec3(0.5f, -0.5f, -0.5f), glm::vec3(1.0f,  0.0f,  0.0f), glm::vec2(0.0f, 1.0f)},
+        {glm::vec3(0.5f, -0.5f,  0.5f), glm::vec3(1.0f,  0.0f,  0.0f), glm::vec2(0.0f, 0.0f)},
+        {glm::vec3(0.5f,  0.5f,  0.5f), glm::vec3(1.0f,  0.0f,  0.0f), glm::vec2(1.0f, 0.0f)},
+
+        {glm::vec3(-0.5f, -0.5f, -0.5f), glm::vec3(0.0f, -1.0f,  0.0f), glm::vec2(0.0f, 1.0f)},
+        {glm::vec3(0.5f, -0.5f, -0.5f), glm::vec3(0.0f, -1.0f,  0.0f),  glm::vec2(1.0f, 1.0f)},
+        {glm::vec3(0.5f, -0.5f,  0.5f), glm::vec3(0.0f, -1.0f,  0.0f),  glm::vec2(1.0f, 0.0f)},
+        {glm::vec3(0.5f, -0.5f,  0.5f), glm::vec3(0.0f, -1.0f,  0.0f),  glm::vec2(1.0f, 0.0f)},
+        {glm::vec3(-0.5f, -0.5f,  0.5f), glm::vec3(0.0f, -1.0f,  0.0f), glm::vec2(0.0f, 0.0f)},
+        {glm::vec3(-0.5f, -0.5f, -0.5f), glm::vec3(0.0f, -1.0f,  0.0f), glm::vec2(0.0f, 1.0f)},
+
+        {glm::vec3(-0.5f,  0.5f, -0.5f), glm::vec3(0.0f,  1.0f,  0.0f), glm::vec2(0.0f, 1.0f)},
+        {glm::vec3(0.5f,  0.5f, -0.5f), glm::vec3(0.0f,  1.0f,  0.0f),  glm::vec2(1.0f, 1.0f)},
+        {glm::vec3(0.5f,  0.5f,  0.5f), glm::vec3(0.0f,  1.0f,  0.0f),  glm::vec2(1.0f, 0.0f)},
+        {glm::vec3(0.5f,  0.5f,  0.5f), glm::vec3(0.0f,  1.0f,  0.0f),  glm::vec2(1.0f, 0.0f)},
+        {glm::vec3(-0.5f,  0.5f,  0.5f), glm::vec3(0.0f,  1.0f,  0.0f), glm::vec2(0.0f, 0.0f)},
+        {glm::vec3(-0.5f,  0.5f, -0.5f), glm::vec3(0.0f,  1.0f,  0.0f), glm::vec2(0.0f, 1.0f)},
+    };
     basicCubeMesh myCube(vertices);
 
     float skyboxVertices[] = {
@@ -617,10 +666,71 @@ int main()
         glm::mat4 view = camera.GetViewMatrix();
         glm::mat4 skyView = camera.GetViewMatrix();
 
-        myShader.use();
+        /*myShader.use();
         myShader.setMat4("projection", projection);
-        myShader.setMat4("view", view);
-       
+        myShader.setMat4("view", view);*/
+
+        lightingShader.use();
+        lightingShader.setMat4("projection", projection);
+        lightingShader.setMat4("view", view);
+
+        glm::vec3 lightPos(1.2f, 1.0f, 2.0f);
+        glm::vec3 lightColor = glm::vec3(1.0f);
+        lightingShader.setVec3("viewPos", camera.Position);
+        lightingShader.setFloat("material.shininess", 32.0f);
+        lightingShader.setInt("material.diffuse", 0);
+        lightingShader.setInt("material.specular", 1);
+
+        // directional light
+        lightingShader.setVec3("dirLight.direction", glm::vec3(-0.2f, -1.0f, -0.3f));
+        lightingShader.setVec3("dirLight.ambient", glm::vec3(0.05f, 0.05f, 0.05f));
+        lightingShader.setVec3("dirLight.diffuse", glm::vec3(0.4f, 0.4f, 0.4f));
+        lightingShader.setVec3("dirLight.specular", glm::vec3(0.5f, 0.5f, 0.5f));
+        // point light 1
+        lightingShader.setVec3("pointLights[0].position", pointLightPositions[0]);
+        lightingShader.setVec3("pointLights[0].ambient", glm::vec3(0.05f, 0.05f, 0.05f));
+        lightingShader.setVec3("pointLights[0].diffuse", glm::vec3(0.8f, 0.8f, 0.8f));
+        lightingShader.setVec3("pointLights[0].specular", glm::vec3(1.0f, 1.0f, 1.0f));
+        lightingShader.setFloat("pointLights[0].constant", 1.0f);
+        lightingShader.setFloat("pointLights[0].linear", 0.09f);
+        lightingShader.setFloat("pointLights[0].quadratic", 0.032f);
+        // point light 2
+        lightingShader.setVec3("pointLights[1].position", pointLightPositions[1]);
+        lightingShader.setVec3("pointLights[1].ambient", glm::vec3(0.05f, 0.05f, 0.05f));
+        lightingShader.setVec3("pointLights[1].diffuse", glm::vec3(0.8f, 0.8f, 0.8f));
+        lightingShader.setVec3("pointLights[1].specular", glm::vec3(1.0f, 1.0f, 1.0f));
+        lightingShader.setFloat("pointLights[1].constant", 1.0f);
+        lightingShader.setFloat("pointLights[1].linear", 0.09f);
+        lightingShader.setFloat("pointLights[1].quadratic", 0.032f);
+        // point light 3
+        lightingShader.setVec3("pointLights[2].position", pointLightPositions[2]);
+        lightingShader.setVec3("pointLights[2].ambient", glm::vec3(0.05f, 0.05f, 0.05f));
+        lightingShader.setVec3("pointLights[2].diffuse", glm::vec3(0.8f, 0.8f, 0.8f));
+        lightingShader.setVec3("pointLights[2].specular", glm::vec3(1.0f, 1.0f, 1.0f));
+        lightingShader.setFloat("pointLights[2].constant", 1.0f);
+        lightingShader.setFloat("pointLights[2].linear", 0.09f);
+        lightingShader.setFloat("pointLights[2].quadratic", 0.032f);
+        // point light 4
+        lightingShader.setVec3("pointLights[3].position", pointLightPositions[3]);
+        lightingShader.setVec3("pointLights[3].ambient", glm::vec3(0.05f, 0.05f, 0.05f));
+        lightingShader.setVec3("pointLights[3].diffuse", glm::vec3(0.8f, 0.8f, 0.8f));
+        lightingShader.setVec3("pointLights[3].specular", glm::vec3(1.0f, 1.0f, 1.0f));
+        lightingShader.setFloat("pointLights[3].constant", 1.0f);
+        lightingShader.setFloat("pointLights[3].linear", 0.09f);
+        lightingShader.setFloat("pointLights[3].quadratic", 0.032f);
+        // spotLight
+        lightingShader.setVec3("spotLight.position", camera.Position);
+        lightingShader.setVec3("spotLight.direction", camera.Front);
+        lightingShader.setVec3("spotLight.ambient", glm::vec3(0.0f, 0.0f, 0.0f));
+        lightingShader.setVec3("spotLight.diffuse", glm::vec3(1.0f, 1.0f, 1.0f));
+        lightingShader.setVec3("spotLight.specular", glm::vec3(1.0f, 1.0f, 1.0f));
+        lightingShader.setFloat("spotLight.constant", 1.0f);
+        lightingShader.setFloat("spotLight.linear", 0.09f);
+        lightingShader.setFloat("spotLight.quadratic", 0.032f);
+        lightingShader.setFloat("spotLight.cutOff", glm::cos(glm::radians(12.5f)));
+        lightingShader.setFloat("spotLight.outerCutOff", glm::cos(glm::radians(15.0f)));
+
+        
         ObjectContainer pawnPiece;
         ObjectContainer rookPiece;
         ObjectContainer knightPiece;
@@ -815,7 +925,7 @@ int main()
                 //anim.applyBouncingAnimation(modelPiece,1.0f,5.0f);
                 anim.applyPawnAnimation(modelPiece, 5.0f, 5.0f, 3.5f);
             }
-            pawnPiece.Draw(modelPiece, myShader);
+            pawnPiece.Draw(modelPiece, lightingShader);
             /*myShader.setMat4("model", modelPiece);
             myCube.Draw(myShader);*/
         }
@@ -840,7 +950,7 @@ int main()
                  //anim.applyBouncingAnimation(modelPiece,1.0f,5.0f);
                 anim.applyPawnAnimation(modelPiece, 5.0f, 5.0f, -3.5f);
             }
-            pawnPiece.Draw(modelPiece, myShader);
+            pawnPiece.Draw(modelPiece, lightingShader);
             /*myShader.setMat4("model", modelPiece);
             myCube.Draw(myShader);*/
         }
@@ -882,7 +992,7 @@ int main()
             modelPiece = glm::rotate(modelPiece, glm::radians(-90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
             modelPiece = glm::scale(modelPiece, glm::vec3(0.5f, 0.5f, 0.5f));
             modelPiece = glm::translate(modelPiece, glm::vec3(0.0f, 0.0f, -1.0f));            
-            rookPiece.Draw(modelPiece, myShader);
+            rookPiece.Draw(modelPiece, lightingShader);
         }
 
         //spawn knights
@@ -923,7 +1033,7 @@ int main()
             modelPiece = glm::rotate(modelPiece, glm::radians(90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
             modelPiece = glm::scale(modelPiece, glm::vec3(0.5f, 0.5f, 0.5f));
             modelPiece = glm::translate(modelPiece, glm::vec3(0.0f, 0.0f, -1.0f));
-            knightPiece.Draw(modelPiece, myShader);
+            knightPiece.Draw(modelPiece, lightingShader);
         }
 
         //spawn bishops
@@ -967,7 +1077,7 @@ int main()
             modelPiece = glm::rotate(modelPiece, glm::radians(-90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
             modelPiece = glm::scale(modelPiece, glm::vec3(0.5f, 0.5f, 0.5f));
             modelPiece = glm::translate(modelPiece, glm::vec3(0.0f, 0.0f, -1.0f));
-            bishopPiece.Draw(modelPiece, myShader);
+            bishopPiece.Draw(modelPiece, lightingShader);
         }
 
         //spawn queens
@@ -995,7 +1105,7 @@ int main()
             modelPiece = glm::rotate(modelPiece, glm::radians(-90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
             modelPiece = glm::scale(modelPiece, glm::vec3(0.5f, 0.5f, 0.5f));
             modelPiece = glm::translate(modelPiece, glm::vec3(0.0f, 0.0f, -1.0f));
-            queenPiece.Draw(modelPiece, myShader);
+            queenPiece.Draw(modelPiece, lightingShader);
         }
 
         //spawn kings
@@ -1023,7 +1133,7 @@ int main()
             modelPiece = glm::rotate(modelPiece, glm::radians(-90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
             modelPiece = glm::scale(modelPiece, glm::vec3(0.5f, 0.5f, 0.5f));
             modelPiece = glm::translate(modelPiece, glm::vec3(0.0f, 0.0f, -1.0f));
-            kingPiece.Draw(modelPiece, myShader);
+            kingPiece.Draw(modelPiece, lightingShader);
         }
 #pragma endregion
 
@@ -1087,7 +1197,7 @@ int main()
                         model = glm::translate(model, glm::vec3(j, boardHeight, i - 0.3f));
                         model = glm::scale(model, glm::vec3(1.0f, 1.0f, 0.5f));
                     }
-                    myShader.setInt("texType", 1);
+                    //myShader.setInt("texType", 1);
                     //glActiveTexture(GL_TEXTURE1);
                     glBindTexture(GL_TEXTURE_2D, texture4);
                     //myShader.setVec3("colourIn", glm::vec3(123.0f, 63.0f, 0.0f));
@@ -1099,7 +1209,7 @@ int main()
                     {
                         model = glm::translate(model, glm::vec3(j + 0.3f, boardHeight, i));
                         model = glm::scale(model, glm::vec3(0.5f, 1.0f, 1.0f));
-                        myShader.setInt("texType", 1);
+                        //myShader.setInt("texType", 1);
                         //glActiveTexture(GL_TEXTURE1);
                         glBindTexture(GL_TEXTURE_2D, texture4);
                         //myShader.setVec3("colourIn", glm::vec3(123.0f, 63.0f, 0.0f));
@@ -1109,7 +1219,7 @@ int main()
                     {
                         model = glm::translate(model, glm::vec3(j - 0.3f, boardHeight, i));
                         model = glm::scale(model, glm::vec3(0.5f, 1.0f, 1.0f));
-                        myShader.setInt("texType", 1);
+                        //myShader.setInt("texType", 1);
                         //glActiveTexture(GL_TEXTURE1);
                         glBindTexture(GL_TEXTURE_2D, texture4);
                         //myShader.setVec3("colourIn", glm::vec3(123.0f, 63.0f, 0.0f));
@@ -1125,7 +1235,7 @@ int main()
                             //non even row block is white
                             if (j % 2 != 0)
                             {
-                                myShader.setInt("texType", 2);
+                                //myShader.setInt("texType", 2);
                                 //glActiveTexture(GL_TEXTURE2);
                                 glBindTexture(GL_TEXTURE_2D, texture3);
                                 //myShader.setVec3("colourIn", glm::vec3(255.0f, 255.0f, 255.0f));
@@ -1133,7 +1243,7 @@ int main()
                             //non even row block is black
                             else
                             {
-                                myShader.setInt("texType", 1);
+                                //myShader.setInt("texType", 1);
                                 //glActiveTexture(GL_TEXTURE1);
                                 glBindTexture(GL_TEXTURE_2D, texture2);
                                 //myShader.setVec3("colourIn", glm::vec3(0.0f, 0.0f, 0.0f));
@@ -1143,14 +1253,14 @@ int main()
                         {
                             if (j % 2 != 0)
                             {
-                                myShader.setInt("texType", 1);
+                                //myShader.setInt("texType", 1);
                                 //glActiveTexture(GL_TEXTURE1);
                                 glBindTexture(GL_TEXTURE_2D, texture2);
                                 //myShader.setVec3("colourIn", glm::vec3(0.0f, 0.0f, 0.0f));
                             }
                             else
                             {
-                                myShader.setInt("texType", 2);
+                                //myShader.setInt("texType", 2);
                                 //glActiveTexture(GL_TEXTURE2);
                                 glBindTexture(GL_TEXTURE_2D, texture3);
                                 //myShader.setVec3("colourIn", glm::vec3(255.0f, 255.0f, 255.0f));
@@ -1158,11 +1268,26 @@ int main()
                         }
                     }
                 }
-                myShader.setMat4("model", model);
-                myCube.Draw(myShader);
+                lightingShader.setMat4("model", model);
+                myCube.Draw(lightingShader);
             }
         }
 #pragma endregion
+
+        lightSourceShader.use();
+        lightSourceShader.setMat4("projection", projection);
+        lightSourceShader.setMat4("view", view);
+        glm::mat4 lightSourceModel = glm::mat4(1.0f);
+        for (unsigned int i = 0; i < 4; i++)
+        {
+            lightSourceModel = glm::mat4(1.0f);
+            lightSourceModel = glm::translate(lightSourceModel, pointLightPositions[i]);
+            lightSourceModel = glm::scale(lightSourceModel, glm::vec3(0.2f)); // Make it a smaller cube
+            lightSourceShader.setMat4("model", lightSourceModel);
+            myCube.Draw(lightSourceShader);
+        }
+
+#pragma region DRAW OWN IMPORTS
 
         importShader.use();
         importShader.setMat4("projection", projection);
@@ -1174,6 +1299,7 @@ int main()
         objModel = glm::scale(objModel, glm::vec3(1.0f, 1.0f, 1.0f));	// it's a bit too big for our scene, so scale it down
         importShader.setMat4("model", objModel);
         templeModel.Draw(importShader);
+#pragma endregion
 
 #pragma region HEIGHTMAP
         heightMapShader.use();
