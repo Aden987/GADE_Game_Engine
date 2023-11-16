@@ -311,12 +311,12 @@ int main()
     std::filesystem::path frontMap = "resources/textures/skybox/front.jpg";
     std::filesystem::path backMap = "resources/textures/skybox/back.jpg";
 
-    //std::filesystem::path rightMap = "resources/textures/newSkybox/right.jpg";
-    //std::filesystem::path leftMap = "resources/textures/newSkybox/left.jpg";
-    //std::filesystem::path topMap = "resources/textures/newSkybox/top.jpg";
-    //std::filesystem::path bottomMap = "resources/textures/newSkybox/bottom.jpg";
-    //std::filesystem::path frontMap = "resources/textures/newSkybox/front.jpg";
-    //std::filesystem::path backMap = "resources/textures/newSkybox/back.jpg";
+    /*std::filesystem::path rightMap = "resources/textures/newSkybox/right.jpg";
+    std::filesystem::path leftMap = "resources/textures/newSkybox/left.jpg";
+    std::filesystem::path topMap = "resources/textures/newSkybox/top.jpg";
+    std::filesystem::path bottomMap = "resources/textures/newSkybox/bottom.jpg";
+    std::filesystem::path frontMap = "resources/textures/newSkybox/front.jpg";
+    std::filesystem::path backMap = "resources/textures/newSkybox/back.jpg";*/
     
     vector<std::filesystem::path> faces
     {
@@ -590,10 +590,13 @@ int main()
 
         
 
-        myShader.use();
+        
 
         glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100000.0f);
         glm::mat4 view = camera.GetViewMatrix();
+        glm::mat4 skyView = camera.GetViewMatrix();
+
+        myShader.use();
         myShader.setMat4("projection", projection);
         myShader.setMat4("view", view);
 
@@ -1166,11 +1169,13 @@ int main()
 #pragma endregion
 
         glDepthFunc(GL_LEQUAL);  // change depth function so depth test passes when values are equal to depth buffer's content
+        //glEnable(GL_DEPTH_CLAMP);
         skyboxShader.use();
-        //view = glm::mat4(1.0f);
-        view = glm::mat4(glm::mat3(camera.GetViewMatrix())); // remove translation from the view matrix
-        skyboxShader.setMat4("view", view);
+        glm::mat4 skyModel = glm::mat4(1.0f);
+        skyView = glm::mat4(glm::mat3(camera.GetViewMatrix())); // remove translation from the view matrix
+        skyboxShader.setMat4("view", skyView);
         skyboxShader.setMat4("projection", projection);
+        skyboxShader.setMat4("model", skyModel);
         // skybox cube
         glBindVertexArray(skyboxVAO);
         glActiveTexture(GL_TEXTURE0);
