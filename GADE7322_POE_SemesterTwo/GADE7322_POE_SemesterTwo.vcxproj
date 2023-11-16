@@ -152,6 +152,7 @@
     <ClInclude Include="Camera.h" />
     <ClInclude Include="HeightMapMesh.h" />
     <ClInclude Include="importMesh.h" />
+    <ClInclude Include="lighting.h" />
     <ClInclude Include="model.h" />
     <ClInclude Include="ObjectContainer.h" />
     <ClInclude Include="Shader.h" />
@@ -164,6 +165,10 @@
     <None Include="resources\shaders\heightmap.shader.vert" />
     <None Include="resources\shaders\importBasic.shader.frag" />
     <None Include="resources\shaders\importBasic.shader.vert" />
+    <None Include="resources\shaders\lighting.shader.frag" />
+    <None Include="resources\shaders\lighting.shader.vert" />
+    <None Include="resources\shaders\lightSource.shader.frag" />
+    <None Include="resources\shaders\lightSource.shader.vert" />
     <None Include="resources\shaders\skybox.shader.frag" />
     <None Include="resources\shaders\skybox.shader.vert" />
   </ItemGroup>

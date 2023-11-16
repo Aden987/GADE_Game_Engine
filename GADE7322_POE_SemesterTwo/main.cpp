@@ -18,6 +18,7 @@
 #include "ObjectContainer.h"
 #include "AnimationController.cpp"
 #include "model.h"
+#include "lighting.h"
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int modifiers);
@@ -102,6 +103,8 @@ int main()
     Shader heightMapShader("resources/shaders/heightmap.shader.vert", "resources/shaders/heightmap.shader.frag");
     Shader importShader("resources/shaders/importBasic.shader.vert", "resources/shaders/importBasic.shader.frag");
     Shader skyboxShader("resources/shaders/skybox.shader.vert", "resources/shaders/skybox.shader.frag");
+    Shader lightSourceShader("resources/shaders/lightSource.shader.vert", "resources/shaders/lightSource.shader.frag");
+    Shader lightingShader("resources/shaders/lighting.shader.vert", "resources/shaders/lighting.shader.frag");
 
     //load texture
 #pragma region TEXTURE
@@ -387,14 +390,6 @@ int main()
     }
     stbi_image_free(data2);
 #pragma endregion
-
-    /*std::vector<BasicVertex> vertices = {
-        {glm::vec3(-0.5f, -0.5f, 0.0f),glm::vec3(1.0f, 0.0f, 0.0f),glm::vec2(0.0f,0.0f)},
-        {glm::vec3(0.5f, -0.5f, 0.0f),glm::vec3(0.0f, 1.0f, 0.0f),glm::vec2(1.0f,0.0f)},
-        {glm::vec3(0.0f,  0.5f, 0.0f),glm::vec3(0.0f, 0.0f, 1.0f),glm::vec2(0.5f,1.0f)}
-    };
-
-    BasicMesh myTriangle(vertices);*/
 
     //index generation for height Map
     std::vector<unsigned int> indices;
