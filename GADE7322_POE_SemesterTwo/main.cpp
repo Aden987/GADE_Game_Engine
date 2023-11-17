@@ -1295,10 +1295,23 @@ int main()
 
         // render the loaded model
         glm::mat4 objModel = glm::mat4(1.0f);
-        objModel = glm::translate(objModel, glm::vec3(1.0f, 25.0f, 2.0f)); // translate it down so it's at the center of the scene
-        objModel = glm::scale(objModel, glm::vec3(1.0f, 1.0f, 1.0f));	// it's a bit too big for our scene, so scale it down
+        objModel = glm::translate(objModel, glm::vec3(4.0f, 15.6f, 4.0f)); // translate it down so it's at the center of the scene
+        objModel = glm::scale(objModel, glm::vec3(0.3f, 0.3f, 0.3f));	// it's a bit too big for our scene, so scale it down
+        objModel = glm::rotate(objModel, glm::radians(-90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
         importShader.setMat4("model", objModel);
         templeModel.Draw(importShader);
+
+        objModel = glm::mat4(1.0f);
+        objModel = glm::translate(objModel, glm::vec3(5.0f, 15.6f, 5.0f)); // translate it down so it's at the center of the scene
+        objModel = glm::scale(objModel, glm::vec3(0.4f, 0.4f, 0.4f));	// it's a bit too big for our scene, so scale it down
+        importShader.setMat4("model", objModel);
+        monolithModel.Draw(importShader);
+
+        objModel = glm::mat4(1.0f);
+        objModel = glm::translate(objModel, glm::vec3(6.0f, 15.6f, 5.5f)); // translate it down so it's at the center of the scene
+        objModel = glm::scale(objModel, glm::vec3(0.4f, 0.4f, 0.4f));	// it's a bit too big for our scene, so scale it down
+        importShader.setMat4("model", objModel);
+        pyramidModel.Draw(importShader);
 #pragma endregion
 
 #pragma region HEIGHTMAP
