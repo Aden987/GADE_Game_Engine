@@ -68,6 +68,9 @@
     <ClInclude Include="model.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="lighting.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="resources\shaders\basic.shader.frag">
@@ -92,6 +95,18 @@
       <Filter>Resource Files\Shaders</Filter>
     </None>
     <None Include="resources\shaders\skybox.shader.vert">
+      <Filter>Resource Files\Shaders</Filter>
+    </None>
+    <None Include="resources\shaders\lighting.shader.frag">
+      <Filter>Resource Files\Shaders</Filter>
+    </None>
+    <None Include="resources\shaders\lighting.shader.vert">
+      <Filter>Resource Files\Shaders</Filter>
+    </None>
+    <None Include="resources\shaders\lightSource.shader.frag">
+      <Filter>Resource Files\Shaders</Filter>
+    </None>
+    <None Include="resources\shaders\lightSource.shader.vert">
       <Filter>Resource Files\Shaders</Filter>
     </None>
   </ItemGroup>
