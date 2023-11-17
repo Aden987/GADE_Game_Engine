@@ -65,9 +65,9 @@ float lastFrame = 0.0f;
 
 glm::vec3 pointLightPositions[] = {
         glm::vec3(0.7f,  18.0f,  2.0f),
-        glm::vec3(2.3f,  18.0f, -4.0f),
-        glm::vec3(-4.0f,   18.0f, -12.0f),
-        glm::vec3(0.0f,  18.0f, -3.0f)
+        glm::vec3(2.3f,  12.0f, 4.0f),
+        glm::vec3(4.0f,   18.0f, 10.0f),
+        glm::vec3(9.0f,  18.0f, 3.0f)
 };
 
 int main()
@@ -643,9 +643,9 @@ int main()
 
         if (camSwitch == true)
         {
-            Camera camera(cameraPosition[cameraIndex],
+           /* Camera camera(cameraPosition[cameraIndex],
                 glm::vec3(0.0f, 1.0f, 0.0f),
-                cameraYaw[cameraIndex], cameraPitch[cameraIndex]);
+                cameraYaw[cameraIndex], cameraPitch[cameraIndex]);*/
             glfwSetCursorPosCallback(window, 0);
             glfwSetScrollCallback(window, 0);
             glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
