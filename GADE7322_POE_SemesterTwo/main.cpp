@@ -131,7 +131,7 @@ int main()
     std::filesystem::path imagePath4 = "resources/textures/wood.png";
     std::filesystem::path imagePath5 = "resources/textures/whitePiece.png";
     std::filesystem::path imagePath6 = "resources/textures/brownPiece.png";
-    std::filesystem::path imagePath7 = "resources/textures/grass.png";
+    std::filesystem::path imagePath7 = "resources/textures/sandtex.png";
     
     //glUniform1i(glGetUniformLocation(myShader.ID, "texture1"), 0);
     // texture 2
